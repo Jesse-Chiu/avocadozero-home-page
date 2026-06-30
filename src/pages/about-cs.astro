@@ -1,0 +1,182 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Features from '@components/Features.astro';
+import CTASection from '@components/CTASection.astro';
+---
+
+<BaseLayout
+  title="什么是信息学"
+  description="信息学奥林匹克竞赛（OI）是面向中学生的五大学科竞赛之一，以算法和程序设计为核心，培养计算思维和问题解决能力。"
+>
+  <!-- Hero Banner -->
+  <section class="relative py-24 md:py-32 particle-bg">
+    <div class="absolute inset-0 bg-hero-pattern"></div>
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6">
+        <span class="gradient-text">什么是信息学</span>
+      </h1>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+        信息学奥林匹克竞赛（Olympiad in Informatics，简称 OI），
+        是中国中学生五大学科竞赛之一，以算法设计和程序设计为核心，
+        考察学生运用计算机解决复杂问题的能力。
+      </p>
+    </div>
+  </section>
+
+  <!-- 竞赛体系 -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <h2 class="section-title">竞赛体系</h2>
+    <p class="section-subtitle">从入门到国际舞台的阶梯式成长路径</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {[
+        {
+          icon: '🌱',
+          title: 'CSP-J/S',
+          subtitle: '非专业级软件能力认证',
+          desc: '信息学竞赛的入门门槛。CSP-J面向初中生，CSP-S面向高中生。分为两轮：第一轮笔试考察计算机基础知识，第二轮上机考察算法编程能力。',
+          grade: '初中/高中',
+          color: 'from-green-500/30 to-emerald-500/10'
+        },
+        {
+          icon: '🏅',
+          title: 'NOIP',
+          subtitle: '全国青少年信息学奥林匹克联赛',
+          desc: '省级联赛，是进入信息学竞赛体系的关键一战。考察数据结构、算法设计与实现，难度较CSP-S更上一层，是省选的重要前置比赛。',
+          grade: '高中',
+          color: 'from-blue-500/30 to-cyan-500/10'
+        },
+        {
+          icon: '🎖️',
+          title: 'NOI',
+          subtitle: '全国青少年信息学奥林匹克竞赛',
+          desc: '国家级决赛，每年约300名选手参赛。金牌前50名入选国家集训队，获得保送清北资格。银牌以上在强基计划中具有显著优势。',
+          grade: '高中',
+          color: 'from-purple-500/30 to-indigo-500/10'
+        },
+        {
+          icon: '👑',
+          title: 'IOI',
+          subtitle: '国际信息学奥林匹克竞赛',
+          desc: '最高级别的国际赛事。中国代表队从国家集训队中选拔4人参赛。中国队在IOI历史上表现卓越，多次获得团体总分第一。',
+          grade: '高中',
+          color: 'from-amber-500/30 to-orange-500/10'
+        },
+      ].map((item) => (
+        <div class="glass-card overflow-hidden">
+          <div class={`h-2 bg-gradient-to-r ${item.color}`}></div>
+          <div class="p-6">
+            <div class="text-3xl mb-3">{item.icon}</div>
+            <div class="text-xs text-primary-600 mb-1">{item.grade}</div>
+            <h3 class="text-lg font-bold text-gray-900 mb-1">{item.title}</h3>
+            <p class="text-xs text-gray-500 mb-3">{item.subtitle}</p>
+            <p class="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 学什么 -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <h2 class="section-title">信息学学什么？</h2>
+    <p class="section-subtitle">不只是写代码，更是学习如何思考</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <div class="glass-card p-6">
+        <h3 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+          <span class="text-2xl">📐</span> 数据结构
+        </h3>
+        <ul class="space-y-2 text-sm text-gray-500">
+          <li>· 基础：数组、链表、栈、队列</li>
+          <li>· 进阶：树、图、堆、并查集</li>
+          <li>· 高级：线段树、平衡树、哈希表</li>
+          <li class="text-xs text-gray-500 mt-2">学会用最优的数据结构组织信息</li>
+        </ul>
+      </div>
+
+      <div class="glass-card p-6">
+        <h3 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+          <span class="text-2xl">⚙️</span> 算法设计
+        </h3>
+        <ul class="space-y-2 text-sm text-gray-500">
+          <li>· 基础：排序、搜索、贪心、递归</li>
+          <li>· 进阶：动态规划、分治、回溯</li>
+          <li>· 高级：图论算法、数论、组合数学</li>
+          <li class="text-xs text-gray-500 mt-2">学会用最优的算法高效地解决问题</li>
+        </ul>
+      </div>
+
+      <div class="glass-card p-6">
+        <h3 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+          <span class="text-2xl">💻</span> 编程语言
+        </h3>
+        <ul class="space-y-2 text-sm text-gray-500">
+          <li>· C++ 是信息学竞赛的标准语言</li>
+          <li>· 重点掌握 STL 标准模板库</li>
+          <li>· 代码规范与调试技巧</li>
+          <li class="text-xs text-gray-500 mt-2">编程只是工具，思维才是核心</li>
+        </ul>
+      </div>
+
+      <div class="glass-card p-6">
+        <h3 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+          <span class="text-2xl">🎯</span> 问题求解
+        </h3>
+        <ul class="space-y-2 text-sm text-gray-500">
+          <li>· 阅读理解：准确理解题目要求</li>
+          <li>· 建模能力：将实际问题抽象化</li>
+          <li>· 复杂度分析：评估算法效率</li>
+          <li class="text-xs text-gray-500 mt-2">从"会做题"到"会解决问题"的跨越</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI时代的独特价值 -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="glass-card p-8 md:p-12 relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-accent-500/5"></div>
+      <div class="relative z-10">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">
+          🤖 AI 时代，为什么更需要学信息学？
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          <div>
+            <h3 class="text-lg font-semibold text-accent-600 mb-2">学会与AI协作</h3>
+            <p class="text-sm text-gray-400 leading-relaxed">
+              AI可以写代码，但理解算法本质、判断代码质量、设计与AI高效协作的人才是未来最稀缺的。
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-accent-600 mb-2">不可替代的思维</h3>
+            <p class="text-sm text-gray-400 leading-relaxed">
+              算法思维、系统设计、复杂度分析——这些底层能力是AI无法替代的，恰恰是信息学训练的核心。
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-accent-600 mb-2">跨学科的应用</h3>
+            <p class="text-sm text-gray-400 leading-relaxed">
+              信息学培养的逻辑思维和建模能力，可以迁移到数学、物理、生物等任何需要结构化思考的领域。
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-accent-600 mb-2">人工智能的基础</h3>
+            <p class="text-sm text-gray-400 leading-relaxed">
+              机器学习、深度学习、大语言模型——AI的前沿技术都建立在算法和数据结构的基石之上。学信息学，就是学AI的底层逻辑。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    title="想了解更多？"
+    description="看看信息学竞赛完整的课程体系，找到适合孩子的起点。"
+    primaryText="查看课程体系"
+    primaryLink="/curriculum"
+    secondaryText="了解学习价值"
+    secondaryLink="/benefits"
+  />
+</BaseLayout>

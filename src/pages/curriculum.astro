@@ -1,0 +1,126 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Timeline from '@components/Timeline.astro';
+import CTASection from '@components/CTASection.astro';
+
+const stages = [
+  {
+    stage: '入门阶段',
+    title: 'C++ 基础与算法入门',
+    grade: '4-7年级 / 0基础',
+    duration: '3-6个月',
+    goals: ['掌握C++基本语法', '理解变量、循环、数组', '培养编程兴趣'],
+    highlights: ['C++入门', '简单循环', '一维数组', '函数基础', 'OJ刷题入门'],
+  },
+  {
+    stage: '基础阶段',
+    title: '数据结构与基础算法',
+    grade: '5-8年级',
+    duration: '6-12个月',
+    goals: ['掌握基础数据结构', '经典算法入门', '冲击CSP-J一等奖'],
+    highlights: ['排序算法', '搜索算法', '贪心', '栈/队列/链表', '二叉树基础', '模拟题训练'],
+  },
+  {
+    stage: '提高阶段',
+    title: '进阶算法与CSP-S冲刺',
+    grade: '7-10年级',
+    duration: '12-18个月',
+    goals: ['全面掌握进阶算法', '冲击CSP-S一等奖', '备战NOIP'],
+    highlights: ['动态规划', '图论基础', '线段树', '平衡树', '数论', '组合数学', '历年真题'],
+  },
+  {
+    stage: '进阶阶段',
+    title: 'NOIP高分与省选冲刺',
+    grade: '9-11年级',
+    duration: '12-24个月',
+    goals: ['NOIP高分晋级', '冲击省队选拔', '备战NOI'],
+    highlights: ['高级DP', '网络流', '高级图论', '字符串算法', '数据结构进阶', '分块/莫队', '省选真题'],
+  },
+  {
+    stage: '冲刺阶段',
+    title: 'NOI金牌与集训队冲刺',
+    grade: '10-12年级',
+    duration: '持续训练',
+    goals: ['冲击NOI奖牌', '入选国家集训队', '保送清北'],
+    highlights: ['综合训练', '构造题', '互动题', '乱搞技巧', '模拟赛', '心态训练'],
+  },
+];
+---
+
+<BaseLayout
+  title="课程体系"
+  description="AvocadoZero 信息学奥赛课程体系，从零基础到省选，完整的阶梯式培养路径。"
+>
+  <!-- Hero -->
+  <section class="relative py-24 md:py-32 particle-bg">
+    <div class="absolute inset-0 bg-hero-pattern opacity-30"></div>
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6">
+        <span class="gradient-text">课程体系</span>
+      </h1>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+        从零基础到省选，系统化的阶梯式培养路径。每个阶段都有明确的学习目标、
+        科学的训练方法和可视化的成长轨迹。
+      </p>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <Timeline items={stages} />
+
+  <!-- 教学特色 -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <h2 class="section-title">教学特色</h2>
+    <p class="section-subtitle">我们不只是教编程，更是培养思维</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {[
+        {
+          icon: '🎯',
+          title: '分层教学',
+          desc: '根据学生水平精准分层，每个孩子都有适合自己的学习节奏。入门班、基础班、提高班、冲刺班，无缝衔接。',
+        },
+        {
+          icon: '💡',
+          title: '项目驱动',
+          desc: '以真实竞赛题目为导向，每节课解决一个具体问题。从"会听课"到"会做题"再到"能拿分"的完整闭环。',
+        },
+        {
+          icon: '📊',
+          title: '数据追踪',
+          desc: '可视化学习进度，记录每道题的提交次数、AC率、用时。家长随时了解孩子的成长轨迹。',
+        },
+        {
+          icon: '🏆',
+          title: '模拟赛训练',
+          desc: '定期组织全真模拟赛，还原真实竞赛环境和压力。赛后精讲，针对性查漏补缺。',
+        },
+        {
+          icon: '👨‍🏫',
+          title: '小班授课',
+          desc: '每班不超过8人，确保每个孩子都能得到充分的指导和关注。一对一答疑辅导。',
+        },
+        {
+          icon: '📱',
+          title: '课后陪伴',
+          desc: '专属学习群每日答疑，定期推送针对性练习题。不在课堂，进步不止。',
+        },
+      ].map((item) => (
+        <div class="glass-card p-6 group">
+          <div class="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">{item.icon}</div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">{item.title}</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CTASection
+    title="找到适合的起点"
+    description="不确定孩子应该从哪个阶段开始？联系我们，免费获得个性化学习规划。"
+    primaryText="联系我们"
+    primaryLink="/about#contact"
+    secondaryText="了解学习价值"
+    secondaryLink="/benefits"
+  />
+</BaseLayout>

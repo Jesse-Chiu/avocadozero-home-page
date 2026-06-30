@@ -1,0 +1,48 @@
+{
+  "$ref": "#/definitions/success-cases",
+  "definitions": {
+    "success-cases": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "company": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "business",
+            "academic"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "order": {
+          "type": "number"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "title",
+        "company",
+        "category",
+        "description",
+        "order"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

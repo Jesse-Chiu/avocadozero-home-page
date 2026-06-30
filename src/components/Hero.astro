@@ -1,0 +1,74 @@
+---
+export interface Props {
+  title: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaLink?: string;
+  secondaryText?: string;
+  secondaryLink?: string;
+}
+
+const { title, subtitle, ctaText = '了解更多', ctaLink = '/about-cs', secondaryText, secondaryLink } = Astro.props;
+---
+
+<section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden particle-bg">
+  <!-- 渐变背景 -->
+  <div class="absolute inset-0 bg-hero-pattern"></div>
+
+  <!-- 网格线装饰 -->
+  <div class="absolute inset-0 opacity-[0.03]"
+       style="background-image: linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px); background-size: 60px 60px;">
+  </div>
+
+  <!-- 浮动光点 -->
+  <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-primary-500/20 rounded-full blur-3xl animate-float"></div>
+  <div class="absolute bottom-1/4 right-1/4 w-48 h-48 bg-accent-500/10 rounded-full blur-3xl animate-float" style="animation-delay: -3s;"></div>
+
+  <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 border border-gray-300/50 text-sm text-gray-600 mb-8">
+      <span class="w-2 h-2 rounded-full bg-accent-500 animate-pulse"></span>
+      培养未来的科技人才
+    </div>
+
+    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+      <span class="gradient-text">{title.split(' ').slice(0, -1).join(' ')}</span>
+      <br />
+      <span class="text-gray-900">{title.split(' ').pop()}</span>
+    </h1>
+
+    {subtitle && (
+      <p class="text-lg sm:text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed text-balance">
+        {subtitle}
+      </p>
+    )}
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href={ctaLink} class="btn-primary text-lg group">
+        {ctaText}
+        <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+      {secondaryText && secondaryLink && (
+        <a href={secondaryLink} class="btn-ghost text-lg">
+          {secondaryText}
+        </a>
+      )}
+    </div>
+
+    <!-- 数据亮点 -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 max-w-3xl mx-auto">
+      {[
+        { value: 'CSP-J/S', label: '信息学竞赛' },
+        { value: 'NOIP', label: '省级联赛' },
+        { value: 'NOI', label: '全国决赛' },
+        { value: 'IOI', label: '国际奥赛' },
+      ].map((stat) => (
+        <div class="glass-card p-4 animate-slide-up">
+          <div class="text-lg font-bold text-primary-600">{stat.value}</div>
+          <div class="text-xs text-gray-500 mt-1">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

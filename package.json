@@ -1,0 +1,20 @@
+{
+  "name": "avocadozero-home-page",
+  "version": "1.0.0",
+  "description": "信息学奥赛工作室官方网站",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "build:github": "DEPLOY_TARGET=github astro build",
+    "preview": "astro preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^5.18.2",
+    "tailwindcss": "^3.4.19"
+  }
+}

@@ -1,0 +1,25 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  icon?: string;
+  href?: string;
+  class?: string;
+}
+
+const { title, description, icon, href, class: extraClass = '' } = Astro.props;
+const Wrapper = href ? 'a' : 'div';
+---
+
+<Wrapper
+  href={href}
+  class={`glass-card p-6 block ${extraClass} ${href ? 'cursor-pointer' : ''}`}
+>
+  {icon && (
+    <div class="text-3xl mb-3">{icon}</div>
+  )}
+  <h3 class="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
+  {description && (
+    <p class="text-gray-500 text-sm leading-relaxed">{description}</p>
+  )}
+</Wrapper>

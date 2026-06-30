@@ -1,0 +1,156 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PersonCard from '@components/PersonCard.astro';
+import CTASection from '@components/CTASection.astro';
+
+const businessPeople = [
+  {
+    name: '王小川',
+    title: '百川智能创始人 & CEO',
+    company: '前搜狗CEO',
+    description: 'IOI 1996金牌得主，毕业于清华大学计算机系。搜狗输入法之父，中国AI领域的领军人物之一。2023年创立百川智能，专注大语言模型。',
+    category: 'business' as const,
+    image: '/images/people/wang-xiaochuan.png',
+  },
+  {
+    name: '楼天城',
+    title: '小马智行联合创始人 & CTO',
+    company: 'Pony.ai',
+    description: 'IOI 2004金牌得主，被誉为"中国大学生计算机编程第一人"。清华姚班毕业，曾在Google X、百度自动驾驶任职，是全球自动驾驶领域的顶级技术专家。',
+    category: 'business' as const,
+    image: '/images/people/lou-tiancheng.png',
+  },
+  {
+    name: '陈启峰',
+    title: 'Luma AI 联合创始人',
+    company: 'Luma AI',
+    description: 'IOI 金牌得主，斯坦福大学博士。创立Luma AI，专注3D生成式AI技术，是AI 3D领域的先锋创业公司。',
+    category: 'business' as const,
+    image: '/images/people/chen-qifeng.png',
+  },
+  {
+    name: '戴文渊',
+    title: '第四范式创始人 & CEO',
+    company: '第四范式',
+    description: 'ACM-ICPC世界冠军团队成员，上海交通大学ACM班毕业。创立第四范式，中国领先的AI决策平台公司，港交所上市。',
+    category: 'business' as const,
+    image: '/images/people/dai-wenyuan.png',
+  },
+];
+
+const academicPeople = [
+  {
+    name: '姚期智',
+    title: '图灵奖得主 · 中国科学院院士',
+    company: '清华大学交叉信息研究院',
+    description: '2000年图灵奖得主（唯一华人获奖者），清华"姚班"创办者。计算理论、密码学领域的泰斗级人物，为中国培养了无数计算机顶尖人才。',
+    category: 'academic' as const,
+    image: '/images/people/yao-qizhi.png',
+  },
+  {
+    name: '鬲融',
+    title: '杜克大学计算机系教授',
+    company: 'Duke University',
+    description: 'IOI 2004金牌得主，清华姚班毕业，普林斯顿大学博士。在理论计算机科学领域发表多篇顶级论文，是国际理论计算机领域最瞩目的华人青年学者之一。',
+    category: 'academic' as const,
+    image: '/images/people/ge-rong.png',
+  },
+  {
+    name: '唐文斌',
+    title: '旷视科技联合创始人 & CTO',
+    company: '旷视科技（算法奥林匹克冠军）',
+    description: 'NOI金牌得主，清华姚班毕业。带领团队多次获得国际计算机视觉竞赛冠军。旷视科技是中国AI视觉领域的独角兽企业。',
+    category: 'academic' as const,
+    image: '/images/people/tang-wenbin.png',
+  },
+  {
+    name: '李开复',
+    title: '创新工场创始人 & CEO',
+    company: '前Google全球副总裁、微软亚洲研究院院长',
+    description: '虽非OI出身，但作为计算机科学领域的标志性人物，李开复长期关注青少年编程教育，多次公开表示"编程是未来世界的核心素养"。',
+    category: 'academic' as const,
+    image: '/images/people/li-kaifu.png',
+  },
+];
+---
+
+<BaseLayout
+  title="成功案例"
+  description="信息学竞赛培养出了无数商业和学术领域的顶尖人才。从IOI金牌到AI创业者，从清华姚班到MIT教授。"
+>
+  <!-- Hero -->
+  <section class="relative py-24 md:py-32 particle-bg">
+    <div class="absolute inset-0 bg-hero-pattern"></div>
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6">
+        <span class="gradient-text">成功案例</span>
+      </h1>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+        信息学竞赛是科技领袖的"黄埔军校"。从IOI金牌到AI创业者，从清华姚班到世界名校教授——这条路已经走出了无数传奇。
+      </p>
+    </div>
+  </section>
+
+  <!-- 商业领域 -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="flex items-center gap-3 mb-12">
+      <div class="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center">
+        <span class="text-xl">💼</span>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-gray-900">商业领域</h2>
+        <p class="text-sm text-gray-500">从信息学竞赛走出的创业者和技术领袖</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {businessPeople.map((person) => (
+        <PersonCard {...person} />
+      ))}
+    </div>
+  </section>
+
+  <!-- 学术领域 -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="flex items-center gap-3 mb-12">
+      <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center">
+        <span class="text-xl">🎓</span>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-gray-900">学术领域</h2>
+        <p class="text-sm text-gray-500">在学术研究领域做出卓越贡献的信息学背景学者</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {academicPeople.map((person) => (
+        <PersonCard {...person} />
+      ))}
+    </div>
+  </section>
+
+  <!-- 共同的起点 -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto text-center">
+    <div class="glass-card p-8 md:p-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">他们共同的起点</h2>
+      <p class="text-gray-500 leading-relaxed">
+        这些在不同领域取得卓越成就的人，都有一个共同的起点——中学时期开始接触信息学竞赛。
+        他们中的大多数人，在十五六岁时就已经在思考算法复杂度、设计数据结构、解决实际问题。
+        这种早期训练塑造的思维方式和学习习惯，伴随他们走过了大学、研究院和创业之路。
+      </p>
+      <p class="text-gray-500 leading-relaxed mt-4">
+        <span class="text-primary-600 font-semibold">IOI金牌 → 清华姚班 → AI创业</span>——这不是个别天才的故事，而是一条可复制的成长路径。
+        关键在于：在合适的时机，用正确的方法，开始系统的信息学训练。
+      </p>
+    </div>
+  </section>
+
+  <CTASection
+    title="你的孩子也可以走向这样的未来"
+    description="从今天开始，加入信息学竞赛的训练。"
+    primaryText="联系我们"
+    primaryLink="/about#contact"
+    secondaryText="了解课程体系"
+    secondaryLink="/curriculum"
+  />
+</BaseLayout>

@@ -1,0 +1,129 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Features from '@components/Features.astro';
+---
+
+<BaseLayout
+  title="关于我们"
+  description="牛油果零壹信奥，专注于信息学奥林匹克竞赛培训，培养孩子的计算思维与算法能力。"
+>
+  <!-- Hero -->
+  <section class="relative py-24 md:py-32 particle-bg">
+    <div class="absolute inset-0 bg-hero-pattern"></div>
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="text-6xl mb-6">🥑</div>
+      <h1 class="text-4xl md:text-6xl font-bold mb-6">
+        <span class="gradient-text">关于我们</span>
+      </h1>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+        牛油果零壹信奥，专注于青少年信息学奥林匹克竞赛培训。
+        我们相信，每个孩子都能在信息学的世界里找到属于自己的光芒。
+      </p>
+    </div>
+  </section>
+
+  <!-- 工作室介绍 -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+          我们的<span class="gradient-text">理念</span>
+        </h2>
+        <div class="space-y-4 text-gray-500 text-sm leading-relaxed">
+          <p>
+            牛油果零壹信奥 成立的初衷很简单：我们看到了太多孩子在信息学竞赛中
+            获得了远超编程本身的成长——更清晰的逻辑、更强的抗挫力、更坚韧的性格。
+          </p>
+          <p>
+            但我们也看到了太多孩子因为缺乏正确的引导而与信息学擦肩而过。
+            我们想做的，就是用科学的方法、耐心的陪伴，帮助更多孩子走上这条路。
+          </p>
+          <p>
+            名字中的 Zero，不是"零基础"，而是"从零到一的突破"。
+            我们陪伴孩子完成从"我不会"到"我做到了"的每一个关键时刻。
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        {[
+          { icon: '🎯', title: '因材施教', desc: '每个孩子都有独特的学习路径' },
+          { icon: '💡', title: '思维优先', desc: '编程是手段，思考才是目的' },
+          { icon: '🤝', title: '长期陪伴', desc: '不止是培训，更是成长伙伴' },
+          { icon: '🌟', title: '结果导向', desc: '用竞赛成绩证明方法的正确性' },
+        ].map((item) => (
+          <div class="glass-card p-4 text-center">
+            <div class="text-2xl mb-2">{item.icon}</div>
+            <h3 class="text-sm font-semibold text-gray-900 mb-1">{item.title}</h3>
+            <p class="text-xs text-gray-500">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系方式 -->
+  <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+    <h2 class="section-title">联系我们</h2>
+    <p class="section-subtitle">任何问题，欢迎随时沟通</p>
+
+    <div class="glass-card p-6 md:p-10">
+      <!-- 工作室地址：顶部独行 -->
+      <div class="flex items-center gap-4 mb-8 pb-8 border-b border-gray-100">
+        <div class="w-11 h-11 rounded-xl bg-primary-500/10 flex items-center justify-center flex-shrink-0">
+          <span class="text-xl">📍</span>
+        </div>
+        <div>
+          <h3 class="text-base font-semibold text-gray-900 mb-0.5">工作室地址</h3>
+          <p class="text-gray-500 text-sm">福州市台江区洋中路 299 号</p>
+        </div>
+      </div>
+
+      <!-- 三个二维码：横向等宽 -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
+        <!-- 微信公众号 -->
+        <div class="flex flex-col items-center text-center">
+          <div class="w-11 h-11 rounded-xl bg-accent-500/10 flex items-center justify-center mb-3">
+            <span class="text-xl">📱</span>
+          </div>
+          <h3 class="text-sm font-semibold text-gray-900 mb-3">微信公众号</h3>
+          <div class="w-36 sm:w-40 aspect-square bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+            <img src="/images/wechat-qr.png" alt="微信公众号二维码" class="w-full h-full object-contain p-1" />
+          </div>
+          <p class="text-gray-400 text-xs mt-2">搜索关注「牛油果零壹信奥」</p>
+        </div>
+
+        <!-- 视频号 -->
+        <div class="flex flex-col items-center text-center">
+          <div class="w-11 h-11 rounded-xl bg-purple-500/10 flex items-center justify-center mb-3">
+            <span class="text-xl">🎬</span>
+          </div>
+          <h3 class="text-sm font-semibold text-gray-900 mb-3">视频号</h3>
+          <div class="w-36 sm:w-40 aspect-square bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+            <img src="/images/video-qr.jpg" alt="视频号二维码" class="w-full h-full object-contain p-1" />
+          </div>
+          <p class="text-gray-400 text-xs mt-2">搜索「牛油果零壹信奥」</p>
+        </div>
+
+        <!-- 福州本地信奥家长群 -->
+        <div class="flex flex-col items-center text-center">
+          <div class="w-11 h-11 rounded-xl bg-green-500/10 flex items-center justify-center mb-3">
+            <span class="text-xl">👨‍👩‍👧‍👦</span>
+          </div>
+          <h3 class="text-sm font-semibold text-gray-900 mb-3">福州本地信奥家长群</h3>
+          <div class="w-36 sm:w-40 aspect-square bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+            <img src="/images/parent-group-qr.jpg" alt="家长群二维码" class="w-full h-full object-contain p-1" />
+          </div>
+          <p class="text-gray-400 text-xs mt-2">扫码加入家长交流群</p>
+        </div>
+      </div>
+
+      <!-- 底部提示 -->
+      <div class="mt-8 p-4 bg-gray-100/80 rounded-xl text-center">
+        <p class="text-sm text-gray-500">
+          💬 最直接的沟通方式：关注公众号后发送消息，我们会尽快回复。
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

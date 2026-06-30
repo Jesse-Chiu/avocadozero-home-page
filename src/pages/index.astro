@@ -1,0 +1,88 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/Hero.astro';
+import Features from '@components/Features.astro';
+import CTASection from '@components/CTASection.astro';
+---
+
+<BaseLayout
+  title="AI时代的信息学竞赛培养"
+  description="牛油果零壹信奥，专注 CSP-J/S、NOIP、NOI 信息学奥赛培训。培养计算思维、抗挫能力和算法能力，助力升学与未来。"
+>
+  <Hero
+    title="信息学奥赛 从这里起步"
+    subtitle="在 AI 时代，让孩子赢在未来。系统化信息学竞赛培训，培养计算思维与算法能力，打造核心竞争力。"
+    ctaText="开始了解信息学"
+    ctaLink="/about-cs"
+    secondaryText="查看课程体系"
+    secondaryLink="/curriculum"
+  />
+
+  <!-- 为什么选择信息学 -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <h2 class="section-title">为什么选择信息学？</h2>
+    <p class="section-subtitle">不止是编程，更是一场思维革命</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+      <div class="glass-card p-8 text-center relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 to-accent-500"></div>
+        <div class="text-5xl mb-4">🧠</div>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">计算思维</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">
+          信息学训练培养的是一种"与计算机对话"的能力。孩子学会将复杂问题拆解为可执行的步骤，这种结构化思考能力将终身受益。
+        </p>
+      </div>
+
+      <div class="glass-card p-8 text-center relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent-500 to-primary-500"></div>
+        <div class="text-5xl mb-4">💪</div>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">抗挫能力</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">
+          代码调试是天然的挫折教育。每一次 WA（Wrong Answer）都是成长的机会。孩子学会面对失败、分析问题、不断迭代，这是人生最重要的软实力之一。
+        </p>
+      </div>
+
+      <div class="glass-card p-8 text-center relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-primary-500"></div>
+        <div class="text-5xl mb-4">🚀</div>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">未来竞争力</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">
+          AI 时代，理解计算本质的人将拥有不可替代的竞争力。信息学竞赛经历在高校自主招生、强基计划中具有重要优势，也是顶尖科技公司的入场券。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 内容导航 -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <h2 class="section-title">探索信息学世界</h2>
+    <p class="section-subtitle">从入门到精通的完整路径</p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {[
+        { icon: '📖', title: '什么是信息学', desc: '了解信息学奥赛的竞赛体系、学习内容和发展前景', href: '/about-cs' },
+        { icon: '📚', title: '课程体系', desc: '从零基础到省选的完整培养路径', href: '/curriculum' },
+        { icon: '🌟', title: '学信息学有什么用', desc: '思维能力、抗挫能力、韧性——比编程更重要的收获', href: '/benefits' },
+        { icon: '🎓', title: '升学帮助', desc: '强基计划、综合评价、自主招生的政策解读', href: '/admission' },
+        { icon: '🏆', title: '成功案例', desc: '信息学背景的商业领袖和学术精英', href: '/success' },
+        { icon: '👥', title: '关于我们', desc: '了解牛油果零壹信奥与教练团队', href: '/about' },
+      ].map((item) => (
+        <a href={item.href} class="glass-card p-6 group">
+          <div class="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">{item.icon}</div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+            {item.title}
+          </h3>
+          <p class="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+          <div class="flex items-center gap-1 text-primary-600 text-sm mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
+            了解更多
+            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <CTASection />
+</BaseLayout>

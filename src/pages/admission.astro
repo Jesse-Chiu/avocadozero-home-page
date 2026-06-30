@@ -1,0 +1,206 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CTASection from '@components/CTASection.astro';
+---
+
+<BaseLayout
+  title="升学帮助"
+  description="信息学竞赛成绩在强基计划、综合评价、自主招生中具有重要优势，金牌选手更可直接保送清华北大。"
+>
+  <!-- Hero -->
+  <section class="relative py-24 md:py-32 particle-bg">
+    <div class="absolute inset-0 bg-hero-pattern"></div>
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6">
+        <span class="gradient-text">升学帮助</span>
+      </h1>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+        信息学竞赛奖项是国家认可的最高级别学科竞赛之一，在各类升学路径中拥有"硬通货"级别的价值。
+      </p>
+    </div>
+  </section>
+
+  <!-- 升学路径图 -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <h2 class="section-title">升学路径总览</h2>
+    <p class="section-subtitle">从竞赛奖项到名校录取的多样路径</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <!-- 保送 -->
+      <div class="glass-card p-8 relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-orange-500"></div>
+        <div class="text-4xl mb-4">🏆</div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">直接保送</h3>
+        <p class="text-xs text-gray-500 mb-4">NOI 金牌 · 国家集训队</p>
+        <div class="glass-card !bg-gray-100 p-4 mb-4">
+          <p class="text-sm text-gray-600 leading-relaxed">
+            NOI 金牌前50名入选国家集训队，<span class="text-amber-600 font-semibold">直接保送清华大学、北京大学</span>，无需参加高考。
+          </p>
+        </div>
+        <ul class="space-y-2 text-xs text-gray-500">
+          <li class="flex items-start gap-2">
+            <span class="text-amber-600 mt-0.5">◆</span>
+            <span>每年约50个保送名额</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-amber-600 mt-0.5">◆</span>
+            <span>专业方向不受限制</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 强基计划 -->
+      <div class="glass-card p-8 relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 to-accent-500"></div>
+        <div class="text-4xl mb-4">🎓</div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">强基计划</h3>
+        <p class="text-xs text-gray-500 mb-4">NOI银牌 · CSP-S一等奖</p>
+        <div class="glass-card !bg-gray-100 p-4 mb-4">
+          <p class="text-sm text-gray-600 leading-relaxed">
+            NOI 银牌/铜牌在<span class="text-primary-600 font-semibold">强基计划中可破格入围</span>。CSP-S一等奖在清北等顶尖高校强基初审中具有显著优势。
+          </p>
+        </div>
+        <ul class="space-y-2 text-xs text-gray-500">
+          <li class="flex items-start gap-2">
+            <span class="text-primary-600 mt-0.5">◆</span>
+            <span>破格入围校测环节</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-primary-600 mt-0.5">◆</span>
+            <span>降分录取幅度可达20-60分</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 综合评价 -->
+      <div class="glass-card p-8 relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 to-emerald-500"></div>
+        <div class="text-4xl mb-4">📋</div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">综合评价</h3>
+        <p class="text-xs text-gray-500 mb-4">CSP-J/S获奖 · NOIP参赛</p>
+        <div class="glass-card !bg-gray-100 p-4 mb-4">
+          <p class="text-sm text-gray-600 leading-relaxed">
+            信息学竞赛奖项是<span class="text-green-600 font-semibold">综合评价录取的重要加分项</span>。南方科技大学、上海科技大学、浙江大学等众多高校认可OI成绩。
+          </p>
+        </div>
+        <ul class="space-y-2 text-xs text-gray-500">
+          <li class="flex items-start gap-2">
+            <span class="text-green-600 mt-0.5">◆</span>
+            <span>综合素质评价加分</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-green-600 mt-0.5">◆</span>
+            <span>提升简历竞争力</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 详细政策 -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <h2 class="section-title">政策详解</h2>
+    <p class="section-subtitle">基于最新教育政策，信息学竞赛在各升学通道中的具体优势</p>
+
+    <div class="max-w-4xl mx-auto space-y-6">
+      <div class="glass-card p-6">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center flex-shrink-0">
+            <span class="text-xl">🥇</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-white mb-2">NOI金牌 → 保送清华北大</h3>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              NOI（全国青少年信息学奥林匹克竞赛）全国决赛金牌前50名入选国家集训队，根据教育部规定可直接保送清华大学和北京大学。这是信息学竞赛的最高荣誉，也是升学的"直通车"。
+            </p>
+            <div class="mt-3 flex items-center gap-2">
+              <span class="text-xs bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full">含金量最高</span>
+              <span class="text-xs bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full">免高考</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card p-6">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center flex-shrink-0">
+            <span class="text-xl">🥈</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-white mb-2">NOI银牌/铜牌 → 强基破格入围</h3>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              NOI 银牌和铜牌获得者在清华、北大等36所双一流高校的强基计划中，可享受破格入围资格，无需与其他考生竞争入围名额。校测中竞赛经历本身就是巨大优势。
+            </p>
+            <div class="mt-3 flex items-center gap-2">
+              <span class="text-xs bg-primary-500/10 text-primary-600 px-2 py-0.5 rounded-full">强基计划</span>
+              <span class="text-xs bg-primary-500/10 text-primary-600 px-2 py-0.5 rounded-full">破格入围</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card p-6">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-accent-500/10 flex items-center justify-center flex-shrink-0">
+            <span class="text-xl">⭐</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-white mb-2">CSP-S / NOIP 一等奖 → 强基初审加分</h3>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              CSP-S（非专业级软件能力认证提高级）一等奖和 NOIP 一等奖在清华、北大等高校的强基计划初审中是重要的加分项。很多高校明确将五大学科竞赛省级一等奖作为强基报名条件之一。
+            </p>
+            <div class="mt-3 flex items-center gap-2">
+              <span class="text-xs bg-accent-500/10 text-accent-400 px-2 py-0.5 rounded-full">强基初审</span>
+              <span class="text-xs bg-accent-500/10 text-accent-400 px-2 py-0.5 rounded-full">显著优势</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card p-6">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center flex-shrink-0">
+            <span class="text-xl">📋</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-white mb-2">CSP-J/S 奖项 → 综合评价/自主招生</h3>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              南方科技大学、上海科技大学、浙江大学、中山大学等众多高校的综合评价录取中，信息学竞赛奖项是综合素质评价的核心加分项。越来越多的初中也将信息学奖项作为科技特长生的选拔依据。
+            </p>
+            <div class="mt-3 flex items-center gap-2">
+              <span class="text-xs bg-green-500/10 text-green-600 px-2 py-0.5 rounded-full">综合评价</span>
+              <span class="text-xs bg-green-500/10 text-green-600 px-2 py-0.5 rounded-full">科技特长生</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card p-6">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+            <span class="text-xl">🌍</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-white mb-2">海外升学价值</h3>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              IOI、NOI等竞赛成绩在国际顶尖大学申请中同样具有极高的含金量。MIT、Stanford、CMU等计算机强校非常看重申请者的算法竞赛经历。OIer 进入 MIT 的案例不胜枚举。
+            </p>
+            <div class="mt-3 flex items-center gap-2">
+              <span class="text-xs bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded-full">海外留学</span>
+              <span class="text-xs bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded-full">MIT/Stanford</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    title="升学路径已经清晰，下一步呢？"
+    description="了解信息学背景的成功人士，看看这条路通向怎样的未来。"
+    primaryText="查看成功案例"
+    primaryLink="/success"
+    secondaryText="查看课程体系"
+    secondaryLink="/curriculum"
+  />
+</BaseLayout>

@@ -1,0 +1,47 @@
+{
+  "$ref": "#/definitions/courses",
+  "definitions": {
+    "courses": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "stage": {
+          "type": "string"
+        },
+        "grade": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "string"
+        },
+        "order": {
+          "type": "number"
+        },
+        "highlights": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "icon": {
+          "type": "string"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "stage",
+        "grade",
+        "duration",
+        "order",
+        "highlights"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

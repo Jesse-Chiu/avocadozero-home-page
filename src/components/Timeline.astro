@@ -1,0 +1,61 @@
+---
+export interface TimelineItem {
+  stage: string;
+  title: string;
+  grade: string;
+  duration: string;
+  goals: string[];
+  highlights: string[];
+}
+
+export interface Props {
+  items: TimelineItem[];
+}
+---
+
+<section class="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+  <div class="relative">
+    <!-- 垂直连接线 -->
+    <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary-500/50 via-primary-400/30 to-transparent md:-translate-x-px"></div>
+
+    <div class="space-y-12">
+      {Astro.props.items.map((item, index) => (
+        <div class={`relative flex flex-col md:flex-row gap-6 md:gap-10 items-start ${
+          index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+        }`}>
+          {/* 节点圆点 */}
+          <div class="absolute left-4 md:left-1/2 w-3 h-3 bg-primary-500 rounded-full border-4 border-gray-50 -translate-x-1/2 z-10 mt-1.5"
+               style="box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);">
+          </div>
+
+          {/* 内容卡片 */}
+          <div class={`ml-10 md:ml-0 glass-card p-6 flex-1 ${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'}`}>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-xs font-mono text-accent-600 bg-accent-500/10 px-2 py-0.5 rounded-full">
+                {item.stage}
+              </span>
+              <span class="text-xs text-gray-500">{item.grade} · {item.duration}</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
+            <div class="space-y-2">
+              <div class="text-sm text-gray-600">
+                <span class="text-primary-600 font-medium">学习目标：</span>
+                {item.goals.join(' · ')}
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                {item.highlights.map((h) => (
+                  <span class="text-xs bg-primary-100 text-primary-700 px-2 py-0.5 rounded-full">
+                    {h}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* 空白占位 */}
+          <div class="hidden md:block flex-1"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
