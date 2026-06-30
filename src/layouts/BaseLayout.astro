@@ -1,6 +1,7 @@
 ---
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
+import { path } from '../utils/base';
 import '@styles/global.css';
 
 export interface Props {
@@ -9,8 +10,9 @@ export interface Props {
   ogImage?: string;
 }
 
-const { title, description = '信息学奥赛专业培训，培养孩子的计算思维与算法能力', ogImage = '/og-image.png' } = Astro.props;
+const { title, description = '信息学奥赛专业培训，培养孩子的计算思维与算法能力', ogImage } = Astro.props;
 const fullTitle = `${title} | 牛油果零壹信奥`;
+const resolvedOgImage = ogImage ? path(ogImage) : path('/og-image.png');
 ---
 
 <!doctype html>
@@ -25,9 +27,9 @@ const fullTitle = `${title} | 牛油果零壹信奥`;
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={resolvedOgImage} />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={path('/favicon.svg')} />
 
     <title>{fullTitle}</title>
   </head>

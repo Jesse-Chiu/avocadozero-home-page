@@ -1,4 +1,5 @@
 ---
+import { path } from '../utils/base';
 ---
 
 <footer class="bg-gradient-to-b from-green-50/50 via-white to-white border-t border-green-100/60">
@@ -13,10 +14,10 @@
           不确定是否适合学？想了解课程详情？欢迎联系我们，免费获取学习规划建议。
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="/about#contact" class="btn-primary">
+          <a href={path('/about#contact')} class="btn-primary">
             联系我们
           </a>
-          <a href="/curriculum" class="btn-ghost">
+          <a href={path('/curriculum')} class="btn-ghost">
             查看课程体系
           </a>
         </div>
@@ -37,8 +38,8 @@
           <span class="ml-1">&copy; {new Date().getFullYear()}</span>
         </div>
         <div class="flex items-center gap-6 text-sm text-gray-500">
-          <a href="/about" class="hover:text-gray-700 transition-colors">关于我们</a>
-          <a href="/about#contact" class="hover:text-gray-700 transition-colors">联系方式</a>
+          <a href={path('/about')} class="hover:text-gray-700 transition-colors">关于我们</a>
+          <a href={path('/about#contact')} class="hover:text-gray-700 transition-colors">联系方式</a>
           <span class="hidden sm:inline">关注公众号获取更多信息学资讯</span>
         </div>
       </div>
