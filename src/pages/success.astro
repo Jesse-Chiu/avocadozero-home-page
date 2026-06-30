@@ -2,6 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PersonCard from '@components/PersonCard.astro';
 import CTASection from '@components/CTASection.astro';
+import { path } from '../utils/base.ts';
 
 const businessPeople = [
   {
@@ -10,7 +11,7 @@ const businessPeople = [
     company: '前搜狗CEO',
     description: 'IOI 1996金牌得主，毕业于清华大学计算机系。搜狗输入法之父，中国AI领域的领军人物之一。2023年创立百川智能，专注大语言模型。',
     category: 'business' as const,
-    image: '/images/people/wang-xiaochuan.png',
+    image: path('/images/people/wang-xiaochuan.png'),
   },
   {
     name: '楼天城',
@@ -18,7 +19,7 @@ const businessPeople = [
     company: 'Pony.ai',
     description: 'IOI 2004金牌得主，被誉为"中国大学生计算机编程第一人"。清华姚班毕业，曾在Google X、百度自动驾驶任职，是全球自动驾驶领域的顶级技术专家。',
     category: 'business' as const,
-    image: '/images/people/lou-tiancheng.png',
+    image: path('/images/people/lou-tiancheng.png'),
   },
   {
     name: '陈启峰',
@@ -26,7 +27,7 @@ const businessPeople = [
     company: 'Luma AI',
     description: 'IOI 金牌得主，斯坦福大学博士。创立Luma AI，专注3D生成式AI技术，是AI 3D领域的先锋创业公司。',
     category: 'business' as const,
-    image: '/images/people/chen-qifeng.png',
+    image: path('/images/people/chen-qifeng.png'),
   },
   {
     name: '戴文渊',
@@ -34,7 +35,7 @@ const businessPeople = [
     company: '第四范式',
     description: 'ACM-ICPC世界冠军团队成员，上海交通大学ACM班毕业。创立第四范式，中国领先的AI决策平台公司，港交所上市。',
     category: 'business' as const,
-    image: '/images/people/dai-wenyuan.png',
+    image: path('/images/people/dai-wenyuan.png'),
   },
 ];
 
@@ -45,7 +46,7 @@ const academicPeople = [
     company: '清华大学交叉信息研究院',
     description: '2000年图灵奖得主（唯一华人获奖者），清华"姚班"创办者。计算理论、密码学领域的泰斗级人物，为中国培养了无数计算机顶尖人才。',
     category: 'academic' as const,
-    image: '/images/people/yao-qizhi.png',
+    image: path('/images/people/yao-qizhi.png'),
   },
   {
     name: '鬲融',
@@ -53,7 +54,7 @@ const academicPeople = [
     company: 'Duke University',
     description: 'IOI 2004金牌得主，清华姚班毕业，普林斯顿大学博士。在理论计算机科学领域发表多篇顶级论文，是国际理论计算机领域最瞩目的华人青年学者之一。',
     category: 'academic' as const,
-    image: '/images/people/ge-rong.png',
+    image: path('/images/people/ge-rong.png'),
   },
   {
     name: '唐文斌',
@@ -61,7 +62,7 @@ const academicPeople = [
     company: '旷视科技（算法奥林匹克冠军）',
     description: 'NOI金牌得主，清华姚班毕业。带领团队多次获得国际计算机视觉竞赛冠军。旷视科技是中国AI视觉领域的独角兽企业。',
     category: 'academic' as const,
-    image: '/images/people/tang-wenbin.png',
+    image: path('/images/people/tang-wenbin.png'),
   },
   {
     name: '李开复',
@@ -69,7 +70,7 @@ const academicPeople = [
     company: '前Google全球副总裁、微软亚洲研究院院长',
     description: '虽非OI出身，但作为计算机科学领域的标志性人物，李开复长期关注青少年编程教育，多次公开表示"编程是未来世界的核心素养"。',
     category: 'academic' as const,
-    image: '/images/people/li-kaifu.png',
+    image: path('/images/people/li-kaifu.png'),
   },
 ];
 ---
@@ -149,8 +150,8 @@ const academicPeople = [
     title="你的孩子也可以走向这样的未来"
     description="从今天开始，加入信息学竞赛的训练。"
     primaryText="联系我们"
-    primaryLink="/about#contact"
+    primaryLink={path('/about#contact')}
     secondaryText="了解课程体系"
-    secondaryLink="/curriculum"
+    secondaryLink={path('/curriculum')}
   />
 </BaseLayout>

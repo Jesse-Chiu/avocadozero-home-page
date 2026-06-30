@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Features from '@components/Features.astro';
+import { path } from '../utils/base.ts';
 ---
 
 <BaseLayout
@@ -88,7 +89,7 @@ import Features from '@components/Features.astro';
           </div>
           <h3 class="text-sm font-semibold text-gray-900 mb-3">微信公众号</h3>
           <div class="w-36 sm:w-40 aspect-square bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-            <img src="/images/wechat-qr.png" alt="微信公众号二维码" class="w-full h-full object-contain p-1" />
+            <img src={path("/images/wechat-qr.png")} alt="微信公众号二维码" class="w-full h-full object-contain p-1" />
           </div>
           <p class="text-gray-400 text-xs mt-2">搜索关注「牛油果零壹信奥」</p>
         </div>
@@ -100,7 +101,7 @@ import Features from '@components/Features.astro';
           </div>
           <h3 class="text-sm font-semibold text-gray-900 mb-3">视频号</h3>
           <div class="w-36 sm:w-40 aspect-square bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-            <img src="/images/video-qr.jpg" alt="视频号二维码" class="w-full h-full object-contain p-1" />
+            <img src={path("/images/video-qr.jpg")} alt="视频号二维码" class="w-full h-full object-contain p-1" />
           </div>
           <p class="text-gray-400 text-xs mt-2">搜索「牛油果零壹信奥」</p>
         </div>
@@ -112,7 +113,7 @@ import Features from '@components/Features.astro';
           </div>
           <h3 class="text-sm font-semibold text-gray-900 mb-3">福州本地信奥家长群</h3>
           <div class="w-36 sm:w-40 aspect-square bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-            <img src="/images/parent-group-qr.jpg" alt="家长群二维码" class="w-full h-full object-contain p-1" />
+            <img src={path("/images/parent-group-qr.jpg")} alt="家长群二维码" class="w-full h-full object-contain p-1" />
           </div>
           <p class="text-gray-400 text-xs mt-2">扫码加入家长交流群</p>
         </div>
