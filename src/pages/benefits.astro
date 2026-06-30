@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CTASection from '@components/CTASection.astro';
+import { path } from '../utils/base';
 ---
 
 <BaseLayout
@@ -171,8 +172,8 @@ import CTASection from '@components/CTASection.astro';
     title="这样的能力训练，你希望孩子拥有吗？"
     description="看看信息学竞赛对升学的直接帮助。"
     primaryText="了解升学优势"
-    primaryLink="/admission"
+    primaryLink={path('/admission')}
     secondaryText="查看课程体系"
-    secondaryLink="/curriculum"
+    secondaryLink={path('/curriculum')}
   />
 </BaseLayout>

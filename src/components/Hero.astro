@@ -1,4 +1,6 @@
 ---
+import { path } from '../utils/base';
+
 export interface Props {
   title: string;
   subtitle?: string;
@@ -8,7 +10,7 @@ export interface Props {
   secondaryLink?: string;
 }
 
-const { title, subtitle, ctaText = '了解更多', ctaLink = '/about-cs', secondaryText, secondaryLink } = Astro.props;
+const { title, subtitle, ctaText = '了解更多', ctaLink = path('/about-cs'), secondaryText, secondaryLink } = Astro.props;
 ---
 
 <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden particle-bg">

@@ -3,6 +3,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Hero from '@components/Hero.astro';
 import Features from '@components/Features.astro';
 import CTASection from '@components/CTASection.astro';
+import { path } from '../utils/base';
 ---
 
 <BaseLayout
@@ -13,9 +14,9 @@ import CTASection from '@components/CTASection.astro';
     title="信息学奥赛 从这里起步"
     subtitle="在 AI 时代，让孩子赢在未来。系统化信息学竞赛培训，培养计算思维与算法能力，打造核心竞争力。"
     ctaText="开始了解信息学"
-    ctaLink="/about-cs"
+    ctaLink={path('/about-cs')}
     secondaryText="查看课程体系"
-    secondaryLink="/curriculum"
+    secondaryLink={path('/curriculum')}
   />
 
   <!-- 为什么选择信息学 -->
@@ -60,12 +61,12 @@ import CTASection from '@components/CTASection.astro';
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {[
-        { icon: '📖', title: '什么是信息学', desc: '了解信息学奥赛的竞赛体系、学习内容和发展前景', href: '/about-cs' },
-        { icon: '📚', title: '课程体系', desc: '从零基础到省选的完整培养路径', href: '/curriculum' },
-        { icon: '🌟', title: '学信息学有什么用', desc: '思维能力、抗挫能力、韧性——比编程更重要的收获', href: '/benefits' },
-        { icon: '🎓', title: '升学帮助', desc: '强基计划、综合评价、自主招生的政策解读', href: '/admission' },
-        { icon: '🏆', title: '成功案例', desc: '信息学背景的商业领袖和学术精英', href: '/success' },
-        { icon: '👥', title: '关于我们', desc: '了解牛油果零壹信奥与教练团队', href: '/about' },
+        { icon: '📖', title: '什么是信息学', desc: '了解信息学奥赛的竞赛体系、学习内容和发展前景', href: path('/about-cs') },
+        { icon: '📚', title: '课程体系', desc: '从零基础到省选的完整培养路径', href: path('/curriculum') },
+        { icon: '🌟', title: '学信息学有什么用', desc: '思维能力、抗挫能力、韧性——比编程更重要的收获', href: path('/benefits') },
+        { icon: '🎓', title: '升学帮助', desc: '强基计划、综合评价、自主招生的政策解读', href: path('/admission') },
+        { icon: '🏆', title: '成功案例', desc: '信息学背景的商业领袖和学术精英', href: path('/success') },
+        { icon: '👥', title: '关于我们', desc: '了解牛油果零壹信奥与教练团队', href: path('/about') },
       ].map((item) => (
         <a href={item.href} class="glass-card p-6 group">
           <div class="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">{item.icon}</div>

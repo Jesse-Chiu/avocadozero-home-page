@@ -2,6 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Features from '@components/Features.astro';
 import CTASection from '@components/CTASection.astro';
+import { path } from '../utils/base';
 ---
 
 <BaseLayout
@@ -175,8 +176,8 @@ import CTASection from '@components/CTASection.astro';
     title="想了解更多？"
     description="看看信息学竞赛完整的课程体系，找到适合孩子的起点。"
     primaryText="查看课程体系"
-    primaryLink="/curriculum"
+    primaryLink={path('/curriculum')}
     secondaryText="了解学习价值"
-    secondaryLink="/benefits"
+    secondaryLink={path('/benefits')}
   />
 </BaseLayout>
