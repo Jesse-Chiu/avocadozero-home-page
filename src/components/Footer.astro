@@ -41,8 +41,89 @@ import { path } from '../utils/base';
           <a href={path('/about')} class="hover:text-gray-700 transition-colors">关于我们</a>
           <a href={path('/about#contact')} class="hover:text-gray-700 transition-colors">联系方式</a>
           <span class="hidden sm:inline">关注公众号获取更多信息学资讯</span>
+          <!-- Visitor Counter -->
+          <div id="visitor-counter" class="flex items-center gap-1.5 text-gray-400 text-xs">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+            <span id="visitor-count" class="tabular-nums">...</span>
+            <span>次访问</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Visitor Counter Script -->
+  <script>
+    (function () {
+      const countEl = document.getElementById('visitor-count');
+      if (!countEl) return;
+
+      const NAMESPACE = 'avocado-zero';
+      const KEY = 'homepage-visits';
+      const STORAGE_KEY = 'avz_visited';
+
+      async function fetchCount(hit = false) {
+        const action = hit ? 'hit' : 'get';
+        try {
+          const res = await fetch(`https://api.countapi.xyz/${action}/${NAMESPACE}/${KEY}`);
+          if (!res.ok) throw new Error('API error');
+          const data = await res.json();
+          return data.value;
+        } catch {
+          return null;
+        }
+      }
+
+      function animateCount(el, target) {
+        const duration = 800;
+        const start = 0;
+        const startTime = performance.now();
+
+        function step(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // ease-out cubic
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = Math.floor(start + (target - start) * eased);
+          el.textContent = current.toLocaleString();
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          }
+        }
+
+        requestAnimationFrame(step);
+      }
+
+      async function init() {
+        const visited = localStorage.getItem(STORAGE_KEY);
+        const today = new Date().toDateString();
+
+        let count;
+        if (visited === today) {
+          // Already counted today, just fetch without incrementing
+          count = await fetchCount(false);
+        } else {
+          // New visit today, increment the counter
+          count = await fetchCount(true);
+          localStorage.setItem(STORAGE_KEY, today);
+        }
+
+        if (count !== null) {
+          animateCount(countEl, count);
+        } else {
+          countEl.textContent = '...';
+        }
+      }
+
+      // Delay slightly so the page renders first
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
 </footer>
