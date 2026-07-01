@@ -8,9 +8,14 @@
 #
 # 首次部署前需要:
 #   1. SSH 免密登录: ssh-copy-id root@47.101.55.91
-#   2. 服务器上创建目录: mkdir -p /var/www/avocado-home-page
-#   3. 把 nginx-avocado.conf 放到服务器: /etc/nginx/conf.d/avocado.conf
-#   4. nginx -t && nginx -s reload
+#   2. 安装 Nginx:
+#      CentOS / Alibaba Cloud Linux:  yum install -y nginx
+#      Ubuntu / Debian:               apt update && apt install -y nginx
+#   3. 创建目录: mkdir -p /var/www/avocado-home-page
+#   4. 上传配置: scp server/nginx-avocado.conf root@47.101.55.91:/etc/nginx/conf.d/avocado.conf
+#   5. 启动 Nginx:
+#      ssh root@47.101.55.91 "nginx -t && systemctl start nginx && systemctl enable nginx"
+#   6. 阿里云安全组放行 80 端口（控制台 → 安全组 → 入方向 → 添加 0.0.0.0/0 TCP:80）
 # ============================================================
 set -e
 
