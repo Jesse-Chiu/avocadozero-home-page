@@ -30,11 +30,11 @@ npm run build:aliyun
 echo ""
 echo "📦 部署到 ${SSH_TARGET}:${REMOTE_DIR} ..."
 
-# rsync: -a 归档模式, -z 压缩传输, --delete 删除服务器上多余文件
-rsync -az --delete \
-    --exclude='.DS_Store' \
-    --exclude='.git' \
-    dist/ "${SSH_TARGET}:${REMOTE_DIR}/"
+# scp 上传 (Mac 默认无 rsync，用 scp 替代)
+# 先清理服务器旧文件
+ssh ${SSH_TARGET} "rm -rf ${REMOTE_DIR}/*"
+# 上传新文件
+scp -r dist/. "${SSH_TARGET}:${REMOTE_DIR}/"
 
 echo ""
 echo "✅ 部署完成！"
