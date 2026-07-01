@@ -55,15 +55,20 @@ import { path } from '../utils/base';
     </div>
   </div>
 
-  <!-- Visitor Counter Script -->
+  <!-- Busuanzi hidden data targets -->
+  <span id="busuanzi_container_site_pv" style="display:none">
+    <span id="busuanzi_value_site_pv"></span>
+  </span>
+
+  <!-- Busuanzi (web analytics) -->
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- Visitor Counter: bridge busuanzi data → our UI -->
   <script type="text/javascript">
     (function () {
       var countEl = document.getElementById('visitor-count');
-      if (!countEl) return;
-
-      var COUNT_KEY = 'avz_visit_count';
-      var SESSION_KEY = 'avz_session_counted';
-      var INITIAL_OFFSET = 138; // 首次访问从 138 开始，避免从零的尴尬
+      var bsEl = document.getElementById('busuanzi_value_site_pv');
+      if (!countEl || !bsEl) return;
 
       function animateCount(el, target) {
         var duration = 800;
@@ -73,7 +78,6 @@ import { path } from '../utils/base';
         function step(now) {
           var elapsed = now - startTime;
           var progress = Math.min(elapsed / duration, 1);
-          // ease-out cubic
           var eased = 1 - Math.pow(1 - progress, 3);
           var current = Math.floor(start + (target - start) * eased);
           el.textContent = current.toLocaleString();
@@ -85,29 +89,33 @@ import { path } from '../utils/base';
         requestAnimationFrame(step);
       }
 
-      function init() {
-        var count = parseInt(localStorage.getItem(COUNT_KEY) || '0', 10);
-        var sessionCounted = sessionStorage.getItem(SESSION_KEY);
-
-        if (!sessionCounted) {
-          // 新会话：计数 +1，首次访问加初始偏移量
-          if (count === 0) {
-            count = INITIAL_OFFSET + 1;
-          } else {
-            count += 1;
-          }
-          localStorage.setItem(COUNT_KEY, count.toString());
-          sessionStorage.setItem(SESSION_KEY, 'true');
+      function tryShowCount() {
+        var val = parseInt(bsEl.textContent || '', 10);
+        if (val > 0) {
+          countEl.textContent = '';
+          animateCount(countEl, val);
+          return true;
         }
-
-        animateCount(countEl, count);
+        return false;
       }
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-      } else {
-        init();
-      }
+      // MutationObserver: watch for busuanzi to fill in the value
+      var observer = new MutationObserver(function () {
+        tryShowCount();
+      });
+      observer.observe(bsEl, { childList: true, characterData: true, subtree: true });
+
+      // Fallback: poll for up to 8 seconds
+      var attempts = 0;
+      var timer = setInterval(function () {
+        attempts++;
+        if (tryShowCount() || attempts >= 40) {
+          clearInterval(timer);
+          if (attempts >= 40) {
+            countEl.textContent = '-';
+          }
+        }
+      }, 200);
     })();
   </script>
 </footer>
