@@ -1,0 +1,286 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><meta name="description" content="信息学奥林匹克竞赛（OI）是面向中学生的五大学科竞赛之一，以算法和程序设计为核心，培养计算思维和问题解决能力。"><meta name="theme-color" content="#ffffff"><!-- Open Graph --><meta property="og:title" content="什么是信息学 | 牛油果零壹信奥"><meta property="og:description" content="信息学奥林匹克竞赛（OI）是面向中学生的五大学科竞赛之一，以算法和程序设计为核心，培养计算思维和问题解决能力。"><meta property="og:type" content="website"><meta property="og:image" content="/og-image.png"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>什么是信息学 | 牛油果零壹信奥</title><link rel="stylesheet" href="/_astro/about-cs.fx9H7NRd.css"></head> <body class="min-h-screen flex flex-col"> <header class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-green-50/95 via-white/90 to-emerald-50/95 backdrop-blur-xl border-b border-green-100/60 shadow-[0_1px_4px_rgba(0,0,0,0.05)]"> <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> <div class="flex items-center justify-between h-16"> <!-- Logo --> <a href="/" class="flex items-center gap-2 group py-1"> <span class="text-2xl">🥑</span> <div class="flex flex-col items-center leading-tight"> <span class="font-bold text-lg tracking-tight text-green-700 group-hover:text-green-600 transition-colors">牛油果零壹信奥</span> <span class="text-[11px] tracking-widest text-green-600 font-medium">Avocado Zero Olympiad</span> </div> </a> <!-- Desktop Nav --> <div class="hidden lg:flex items-center gap-1.5"> <a href="/" class="relative px-3.5 py-2 rounded-full text-sm font-semibold
+                   text-gray-600
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-1
+                   active:translate-y-0.5
+                   active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)]
+                   active:border-b
+                   transition-all duration-200 ease-out"> 首页 </a><a href="/about-cs" class="relative px-3.5 py-2 rounded-full text-sm font-semibold
+                   text-gray-600
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-1
+                   active:translate-y-0.5
+                   active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)]
+                   active:border-b
+                   transition-all duration-200 ease-out"> 什么是信息学 </a><a href="/curriculum" class="relative px-3.5 py-2 rounded-full text-sm font-semibold
+                   text-gray-600
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-1
+                   active:translate-y-0.5
+                   active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)]
+                   active:border-b
+                   transition-all duration-200 ease-out"> 课程体系 </a><a href="/benefits" class="relative px-3.5 py-2 rounded-full text-sm font-semibold
+                   text-gray-600
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-1
+                   active:translate-y-0.5
+                   active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)]
+                   active:border-b
+                   transition-all duration-200 ease-out"> 学信息学有什么用 </a><a href="/admission" class="relative px-3.5 py-2 rounded-full text-sm font-semibold
+                   text-gray-600
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-1
+                   active:translate-y-0.5
+                   active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)]
+                   active:border-b
+                   transition-all duration-200 ease-out"> 升学帮助 </a><a href="/success" class="relative px-3.5 py-2 rounded-full text-sm font-semibold
+                   text-gray-600
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-1
+                   active:translate-y-0.5
+                   active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)]
+                   active:border-b
+                   transition-all duration-200 ease-out"> 成功案例 </a><a href="/awards" class="relative px-3.5 py-2 rounded-full text-sm font-semibold
+                   text-gray-600
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-1
+                   active:translate-y-0.5
+                   active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)]
+                   active:border-b
+                   transition-all duration-200 ease-out"> 学员获奖 </a><a href="/about" class="relative px-3.5 py-2 rounded-full text-sm font-semibold
+                   text-gray-600
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-1
+                   active:translate-y-0.5
+                   active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)]
+                   active:border-b
+                   transition-all duration-200 ease-out"> 关于我们 </a> <a href="/about#contact" class="ml-2 px-4 py-2 rounded-full text-sm font-semibold text-white
+                  bg-gradient-to-b from-green-500 to-emerald-600
+                  border border-b-2 border-emerald-700
+                  shadow-[0_3px_0_#059669,0_4px_8px_rgba(5,150,105,0.2)]
+                  hover:from-green-400 hover:to-emerald-500
+                  hover:border-emerald-600 hover:border-b-emerald-700
+                  hover:shadow-[0_4px_0_#047857,0_6px_12px_rgba(5,150,105,0.25)]
+                  hover:-translate-y-1
+                  active:translate-y-0.5
+                  active:shadow-[0_1px_0_#059669,0_2px_4px_rgba(5,150,105,0.15)]
+                  active:border-b
+                  transition-all duration-200 ease-out">
+联系我们
+</a> </div> <!-- Mobile Menu Button --> <button id="menu-toggle" class="lg:hidden p-2 rounded-lg text-gray-600 hover:text-green-700 hover:bg-green-50/60 transition-colors" aria-label="菜单"> <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path> </svg> </button> </div> <!-- Mobile Nav --> <div id="mobile-menu" class="lg:hidden hidden pb-4 border-t border-gray-200/60 mt-2 pt-3"> <div class="flex flex-col gap-2"> <a href="/" class="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-600 text-center
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-0.5
+                   active:translate-y-0.5 active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)] active:border-b
+                   transition-all duration-200 ease-out"> 首页 </a><a href="/about-cs" class="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-600 text-center
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-0.5
+                   active:translate-y-0.5 active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)] active:border-b
+                   transition-all duration-200 ease-out"> 什么是信息学 </a><a href="/curriculum" class="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-600 text-center
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-0.5
+                   active:translate-y-0.5 active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)] active:border-b
+                   transition-all duration-200 ease-out"> 课程体系 </a><a href="/benefits" class="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-600 text-center
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-0.5
+                   active:translate-y-0.5 active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)] active:border-b
+                   transition-all duration-200 ease-out"> 学信息学有什么用 </a><a href="/admission" class="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-600 text-center
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-0.5
+                   active:translate-y-0.5 active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)] active:border-b
+                   transition-all duration-200 ease-out"> 升学帮助 </a><a href="/success" class="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-600 text-center
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-0.5
+                   active:translate-y-0.5 active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)] active:border-b
+                   transition-all duration-200 ease-out"> 成功案例 </a><a href="/awards" class="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-600 text-center
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-0.5
+                   active:translate-y-0.5 active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)] active:border-b
+                   transition-all duration-200 ease-out"> 学员获奖 </a><a href="/about" class="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-600 text-center
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-0.5
+                   active:translate-y-0.5 active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)] active:border-b
+                   transition-all duration-200 ease-out"> 关于我们 </a> <a href="/about#contact" class="px-4 py-2.5 rounded-xl text-sm font-semibold text-white text-center
+                  bg-gradient-to-b from-green-500 to-emerald-600
+                  border border-b-2 border-emerald-700
+                  shadow-[0_3px_0_#059669,0_4px_8px_rgba(5,150,105,0.2)]
+                  hover:from-green-400 hover:to-emerald-500
+                  hover:-translate-y-0.5
+                  active:translate-y-0.5 active:shadow-[0_1px_0_#059669,0_2px_4px_rgba(5,150,105,0.15)] active:border-b
+                  transition-all duration-200 ease-out">
+联系我们
+</a> </div> </div> </nav> </header> <!-- Offset for fixed header --> <div class="h-16"></div> <script type="module">const e=document.getElementById("menu-toggle"),t=document.getElementById("mobile-menu");e&&t&&e.addEventListener("click",()=>{t.classList.toggle("hidden")});</script> <main class="flex-1">   <section class="relative py-24 md:py-32 particle-bg"> <div class="absolute inset-0 bg-hero-pattern"></div> <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center"> <h1 class="text-4xl md:text-6xl font-bold mb-6"> <span class="gradient-text">什么是信息学</span> </h1> <p class="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+信息学奥林匹克竞赛（Olympiad in Informatics，简称 OI），
+        是中国中学生五大学科竞赛之一，以算法设计和程序设计为核心，
+        考察学生运用计算机解决复杂问题的能力。
+</p> </div> </section>  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"> <h2 class="section-title">竞赛体系</h2> <p class="section-subtitle">从入门到国际舞台的阶梯式成长路径</p> <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"> <div class="glass-card overflow-hidden"> <div class="h-2 bg-gradient-to-r from-green-500/30 to-emerald-500/10"></div> <div class="p-6"> <div class="text-3xl mb-3">🌱</div> <div class="text-xs text-primary-600 mb-1">初中/高中</div> <h3 class="text-lg font-bold text-gray-900 mb-1">CSP-J/S</h3> <p class="text-xs text-gray-500 mb-3">非专业级软件能力认证</p> <p class="text-sm text-gray-500 leading-relaxed">信息学竞赛的入门门槛。CSP-J面向初中生，CSP-S面向高中生。分为两轮：第一轮笔试考察计算机基础知识，第二轮上机考察算法编程能力。</p> </div> </div><div class="glass-card overflow-hidden"> <div class="h-2 bg-gradient-to-r from-blue-500/30 to-cyan-500/10"></div> <div class="p-6"> <div class="text-3xl mb-3">🏅</div> <div class="text-xs text-primary-600 mb-1">高中</div> <h3 class="text-lg font-bold text-gray-900 mb-1">NOIP</h3> <p class="text-xs text-gray-500 mb-3">全国青少年信息学奥林匹克联赛</p> <p class="text-sm text-gray-500 leading-relaxed">省级联赛，是进入信息学竞赛体系的关键一战。考察数据结构、算法设计与实现，难度较CSP-S更上一层，是省选的重要前置比赛。</p> </div> </div><div class="glass-card overflow-hidden"> <div class="h-2 bg-gradient-to-r from-purple-500/30 to-indigo-500/10"></div> <div class="p-6"> <div class="text-3xl mb-3">🎖️</div> <div class="text-xs text-primary-600 mb-1">高中</div> <h3 class="text-lg font-bold text-gray-900 mb-1">NOI</h3> <p class="text-xs text-gray-500 mb-3">全国青少年信息学奥林匹克竞赛</p> <p class="text-sm text-gray-500 leading-relaxed">国家级决赛，每年约300名选手参赛。金牌前50名入选国家集训队，获得保送清北资格。银牌以上在强基计划中具有显著优势。</p> </div> </div><div class="glass-card overflow-hidden"> <div class="h-2 bg-gradient-to-r from-amber-500/30 to-orange-500/10"></div> <div class="p-6"> <div class="text-3xl mb-3">👑</div> <div class="text-xs text-primary-600 mb-1">高中</div> <h3 class="text-lg font-bold text-gray-900 mb-1">IOI</h3> <p class="text-xs text-gray-500 mb-3">国际信息学奥林匹克竞赛</p> <p class="text-sm text-gray-500 leading-relaxed">最高级别的国际赛事。中国代表队从国家集训队中选拔4人参赛。中国队在IOI历史上表现卓越，多次获得团体总分第一。</p> </div> </div> </div> </section>  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"> <h2 class="section-title">信息学学什么？</h2> <p class="section-subtitle">不只是写代码，更是学习如何思考</p> <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto"> <div class="glass-card p-6"> <h3 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2"> <span class="text-2xl">📐</span> 数据结构
+</h3> <ul class="space-y-2 text-sm text-gray-500"> <li>· 基础：数组、链表、栈、队列</li> <li>· 进阶：树、图、堆、并查集</li> <li>· 高级：线段树、平衡树、哈希表</li> <li class="text-xs text-gray-500 mt-2">学会用最优的数据结构组织信息</li> </ul> </div> <div class="glass-card p-6"> <h3 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2"> <span class="text-2xl">⚙️</span> 算法设计
+</h3> <ul class="space-y-2 text-sm text-gray-500"> <li>· 基础：排序、搜索、贪心、递归</li> <li>· 进阶：动态规划、分治、回溯</li> <li>· 高级：图论算法、数论、组合数学</li> <li class="text-xs text-gray-500 mt-2">学会用最优的算法高效地解决问题</li> </ul> </div> <div class="glass-card p-6"> <h3 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2"> <span class="text-2xl">💻</span> 编程语言
+</h3> <ul class="space-y-2 text-sm text-gray-500"> <li>· C++ 是信息学竞赛的标准语言</li> <li>· 重点掌握 STL 标准模板库</li> <li>· 代码规范与调试技巧</li> <li class="text-xs text-gray-500 mt-2">编程只是工具，思维才是核心</li> </ul> </div> <div class="glass-card p-6"> <h3 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2"> <span class="text-2xl">🎯</span> 问题求解
+</h3> <ul class="space-y-2 text-sm text-gray-500"> <li>· 阅读理解：准确理解题目要求</li> <li>· 建模能力：将实际问题抽象化</li> <li>· 复杂度分析：评估算法效率</li> <li class="text-xs text-gray-500 mt-2">从"会做题"到"会解决问题"的跨越</li> </ul> </div> </div> </section>  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"> <div class="glass-card p-8 md:p-12 relative overflow-hidden"> <div class="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-accent-500/5"></div> <div class="relative z-10"> <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">
+🤖 AI 时代，为什么更需要学信息学？
+</h2> <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto"> <div> <h3 class="text-lg font-semibold text-accent-600 mb-2">学会与AI协作</h3> <p class="text-sm text-gray-400 leading-relaxed">
+AI可以写代码，但理解算法本质、判断代码质量、设计与AI高效协作的人才是未来最稀缺的。
+</p> </div> <div> <h3 class="text-lg font-semibold text-accent-600 mb-2">不可替代的思维</h3> <p class="text-sm text-gray-400 leading-relaxed">
+算法思维、系统设计、复杂度分析——这些底层能力是AI无法替代的，恰恰是信息学训练的核心。
+</p> </div> <div> <h3 class="text-lg font-semibold text-accent-600 mb-2">跨学科的应用</h3> <p class="text-sm text-gray-400 leading-relaxed">
+信息学培养的逻辑思维和建模能力，可以迁移到数学、物理、生物等任何需要结构化思考的领域。
+</p> </div> <div> <h3 class="text-lg font-semibold text-accent-600 mb-2">人工智能的基础</h3> <p class="text-sm text-gray-400 leading-relaxed">
+机器学习、深度学习、大语言模型——AI的前沿技术都建立在算法和数据结构的基石之上。学信息学，就是学AI的底层逻辑。
+</p> </div> </div> </div> </div> </section> <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto text-center"> <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3">想了解更多？</h2> <p class="text-gray-500 mb-8">看看信息学竞赛完整的课程体系，找到适合孩子的起点。</p> <div class="flex flex-col sm:flex-row gap-4 justify-center"> <a href="/curriculum" class="btn-primary">查看课程体系</a> <a href="/benefits" class="btn-ghost">了解学习价值</a> </div> </section>  </main> <footer class="bg-gradient-to-b from-green-50/50 via-white to-white border-t border-green-100/60"> <!-- CTA Section --> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16"> <div class="glass-card p-8 md:p-12 text-center relative overflow-hidden bg-gradient-to-br from-blue-50 to-cyan-50"> <div class="relative z-10"> <h2 class="text-2xl md:text-3xl font-bold mb-4 text-gray-900">
+准备好开启信息学之旅了吗？
+</h2> <p class="text-gray-500 mb-8 max-w-xl mx-auto">
+不确定是否适合学？想了解课程详情？欢迎联系我们，免费获取学习规划建议。
+</p> <div class="flex flex-col sm:flex-row gap-4 justify-center"> <a href="/about#contact" class="btn-primary">
+联系我们
+</a> <a href="/curriculum" class="btn-ghost">
+查看课程体系
+</a> </div> </div> </div> </div> <!-- Bottom Bar --> <div class="border-t border-gray-200 py-8"> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> <div class="flex flex-col md:flex-row items-center justify-between gap-4"> <div class="flex items-center gap-2 text-gray-500 text-sm"> <span class="text-2xl">🥑</span> <div class="flex flex-col items-center leading-tight"> <span class="font-bold text-lg text-green-700">牛油果零壹信奥</span> <span class="text-[11px] tracking-widest text-green-600 font-medium">Avocado Zero Olympiad</span> </div> <span class="ml-1">&copy; 2026</span> </div> <div class="flex items-center gap-6 text-sm text-gray-500"> <a href="/about" class="hover:text-gray-700 transition-colors">关于我们</a> <a href="/about#contact" class="hover:text-gray-700 transition-colors">联系方式</a> <span class="hidden sm:inline">关注公众号获取更多信息学资讯</span> <!-- Visitor Counter --> <div id="visitor-counter" class="flex items-center gap-1.5 text-gray-400 text-xs"> <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path> </svg> <span id="visitor-count" class="tabular-nums">...</span> <span>次访问</span> </div> </div> </div> </div> </div> <!-- Busuanzi hidden data targets --> <span id="busuanzi_container_site_pv" style="display:none"> <span id="busuanzi_value_site_pv"></span> </span> <!-- Busuanzi (web analytics) --> <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> <!-- Visitor Counter: bridge busuanzi data → our UI --> <script type="text/javascript">
+    (function () {
+      var countEl = document.getElementById('visitor-count');
+      var bsEl = document.getElementById('busuanzi_value_site_pv');
+      if (!countEl || !bsEl) return;
+
+      function animateCount(el, target) {
+        var duration = 800;
+        var start = 0;
+        var startTime = performance.now();
+
+        function step(now) {
+          var elapsed = now - startTime;
+          var progress = Math.min(elapsed / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          var current = Math.floor(start + (target - start) * eased);
+          el.textContent = current.toLocaleString();
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          }
+        }
+
+        requestAnimationFrame(step);
+      }
+
+      function tryShowCount() {
+        var val = parseInt(bsEl.textContent || '', 10);
+        if (val > 0) {
+          countEl.textContent = '';
+          animateCount(countEl, val);
+          return true;
+        }
+        return false;
+      }
+
+      // MutationObserver: watch for busuanzi to fill in the value
+      var observer = new MutationObserver(function () {
+        tryShowCount();
+      });
+      observer.observe(bsEl, { childList: true, characterData: true, subtree: true });
+
+      // Fallback: poll for up to 8 seconds
+      var attempts = 0;
+      var timer = setInterval(function () {
+        attempts++;
+        if (tryShowCount() || attempts >= 40) {
+          clearInterval(timer);
+          if (attempts >= 40) {
+            countEl.textContent = '-';
+          }
+        }
+      }, 200);
+    })();
+  </script> </footer> </body></html>
