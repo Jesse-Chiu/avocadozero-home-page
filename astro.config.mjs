@@ -5,10 +5,21 @@ import path from 'path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// 部署目标映射：site URL + base path
+// DOMAIN 环境变量用于备案完成后覆盖 site URL（形如 https://avocadozero.cn）
+const domain = process.env.DOMAIN;
+const deployTarget = process.env.DEPLOY_TARGET || 'local';
+const deployConfig = {
+  github:  { site: 'https://avocadozero.github.io', base: '/avocadozero-home-page' },
+  gitee:   { site: 'https://jessechiu.gitee.io',   base: '/avocadozero-home-page' },
+  aliyun:  { site: domain || 'http://47.101.55.91', base: '/' },
+  local:   { site: 'http://localhost:4321',         base: '/' },
+};
+const { site, base } = deployConfig[deployTarget] || deployConfig.local;
+
 export default defineConfig({
-  site: 'https://avocadozero.github.io',
-  // 本地开发用 '/', GitHub Pages部署用 '/avocadozero-home-page'
-  base: process.env.DEPLOY_TARGET === 'github' ? '/avocadozero-home-page' : '/',
+  site,
+  base,
   integrations: [tailwind()],
   output: 'static',
   vite: {

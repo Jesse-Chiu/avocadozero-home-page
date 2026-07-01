@@ -7,7 +7,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "build:github": "DEPLOY_TARGET=github astro build",
-    "preview": "astro preview"
+    "build:gitee": "DEPLOY_TARGET=gitee astro build",
+    "build:aliyun": "DEPLOY_TARGET=aliyun astro build",
+    "preview": "astro preview",
+    "deploy:gitee": "bash scripts/deploy-gitee.sh",
+    "deploy:aliyun": "bash server/deploy.sh"
   },
   "keywords": [],
   "author": "",
