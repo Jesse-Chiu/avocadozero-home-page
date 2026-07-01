@@ -13,5 +13,8 @@ export const BASE = (import.meta.env.BASE_URL as string) || '/';
  * @returns 拼接了 base 的完整路径
  */
 export function path(p: string): string {
-  return `${BASE}${p}`;
+  // 去掉 BASE 末尾的 /，去掉 p 开头的 /，然后用 / 拼接，避免双斜杠
+  const base = BASE.replace(/\/+$/, '');
+  const clean = p.replace(/^\/+/, '');
+  return `${base}/${clean}`;
 }
