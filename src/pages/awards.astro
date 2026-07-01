@@ -18,7 +18,7 @@ const posters = getAwardImages('posters');
 const photos = getAwardImages('photos');
 
 const sections = [
-  { id: 'certificates', icon: '🏅', title: '获奖证书', desc: '学员在各大赛事中获得的荣誉证书', images: certificates, gradient: 'from-amber-500 to-orange-600', bg: 'bg-amber-50', border: 'border-amber-200', ratio: 'aspect-[4/3]', fit: 'object-cover', cardWidth: 'w-72 sm:w-80', padded: false },
+  { id: 'certificates', icon: '🏅', title: '获奖证书', desc: '学员在各大赛事中获得的荣誉证书', images: certificates, gradient: 'from-amber-500 to-orange-600', bg: 'bg-amber-50', border: 'border-amber-200', ratio: '', fit: 'object-contain', cardWidth: 'w-72 sm:w-80', padded: true },
   { id: 'posters', icon: '🎨', title: '获奖海报', desc: '学员风采与竞赛成果展示海报', images: posters, gradient: 'from-blue-500 to-indigo-600', bg: 'bg-blue-50', border: 'border-blue-200', ratio: '', fit: 'object-contain', cardWidth: 'w-44 sm:w-52', padded: true },
   { id: 'photos', icon: '📸', title: '活动掠影', desc: '课堂训练、比赛现场和团队活动精彩瞬间', images: photos, gradient: 'from-emerald-500 to-teal-600', bg: 'bg-emerald-50', border: 'border-emerald-200', ratio: 'aspect-[4/3]', fit: 'object-cover', cardWidth: 'w-72 sm:w-80', padded: false },
 ];
@@ -26,52 +26,122 @@ const sections = [
 
 <BaseLayout title="学员获奖" description="牛油果零壹信奥学员在各大赛事中取得的优异成绩与荣誉展示">
   <script>
-    // Lightbox functionality
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxClose = document.getElementById('lightbox-close');
+    // ── Lightbox ──────────────────────────────────────────────
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightbox-img');
+    var lightboxClose = document.getElementById('lightbox-close');
+    var spinner = document.getElementById('lightbox-spinner');
+    var counter = document.getElementById('lightbox-counter');
+    var prevBtn = document.getElementById('lightbox-prev');
+    var nextBtn = document.getElementById('lightbox-next');
 
-    function openLightbox(src: string) {
-      if (lightbox && lightboxImg) {
-        lightboxImg.setAttribute('src', src);
-        lightbox.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-      }
+    var currentGalleryImages = [];
+    var currentImageIndex = 0;
+
+    function openLightbox(src, gallery) {
+      if (!lightbox || !lightboxImg) return;
+      if (spinner) spinner.classList.remove('hidden');
+      lightboxImg.style.opacity = '0';
+      lightboxImg.setAttribute('src', src);
+      lightbox.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      currentGalleryImages = gallery;
+      currentImageIndex = gallery.indexOf(src);
+      if (currentImageIndex === -1) currentImageIndex = 0;
+      updateCounter();
+      toggleArrows();
     }
 
     function closeLightbox() {
-      if (lightbox) {
-        lightbox.classList.add('hidden');
-        document.body.style.overflow = '';
+      if (!lightbox) return;
+      lightbox.classList.add('hidden');
+      document.body.style.overflow = '';
+      currentGalleryImages = [];
+    }
+
+    function switchTo(src) {
+      if (!lightboxImg) return;
+      if (spinner) spinner.classList.remove('hidden');
+      lightboxImg.style.opacity = '0';
+      lightboxImg.setAttribute('src', src);
+    }
+
+    function prevImage() {
+      if (currentGalleryImages.length === 0) return;
+      currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
+      switchTo(currentGalleryImages[currentImageIndex]);
+      updateCounter();
+    }
+
+    function nextImage() {
+      if (currentGalleryImages.length === 0) return;
+      currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
+      switchTo(currentGalleryImages[currentImageIndex]);
+      updateCounter();
+    }
+
+    function updateCounter() {
+      if (!counter) return;
+      if (currentGalleryImages.length <= 1) {
+        counter.style.display = 'none';
+      } else {
+        counter.style.display = 'block';
+        counter.textContent = (currentImageIndex + 1) + ' / ' + currentGalleryImages.length;
       }
     }
 
-    // Close on backdrop click
+    function toggleArrows() {
+      var show = currentGalleryImages.length > 1;
+      if (prevBtn) prevBtn.style.display = show ? '' : 'none';
+      if (nextBtn) nextBtn.style.display = show ? '' : 'none';
+    }
+
+    // ── Event delegation: click any card → open lightbox ──────
+    document.querySelectorAll('.gallery-scroll').forEach(function (gallery) {
+      gallery.addEventListener('click', function (e) {
+        var card = e.target.closest('[data-lightbox-src]');
+        if (!card) return;
+        var src = card.getAttribute('data-lightbox-src');
+        var galleryEl = card.closest('.gallery-scroll');
+        var galleryArr = [];
+        try {
+          galleryArr = JSON.parse(galleryEl.getAttribute('data-gallery-images') || '[]');
+        } catch (err) { /* ignore */ }
+        if (galleryArr.length === 0) galleryArr = [src];
+        openLightbox(src, galleryArr);
+      });
+    });
+
+    // Close: backdrop + button
     if (lightbox) {
-      lightbox.addEventListener('click', (e) => {
+      lightbox.addEventListener('click', function (e) {
         if (e.target === lightbox) closeLightbox();
       });
     }
-    if (lightboxClose) {
-      lightboxClose.addEventListener('click', closeLightbox);
-    }
+    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
 
-    // Keyboard: Escape to close
-    document.addEventListener('keydown', (e) => {
+    // Prev / Next buttons
+    if (prevBtn) prevBtn.addEventListener('click', prevImage);
+    if (nextBtn) nextBtn.addEventListener('click', nextImage);
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function (e) {
+      if (!lightbox || lightbox.classList.contains('hidden')) return;
       if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') prevImage();
+      if (e.key === 'ArrowRight') nextImage();
     });
 
-    // Auto-scroll for each gallery
-    document.querySelectorAll('.gallery-scroll').forEach((gallery) => {
-      const el = gallery as HTMLElement;
-      let scrollInterval: ReturnType<typeof setInterval> | null = null;
+    // ── Auto-scroll galleries ─────────────────────────────────
+    document.querySelectorAll('.gallery-scroll').forEach(function (gallery) {
+      var scrollInterval = null;
 
       function startAutoScroll() {
-        scrollInterval = setInterval(() => {
-          if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 10) {
-            el.scrollTo({ left: 0, behavior: 'smooth' });
+        scrollInterval = setInterval(function () {
+          if (gallery.scrollLeft + gallery.clientWidth >= gallery.scrollWidth - 10) {
+            gallery.scrollTo({ left: 0, behavior: 'smooth' });
           } else {
-            el.scrollBy({ left: 320, behavior: 'smooth' });
+            gallery.scrollBy({ left: 320, behavior: 'smooth' });
           }
         }, 3500);
       }
@@ -81,10 +151,12 @@ const sections = [
       }
 
       startAutoScroll();
-      el.addEventListener('mouseenter', stopAutoScroll);
-      el.addEventListener('mouseleave', startAutoScroll);
-      el.addEventListener('touchstart', stopAutoScroll);
-      el.addEventListener('touchend', () => setTimeout(startAutoScroll, 2000));
+      gallery.addEventListener('mouseenter', stopAutoScroll);
+      gallery.addEventListener('mouseleave', startAutoScroll);
+      gallery.addEventListener('touchstart', stopAutoScroll);
+      gallery.addEventListener('touchend', function () {
+        setTimeout(startAutoScroll, 2000);
+      });
     });
   </script>
 
@@ -132,11 +204,14 @@ const sections = [
               class={`gallery-scroll flex gap-4 overflow-x-auto pb-4 scrollbar-hide scroll-smooth snap-x snap-mandatory
                 -mx-1 px-1`}
               style="scrollbar-width: none; -ms-overflow-style: none;"
+              data-gallery-images={JSON.stringify(section.images)}
+              data-gallery-section={section.id}
             >
               {section.images.map((img, idx) => (
                 <div
                   class={`flex-shrink-0 ${section.cardWidth} snap-start group cursor-pointer`}
-                  onclick={`openLightbox('${img}')`}
+                  data-lightbox-src={img}
+                  data-lightbox-section={section.id}
                 >
                   <div class={`relative overflow-hidden rounded-2xl bg-white
                     shadow-[0_2px_12px_rgba(0,0,0,0.06),0_0_0_1px_rgba(0,0,0,0.04)]
@@ -254,11 +329,35 @@ const sections = [
   </section>
 
   <!-- Lightbox -->
-  <div id="lightbox" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300">
-    <button id="lightbox-close" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-xl transition-colors z-10">
+  <div id="lightbox" class="hidden fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300">
+    <!-- Close button -->
+    <button id="lightbox-close" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-xl transition-colors z-10" aria-label="关闭">
       ✕
     </button>
-    <img id="lightbox-img" src="" alt="查看大图" class="max-w-full max-h-[90vh] rounded-xl shadow-2xl object-contain" />
+
+    <!-- Prev button -->
+    <button id="lightbox-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center text-2xl transition-all z-10" aria-label="上一张">
+      ‹
+    </button>
+
+    <!-- Next button -->
+    <button id="lightbox-next" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center text-2xl transition-all z-10" aria-label="下一张">
+      ›
+    </button>
+
+    <!-- Image counter -->
+    <div id="lightbox-counter" class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/60 text-sm font-mono z-10" style="display:none;"></div>
+
+    <!-- Loading spinner -->
+    <div id="lightbox-spinner" class="absolute inset-0 flex items-center justify-center z-0">
+      <div class="w-10 h-10 border-2 border-white/20 border-t-white/80 rounded-full animate-spin"></div>
+    </div>
+
+    <img id="lightbox-img" src="" alt="查看大图"
+      class="relative z-10 max-w-full max-h-[90vh] rounded-xl shadow-2xl object-contain transition-opacity duration-300 opacity-0"
+      onload="this.style.opacity='1'; document.getElementById('lightbox-spinner')?.classList.add('hidden');"
+      onerror="this.style.opacity='1'; document.getElementById('lightbox-spinner')?.classList.add('hidden');"
+    />
   </div>
 </BaseLayout>
 
