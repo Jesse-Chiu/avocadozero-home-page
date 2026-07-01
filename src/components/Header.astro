@@ -25,27 +25,41 @@ const navItems = [
       </a>
 
       <!-- Desktop Nav -->
-      <div class="hidden lg:flex items-center gap-1">
+      <div class="hidden lg:flex items-center gap-1.5">
         {navItems.map((item) => (
           <a
             href={path(item.href)}
-            class="relative px-3.5 py-2 rounded-full text-sm font-medium text-gray-600
-                   border border-gray-200/80 bg-white/60
-                   hover:text-green-700 hover:border-green-300 hover:bg-green-50/70
-                   hover:shadow-sm hover:-translate-y-0.5
-                   active:translate-y-0 active:shadow-none
-                   transition-all duration-200"
+            class="relative px-3.5 py-2 rounded-full text-sm font-semibold
+                   text-gray-600
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-1
+                   active:translate-y-0.5
+                   active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)]
+                   active:border-b
+                   transition-all duration-200 ease-out"
           >
             {item.label}
           </a>
         ))}
         <a href={path('/about#contact')}
            class="ml-2 px-4 py-2 rounded-full text-sm font-semibold text-white
-                  bg-gradient-to-r from-green-500 to-emerald-500
-                  hover:from-green-600 hover:to-emerald-600
-                  hover:shadow-md hover:shadow-green-200 hover:-translate-y-0.5
-                  active:translate-y-0 active:shadow-sm
-                  transition-all duration-200">
+                  bg-gradient-to-b from-green-500 to-emerald-600
+                  border border-b-2 border-emerald-700
+                  shadow-[0_3px_0_#059669,0_4px_8px_rgba(5,150,105,0.2)]
+                  hover:from-green-400 hover:to-emerald-500
+                  hover:border-emerald-600 hover:border-b-emerald-700
+                  hover:shadow-[0_4px_0_#047857,0_6px_12px_rgba(5,150,105,0.25)]
+                  hover:-translate-y-1
+                  active:translate-y-0.5
+                  active:shadow-[0_1px_0_#059669,0_2px_4px_rgba(5,150,105,0.15)]
+                  active:border-b
+                  transition-all duration-200 ease-out">
           联系我们
         </a>
       </div>
@@ -64,19 +78,34 @@ const navItems = [
 
     <!-- Mobile Nav -->
     <div id="mobile-menu" class="lg:hidden hidden pb-4 border-t border-gray-200/60 mt-2 pt-3">
-      <div class="flex flex-col gap-1.5">
+      <div class="flex flex-col gap-2">
         {navItems.map((item) => (
           <a
             href={path(item.href)}
-            class="px-4 py-2.5 rounded-xl text-sm font-medium text-gray-600 text-center
-                   border border-gray-200/80 bg-white/70
-                   hover:text-green-700 hover:border-green-300 hover:bg-green-50/70
-                   transition-all duration-200"
+            class="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-600 text-center
+                   bg-gradient-to-b from-white to-gray-100
+                   border border-b-2 border-gray-200
+                   shadow-[0_2px_0_#e5e7eb,0_3px_6px_rgba(0,0,0,0.06)]
+                   hover:text-green-700
+                   hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/60
+                   hover:border-green-300 hover:border-b-green-400
+                   hover:shadow-[0_3px_0_#bbf7d0,0_5px_10px_rgba(34,197,94,0.10)]
+                   hover:-translate-y-0.5
+                   active:translate-y-0.5 active:shadow-[0_1px_0_#e5e7eb,0_1px_3px_rgba(0,0,0,0.05)] active:border-b
+                   transition-all duration-200 ease-out"
           >
             {item.label}
           </a>
         ))}
-        <a href={path('/about#contact')} class="btn-primary text-sm mt-1 justify-center">
+        <a href={path('/about#contact')}
+           class="px-4 py-2.5 rounded-xl text-sm font-semibold text-white text-center
+                  bg-gradient-to-b from-green-500 to-emerald-600
+                  border border-b-2 border-emerald-700
+                  shadow-[0_3px_0_#059669,0_4px_8px_rgba(5,150,105,0.2)]
+                  hover:from-green-400 hover:to-emerald-500
+                  hover:-translate-y-0.5
+                  active:translate-y-0.5 active:shadow-[0_1px_0_#059669,0_2px_4px_rgba(5,150,105,0.15)] active:border-b
+                  transition-all duration-200 ease-out">
           联系我们
         </a>
       </div>
