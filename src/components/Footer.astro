@@ -1,5 +1,9 @@
 ---
 import { path } from '../utils/base';
+import pkg from '../../package.json';
+
+const buildTime = new Date().toISOString().replace('T', ' ').slice(0, 19);
+const version = `v${pkg.version} · ${buildTime}`;
 ---
 
 <footer class="bg-gradient-to-b from-green-50/50 via-white to-white border-t border-green-100/60">
@@ -52,6 +56,13 @@ import { path } from '../utils/base';
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Version Info -->
+  <div class="border-t border-gray-100 py-3">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="text-[11px] text-gray-400 tabular-nums font-mono tracking-tight">{version}</span>
     </div>
   </div>
 
