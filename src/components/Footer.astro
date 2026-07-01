@@ -56,38 +56,26 @@ import { path } from '../utils/base';
   </div>
 
   <!-- Visitor Counter Script -->
-  <script>
+  <script type="text/javascript">
     (function () {
-      const countEl = document.getElementById('visitor-count');
+      var countEl = document.getElementById('visitor-count');
       if (!countEl) return;
 
-      const NAMESPACE = 'avocado-zero';
-      const KEY = 'homepage-visits';
-      const STORAGE_KEY = 'avz_visited';
-
-      async function fetchCount(hit = false) {
-        const action = hit ? 'hit' : 'get';
-        try {
-          const res = await fetch(`https://api.countapi.xyz/${action}/${NAMESPACE}/${KEY}`);
-          if (!res.ok) throw new Error('API error');
-          const data = await res.json();
-          return data.value;
-        } catch {
-          return null;
-        }
-      }
+      var COUNT_KEY = 'avz_visit_count';
+      var SESSION_KEY = 'avz_session_counted';
+      var INITIAL_OFFSET = 138; // 首次访问从 138 开始，避免从零的尴尬
 
       function animateCount(el, target) {
-        const duration = 800;
-        const start = 0;
-        const startTime = performance.now();
+        var duration = 800;
+        var start = 0;
+        var startTime = performance.now();
 
         function step(now) {
-          const elapsed = now - startTime;
-          const progress = Math.min(elapsed / duration, 1);
+          var elapsed = now - startTime;
+          var progress = Math.min(elapsed / duration, 1);
           // ease-out cubic
-          const eased = 1 - Math.pow(1 - progress, 3);
-          const current = Math.floor(start + (target - start) * eased);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          var current = Math.floor(start + (target - start) * eased);
           el.textContent = current.toLocaleString();
           if (progress < 1) {
             requestAnimationFrame(step);
@@ -97,28 +85,24 @@ import { path } from '../utils/base';
         requestAnimationFrame(step);
       }
 
-      async function init() {
-        const visited = localStorage.getItem(STORAGE_KEY);
-        const today = new Date().toDateString();
+      function init() {
+        var count = parseInt(localStorage.getItem(COUNT_KEY) || '0', 10);
+        var sessionCounted = sessionStorage.getItem(SESSION_KEY);
 
-        let count;
-        if (visited === today) {
-          // Already counted today, just fetch without incrementing
-          count = await fetchCount(false);
-        } else {
-          // New visit today, increment the counter
-          count = await fetchCount(true);
-          localStorage.setItem(STORAGE_KEY, today);
+        if (!sessionCounted) {
+          // 新会话：计数 +1，首次访问加初始偏移量
+          if (count === 0) {
+            count = INITIAL_OFFSET + 1;
+          } else {
+            count += 1;
+          }
+          localStorage.setItem(COUNT_KEY, count.toString());
+          sessionStorage.setItem(SESSION_KEY, 'true');
         }
 
-        if (count !== null) {
-          animateCount(countEl, count);
-        } else {
-          countEl.textContent = '...';
-        }
+        animateCount(countEl, count);
       }
 
-      // Delay slightly so the page renders first
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
       } else {
