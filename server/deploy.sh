@@ -38,7 +38,7 @@ scp -r dist/. "${SSH_TARGET}:${REMOTE_DIR}/"
 
 echo ""
 echo "✅ 部署完成！"
-echo "   访问地址: http://${SERVER_IP}/"
+echo "   访问地址: https://www.avocadozero.cn/"
 echo ""
 echo "   💡 如果是首次部署，还需要在服务器上："
 echo "      cp server/nginx-avocado.conf → /etc/nginx/conf.d/avocado.conf"

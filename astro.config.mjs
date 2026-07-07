@@ -12,7 +12,7 @@ const deployTarget = process.env.DEPLOY_TARGET || 'local';
 const deployConfig = {
   github:  { site: 'https://avocadozero.github.io', base: '/avocadozero-home-page' },
   gitee:   { site: 'https://jessechiu.gitee.io',   base: '/avocadozero-home-page' },
-  aliyun:  { site: domain || 'http://47.101.55.91', base: '/' },
+  aliyun:  { site: domain || 'https://www.avocadozero.cn', base: '/' },
   local:   { site: 'http://localhost:4321',         base: '/' },
 };
 const { site, base } = deployConfig[deployTarget] || deployConfig.local;
