@@ -19,7 +19,7 @@
 # ============================================================
 set -e
 
-SSH_USER="${SSH_USER:-root}"
+SSH_USER="${SSH_USER:-admin}"
 SERVER_IP="${SERVER_IP:-47.101.55.91}"
 REMOTE_DIR="/var/www/avocado-home-page"
 SSH_TARGET="${SSH_USER}@${SERVER_IP}"
