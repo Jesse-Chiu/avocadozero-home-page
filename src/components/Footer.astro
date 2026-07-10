@@ -59,10 +59,31 @@ const version = `v${pkg.version} · ${buildTime}`;
     </div>
   </div>
 
-  <!-- Version Info -->
+  <!-- Version & Filing Info -->
   <div class="border-t border-gray-100 py-3">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <span class="text-[11px] text-gray-400 tabular-nums font-mono tracking-tight">{version}</span>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col items-center gap-1.5">
+        <span class="text-[11px] text-gray-400 tabular-nums font-mono tracking-tight">{version}</span>
+        <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-[11px] text-gray-400">
+          <a
+            href="https://beian.mps.gov.cn/#/query/webSearch?code=35010302000995"
+            target="_blank"
+            rel="noreferrer"
+            class="flex items-center gap-1 hover:text-gray-600 transition-colors"
+          >
+            <img src={path('/images/beian-icon.png')} alt="公安备案图标" class="w-3.5 h-3.5 flex-shrink-0" width="14" height="14" />
+            <span>闽公网安备35010302000995号</span>
+          </a>
+          <a
+            href="https://beian.miit.gov.cn/"
+            target="_blank"
+            rel="noreferrer"
+            class="hover:text-gray-600 transition-colors"
+          >
+            闽ICP备2026024628号-1
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 

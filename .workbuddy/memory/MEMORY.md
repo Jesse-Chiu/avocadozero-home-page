@@ -8,18 +8,20 @@
 
 ## 阿里云 ECS 部署
 - **服务器 IP**：47.101.55.91
-- **Nginx 配置**：`server/nginx-avocado.conf`
-- **部署脚本**：`npm run deploy:aliyun`（rsync 同步 dist/ 到服务器）
+- **域名**：www.avocadozero.cn（已备案，DNS 已解析）
+- **HTTPS**：已启用（443 SSL + HTTP→HTTPS 301 跳转）
+- **SSL 证书**：`/etc/nginx/ssl/www.avocadozero.cn.{pem,key}`
+- **Nginx 配置**：`server/nginx-avocado.conf`（部署到 `/etc/nginx/conf.d/avocado.conf`）
+- **部署脚本**：`npm run deploy:aliyun`（scp 同步 dist/ 到服务器，默认 SSH_USER=admin）
 - **静态文件目录**：`/var/www/avocado-home-page/`
-- **域名**：备案审核中，备案后设置 `DOMAIN` 环境变量覆盖 site URL
-- **build:aliyun**：base 为 `/`（根路径），site 为 IP 或域名
+- **build:aliyun**：base 为 `/`（根路径），site 为 `https://www.avocadozero.cn`
 - **未来规划**：`/var/www/oj/`（做题网）、`/var/www/api/`（API）
 
 ## 技术细节
 - 设计风格：科技现代风，深蓝色调
 - 响应式：移动端汉堡菜单 + Tailwind responsive grid
 - 部署配置通过 `DEPLOY_TARGET` 环境变量切换
-  - `aliyun` → site: `http://47.101.55.91`, base: `/`
+  - `aliyun` → site: `https://www.avocadozero.cn`, base: `/`
   - `github` → site: `avocadozero.github.io`, base: `/avocadozero-home-page`
   - `gitee` → site: `jessechiu.gitee.io`, base: `/avocadozero-home-page`
   - `local` → site: `localhost:4321`, base: `/`
