@@ -1,0 +1,297 @@
+---
+import fs from 'node:fs';
+import { resolve, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { path } from '../../../utils/base';
+import { CSP_CHAPTERS, type CspChapter } from '../../../data/csp-chapters';
+
+export async function getStaticPaths() {
+  const paths: Array<{
+    params: { id: string; type: string };
+    props: { chapter: CspChapter; type: 'knowledge' | 'practice' };
+  }> = [];
+
+  for (const chapter of CSP_CHAPTERS) {
+    paths.push({
+      params: { id: chapter.id, type: 'knowledge' },
+      props: { chapter, type: 'knowledge' },
+    });
+    paths.push({
+      params: { id: chapter.id, type: 'practice' },
+      props: { chapter, type: 'practice' },
+    });
+  }
+  return paths;
+}
+
+const { chapter, type } = Astro.props as { chapter: CspChapter; type: 'knowledge' | 'practice' };
+
+const isKnowledge = type === 'knowledge';
+const pageTitle = `${isKnowledge ? '知识点' : '练习'} · ${chapter.title} · 牛油果零壹信奥`;
+const pageDesc = `${chapter.title} - ${isKnowledge ? chapter.knowledge : chapter.practice}`;
+
+// 加载章节内容 HTML（构建时读取 src/data/csp-content/{id}-{type}.html）
+// Astro dev/build 均从项目根目录运行，用 process.cwd() 定位
+const contentDir = resolve(process.cwd(), 'src/data/csp-content');
+const contentFile = join(contentDir, `${chapter.id}-${type}.html`);
+let contentHtml = '';
+if (fs.existsSync(contentFile)) {
+  const raw = fs.readFileSync(contentFile, 'utf-8');
+  // 适配 base path：把 /images/ 前缀替换为带 base 的路径
+  const base = (import.meta.env.BASE_URL as string || '/').replace(/\/+$/, '');
+  contentHtml = raw.replaceAll('src="/images/', `src="${base}/images/`);
+}
+const hasContent = contentHtml.length > 0;
+
+// 颜色映射
+const colorClass = {
+  blue: 'from-blue-500 to-cyan-500',
+  green: 'from-green-500 to-emerald-500',
+  purple: 'from-purple-500 to-pink-500',
+  orange: 'from-orange-500 to-amber-500',
+  pink: 'from-pink-500 to-rose-500',
+  cyan: 'from-cyan-500 to-sky-500',
+  amber: 'from-amber-500 to-yellow-500',
+  indigo: 'from-indigo-500 to-violet-500',
+}[chapter.color];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <!-- Breadcrumb -->
+  <section class="bg-gradient-to-b from-green-50/40 via-white to-white border-b border-green-100/50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <nav class="flex items-center gap-2 text-sm text-gray-500 mb-4">
+        <a href={path('/csp/intro')} class="hover:text-green-600 transition-colors">初赛知识点</a>
+        <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+        <span class="text-gray-700 font-medium">{chapter.title}</span>
+        <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+        <span class="text-gray-900 font-semibold">{isKnowledge ? '知识点' : '练习'}</span>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <div class={`w-14 h-14 rounded-xl bg-gradient-to-br ${colorClass} flex items-center justify-center text-3xl shadow-lg`}>
+          {chapter.icon}
+        </div>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-xs font-bold text-gray-400">Ch.{chapter.id}</span>
+            <span class={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full ${isKnowledge ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'}`}>
+              {isKnowledge ? '📖 知识点' : '✏️ 练习'}
+            </span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">{chapter.title}</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content area -->
+  <section class="py-10 sm:py-14">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Description -->
+      <div class={`mb-8 px-5 py-4 rounded-xl border ${isKnowledge ? 'bg-blue-50/50 border-blue-100' : 'bg-green-50/50 border-green-100'}`}>
+        <p class="text-sm text-gray-700 leading-relaxed">
+          {isKnowledge ? chapter.knowledge : chapter.practice}
+        </p>
+      </div>
+
+      {
+        hasContent ? (
+          <!-- Real content -->
+          <article class="csp-content relative bg-white rounded-2xl border border-gray-200/80 shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+            <div class={`h-1 bg-gradient-to-r ${colorClass}`}></div>
+            <div class="px-6 sm:px-10 py-8 sm:py-10">
+              <Fragment set:html={contentHtml} />
+            </div>
+          </article>
+        ) : (
+          <!-- Placeholder content -->
+          <div class="relative bg-white rounded-2xl border border-gray-200/80 shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+            <div class={`h-1 bg-gradient-to-r ${colorClass}`}></div>
+            <div class="px-6 sm:px-10 py-12 sm:py-16 text-center">
+              <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gray-50 mb-5">
+                <span class="text-4xl">{isKnowledge ? '📖' : '✏️'}</span>
+              </div>
+              <h2 class="text-xl font-bold text-gray-900 mb-2">
+                内容准备中
+              </h2>
+              <p class="text-sm text-gray-500 max-w-md mx-auto mb-6">
+                {isKnowledge ? '本章知识点' : '本章练习'}正在整理中，后续会持续补充
+                详细讲解、例题、解析等内容。
+              </p>
+
+              <!-- TODO list (placeholder) -->
+              <div class="max-w-md mx-auto text-left bg-gray-50 rounded-xl p-5 border border-gray-100">
+                <p class="text-xs font-semibold text-gray-500 mb-3 uppercase tracking-wider">本页将包含</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                  <li class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>
+                    <span>核心概念讲解</span>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>
+                    <span>典型例题演示</span>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>
+                    <span>常见考点解析</span>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>
+                    <span>{isKnowledge ? '知识点小结与思维导图' : '练习题与答案解析'}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        )
+      }
+
+      <!-- Type switcher + nav -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <a
+          href={path('/csp/intro')}
+          class="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-green-600 transition-colors"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          返回章节列表
+        </a>
+
+        <!-- Switch knowledge/practice -->
+        <div class="inline-flex items-center bg-gray-100 rounded-full p-1">
+          <a
+            href={path(`/csp/${chapter.id}/knowledge`)}
+            class={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${isKnowledge ? 'bg-white text-blue-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+          >
+            📖 知识点
+          </a>
+          <a
+            href={path(`/csp/${chapter.id}/practice`)}
+            class={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${!isKnowledge ? 'bg-white text-green-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+          >
+            ✏️ 练习
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { requireAuth } from '../../../utils/auth';
+    requireAuth();
+  </script>
+</BaseLayout>
+
+<style is:global>
+/* CSP 章节内容排版（set:html 注入，需全局样式） */
+.csp-content {
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: #374151;
+}
+.csp-content h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 2.25rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #d1fae5;
+  scroll-margin-top: 5rem;
+}
+.csp-content h2:first-child { margin-top: 0; }
+.csp-content h3 {
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 1.75rem 0 0.75rem;
+  padding-left: 0.75rem;
+  border-left: 4px solid #10b981;
+  scroll-margin-top: 5rem;
+}
+.csp-content h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 1.25rem 0 0.5rem;
+}
+.csp-content p { margin: 0.6rem 0; }
+.csp-content sup { font-size: 0.72em; }
+
+/* 图片 */
+.csp-content figure {
+  margin: 1.5rem auto;
+  text-align: center;
+}
+.csp-content figure img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.6rem;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+}
+.csp-content figure.figure-single img { max-width: 420px; }
+.csp-content figure.figure-grid {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.csp-content figure.figure-grid img { max-width: 300px; }
+.csp-content figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  letter-spacing: 0.15em;
+  width: 100%;
+}
+
+/* 真题块 */
+.csp-content .quiz-block {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  border: 1px solid #fcd34d;
+  border-left: 4px solid #f59e0b;
+  border-radius: 0.75rem;
+}
+.csp-content .quiz-block p { margin: 0.35rem 0; }
+.csp-content .quiz-block p:first-child { font-weight: 600; }
+
+/* 代码块 */
+.csp-content pre {
+  margin: 1.25rem 0;
+  padding: 1rem 1.25rem;
+  background: #1e293b;
+  color: #e2e8f0;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+.csp-content pre.mono {
+  background: #f8fafc;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+}
+.csp-content code {
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+}
+
+/* 移动端适配 */
+@media (max-width: 640px) {
+  .csp-content { font-size: 0.9rem; }
+  .csp-content figure.figure-grid img { max-width: 100%; }
+  .csp-content figure.figure-single img { max-width: 100%; }
+  .csp-content pre { font-size: 0.78rem; padding: 0.85rem 1rem; }
+}
+</style>

@@ -1,0 +1,163 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { path } from '../../utils/base';
+import { CSP_CHAPTERS, type CspChapter } from '../../data/csp-chapters';
+
+const pageTitle = '初赛知识点 · 牛油果零壹信奥';
+const pageDesc = 'CSP-J/S 初赛知识点导航 — 8 大章节系统化复习';
+
+// Tailwind 颜色映射
+const colorMap: Record<CspChapter['color'], { bg: string; border: string; text: string; ring: string; gradient: string }> = {
+  blue:   { bg: 'bg-blue-50',   border: 'border-blue-200',   text: 'text-blue-700',   ring: 'ring-blue-100',   gradient: 'from-blue-50 to-cyan-50' },
+  green:  { bg: 'bg-green-50',  border: 'border-green-200',  text: 'text-green-700',  ring: 'ring-green-100',  gradient: 'from-green-50 to-emerald-50' },
+  purple: { bg: 'bg-purple-50', border: 'border-purple-200', text: 'text-purple-700', ring: 'ring-purple-100', gradient: 'from-purple-50 to-pink-50' },
+  orange: { bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-700', ring: 'ring-orange-100', gradient: 'from-orange-50 to-amber-50' },
+  pink:   { bg: 'bg-pink-50',   border: 'border-pink-200',   text: 'text-pink-700',   ring: 'ring-pink-100',   gradient: 'from-pink-50 to-rose-50' },
+  cyan:   { bg: 'bg-cyan-50',   border: 'border-cyan-200',   text: 'text-cyan-700',   ring: 'ring-cyan-100',   gradient: 'from-cyan-50 to-sky-50' },
+  amber:  { bg: 'bg-amber-50',  border: 'border-amber-200',  text: 'text-amber-700',  ring: 'ring-amber-100',  gradient: 'from-amber-50 to-yellow-50' },
+  indigo: { bg: 'bg-indigo-50', border: 'border-indigo-200', text: 'text-indigo-700', ring: 'ring-indigo-100', gradient: 'from-indigo-50 to-violet-50' },
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <!-- Top banner -->
+  <section class="bg-gradient-to-b from-green-50/60 via-white to-white border-b border-green-100/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100/80 text-green-700 text-xs font-semibold mb-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+            CSP-J/S 初赛备考
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">初赛知识点</h1>
+          <p class="text-gray-500 text-sm sm:text-base">共 {CSP_CHAPTERS.length} 个章节 · 每个章节包含「知识点」与「练习」两部分</p>
+        </div>
+        <div class="flex items-center gap-3 text-sm text-gray-500">
+          <span>登录身份：</span>
+          <span id="user-display" class="font-semibold text-gray-700">--</span>
+          <button
+            id="logout-btn"
+            class="ml-2 px-3 py-1.5 rounded-lg text-xs text-gray-500 hover:text-red-600 hover:bg-red-50 transition-colors"
+          >
+            退出
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chapter grid -->
+  <section class="py-10 sm:py-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
+        {CSP_CHAPTERS.map((chapter, idx) => {
+          const c = colorMap[chapter.color];
+          return (
+            <article
+              class="group relative bg-white rounded-2xl border border-gray-200/80 overflow-hidden
+                     shadow-[0_2px_12px_rgba(0,0,0,0.04)]
+                     hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)]
+                     hover:-translate-y-1 hover:border-green-200
+                     transition-all duration-300"
+            >
+              <!-- Top color band -->
+              <div class={`h-1.5 bg-gradient-to-r ${c.gradient}`}></div>
+
+              <div class="p-5 sm:p-6">
+                <!-- Number + Icon -->
+                <div class="flex items-start justify-between mb-4">
+                  <div class={`w-12 h-12 rounded-xl ${c.bg} flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300`}>
+                    {chapter.icon}
+                  </div>
+                  <span class={`text-xs font-bold ${c.text} ${c.bg} ${c.border} border px-2 py-0.5 rounded-full`}>
+                    Ch.{chapter.id}
+                  </span>
+                </div>
+
+                <!-- Title -->
+                <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-2 leading-snug group-hover:text-green-700 transition-colors">
+                  {chapter.title}
+                </h3>
+
+                <!-- Knowledge preview -->
+                <p class="text-xs text-gray-500 leading-relaxed mb-1.5 line-clamp-2">
+                  <span class="font-semibold text-gray-600">📖 知识点：</span>{chapter.knowledge}
+                </p>
+                <p class="text-xs text-gray-500 leading-relaxed mb-5 line-clamp-2">
+                  <span class="font-semibold text-gray-600">✏️ 练习：</span>{chapter.practice}
+                </p>
+
+                <!-- Action buttons -->
+                <div class="grid grid-cols-2 gap-2">
+                  <a
+                    href={path(`/csp/${chapter.id}/knowledge`)}
+                    class="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold
+                           bg-gradient-to-b from-white to-gray-50 text-gray-700
+                           border border-b-2 border-gray-200
+                           shadow-[0_2px_0_#e5e7eb,0_2px_4px_rgba(0,0,0,0.04)]
+                           hover:text-green-700 hover:border-green-300
+                           hover:shadow-[0_3px_0_#bbf7d0,0_4px_6px_rgba(34,197,94,0.08)]
+                           hover:-translate-y-0.5
+                           active:translate-y-0 active:shadow-[0_1px_0_#e5e7eb]
+                           transition-all duration-200"
+                  >
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    知识点
+                  </a>
+                  <a
+                    href={path(`/csp/${chapter.id}/practice`)}
+                    class="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold
+                           bg-gradient-to-b from-green-500 to-emerald-600 text-white
+                           border border-b-2 border-emerald-700
+                           shadow-[0_2px_0_#059669,0_3px_6px_rgba(5,150,105,0.15)]
+                           hover:from-green-400 hover:to-emerald-500
+                           hover:shadow-[0_3px_0_#047857,0_4px_8px_rgba(5,150,105,0.2)]
+                           hover:-translate-y-0.5
+                           active:translate-y-0 active:shadow-[0_1px_0_#059669]
+                           transition-all duration-200"
+                  >
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                    练 习
+                  </a>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+      <!-- Footer note -->
+      <div class="mt-10 text-center text-xs text-gray-400">
+        <p>内容持续更新中 · 如需补充请向教练反馈</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { requireAuth, getCurrentUser, logout } from '../../utils/auth';
+    import { path } from '../../utils/base';
+
+    // 鉴权：未登录跳转到 /login
+    requireAuth();
+
+    // 显示当前用户名
+    const userDisplay = document.getElementById('user-display');
+    if (userDisplay) {
+      const user = getCurrentUser();
+      userDisplay.textContent = user ? `🥑 ${user}` : '🥑';
+    }
+
+    // 退出按钮
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        logout();
+        window.location.href = path('/login');
+      });
+    }
+  </script>
+</BaseLayout>

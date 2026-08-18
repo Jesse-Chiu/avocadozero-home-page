@@ -63,6 +63,25 @@ const navItems = [
                   transition-all duration-200 ease-out">
           联系我们
         </a>
+        <!-- Login button (always shown) -->
+        <a href={path('/login')}
+           id="header-login-btn"
+           class="ml-1.5 px-3.5 py-2 rounded-full text-sm font-semibold
+                  text-blue-700
+                  bg-gradient-to-b from-white to-blue-50/60
+                  border border-b-2 border-blue-200
+                  shadow-[0_2px_0_#bfdbfe,0_3px_6px_rgba(59,130,246,0.10)]
+                  hover:from-blue-50 hover:to-blue-100/60
+                  hover:border-blue-300 hover:border-b-blue-400
+                  hover:text-blue-800
+                  hover:shadow-[0_3px_0_#93c5fd,0_5px_10px_rgba(59,130,246,0.15)]
+                  hover:-translate-y-1
+                  active:translate-y-0.5
+                  active:shadow-[0_1px_0_#bfdbfe,0_1px_3px_rgba(0,0,0,0.05)]
+                  active:border-b
+                  transition-all duration-200 ease-out">
+          登录
+        </a>
       </div>
 
       <!-- Mobile Menu Button -->
@@ -109,6 +128,18 @@ const navItems = [
                   transition-all duration-200 ease-out">
           联系我们
         </a>
+        <a href={path('/login')}
+           class="px-4 py-2.5 rounded-xl text-sm font-semibold text-blue-700 text-center
+                  bg-gradient-to-b from-white to-blue-50/60
+                  border border-b-2 border-blue-200
+                  shadow-[0_2px_0_#bfdbfe,0_3px_6px_rgba(59,130,246,0.10)]
+                  hover:from-blue-50 hover:to-blue-100/60
+                  hover:border-blue-300 hover:border-b-blue-400
+                  hover:-translate-y-0.5
+                  active:translate-y-0.5 active:shadow-[0_1px_0_#bfdbfe,0_1px_3px_rgba(0,0,0,0.05)] active:border-b
+                  transition-all duration-200 ease-out">
+          登录
+        </a>
       </div>
     </div>
   </nav>
@@ -118,6 +149,7 @@ const navItems = [
 <div class="h-16"></div>
 
 <script>
+  // 移动端菜单切换
   const toggle = document.getElementById('menu-toggle');
   const menu = document.getElementById('mobile-menu');
   if (toggle && menu) {

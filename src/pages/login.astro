@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { path } from '../utils/base';
+
+const pageTitle = '登录 · 牛油果零壹信奥';
+const pageDesc = '登录后查看 CSP 初赛知识点导航';
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <section class="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md">
+      <!-- Card -->
+      <div class="relative bg-white rounded-2xl border border-gray-200/80 shadow-[0_8px_32px_rgba(0,0,0,0.06)] overflow-hidden">
+        <!-- Top accent bar -->
+        <div class="h-1.5 bg-gradient-to-r from-green-400 via-emerald-500 to-teal-500"></div>
+
+        <div class="px-8 py-10 sm:px-10 sm:py-12">
+          <!-- Header -->
+          <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-100 mb-4">
+              <span class="text-4xl">🥑</span>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-900 mb-1">欢迎回来</h1>
+            <p class="text-sm text-gray-500">登录后查看 CSP 初赛知识点</p>
+          </div>
+
+          <!-- Form -->
+          <form id="login-form" class="space-y-5" novalidate>
+            <!-- Username -->
+            <div>
+              <label for="username" class="block text-sm font-semibold text-gray-700 mb-1.5">
+                用户名
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                autocomplete="username"
+                required
+                placeholder="请输入用户名"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50
+                       text-gray-900 placeholder-gray-400
+                       focus:bg-white focus:border-green-400 focus:ring-4 focus:ring-green-100
+                       transition-all duration-200 outline-none"
+              />
+            </div>
+
+            <!-- Password -->
+            <div>
+              <label for="password" class="block text-sm font-semibold text-gray-700 mb-1.5">
+                密码
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                autocomplete="current-password"
+                required
+                placeholder="请输入密码"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50
+                       text-gray-900 placeholder-gray-400
+                       focus:bg-white focus:border-green-400 focus:ring-4 focus:ring-green-100
+                       transition-all duration-200 outline-none"
+              />
+            </div>
+
+            <!-- Error -->
+            <div
+              id="error-msg"
+              class="hidden px-4 py-2.5 rounded-lg bg-red-50 border border-red-200 text-sm text-red-600"
+            >
+              用户名或密码错误，请重试
+            </div>
+
+            <!-- Submit -->
+            <button
+              type="submit"
+              id="submit-btn"
+              class="w-full px-4 py-3 rounded-xl text-white font-semibold
+                     bg-gradient-to-b from-green-500 to-emerald-600
+                     border border-b-2 border-emerald-700
+                     shadow-[0_3px_0_#059669,0_4px_8px_rgba(5,150,105,0.2)]
+                     hover:from-green-400 hover:to-emerald-500
+                     hover:shadow-[0_4px_0_#047857,0_6px_12px_rgba(5,150,105,0.25)]
+                     hover:-translate-y-0.5
+                     active:translate-y-0.5 active:shadow-[0_1px_0_#059669,0_2px_4px_rgba(5,150,105,0.15)] active:border-b
+                     transition-all duration-200 ease-out
+                     disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              登 录
+            </button>
+          </form>
+
+          <!-- Footer hint -->
+          <div class="mt-6 text-center text-xs text-gray-400">
+            <p>仅供内部学员使用 · 登录信息请向教练获取</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Back link -->
+      <div class="mt-6 text-center">
+        <a
+          href={path('/')}
+          class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-green-600 transition-colors"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          返回首页
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { login, isLoggedIn } from '../utils/auth';
+
+    // 已登录则直接跳转
+    if (isLoggedIn()) {
+      const url = new URL(window.location.href);
+      const next = url.searchParams.get('next') || '/csp/intro';
+      window.location.replace(next);
+    }
+
+    const form = document.getElementById('login-form') as HTMLFormElement | null;
+    const errorMsg = document.getElementById('error-msg');
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+
+    function showError(msg: string) {
+      if (!errorMsg) return;
+      errorMsg.textContent = msg;
+      errorMsg.classList.remove('hidden');
+    }
+
+    function hideError() {
+      if (!errorMsg) return;
+      errorMsg.classList.add('hidden');
+    }
+
+    function getQueryParam(name: string): string {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name) || '/csp/intro';
+    }
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        hideError();
+
+        const data = new FormData(form);
+        const username = (data.get('username') as string || '').trim();
+        const password = (data.get('password') as string || '').trim();
+
+        if (!username || !password) {
+          showError('请填写用户名和密码');
+          return;
+        }
+
+        // 模拟网络延迟
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = '登录中…';
+        }
+
+        setTimeout(() => {
+          if (login(username, password)) {
+            const next = getQueryParam('next');
+            window.location.href = next;
+          } else {
+            showError('用户名或密码错误，请重试');
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = '登 录';
+            }
+          }
+        }, 400);
+      });
+    }
+  </script>
+</BaseLayout>
