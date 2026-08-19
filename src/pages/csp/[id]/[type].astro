@@ -187,6 +187,31 @@ const colorClass = {
     import { requireAuth } from '../../../utils/auth';
     requireAuth();
   </script>
+
+  <!-- highlight.js：客户端语法高亮（浅色主题） -->
+  <link rel="stylesheet" href={`${path('/vendor/hljs/atom-one-light.min.css')}`} />
+  <script is:inline src={`${path('/vendor/hljs/highlight.min.js')}`}></script>
+  <script is:inline src={`${path('/vendor/hljs/cpp.min.js')}`}></script>
+  <script is:inline>
+    (function () {
+      function run() {
+        if (!window.hljs) { setTimeout(run, 50); return; }
+        // 把 language-c++ / language-c 统一映射到 cpp
+        document.querySelectorAll('.csp-content pre code').forEach(function (code) {
+          var cls = code.className || '';
+          if (/language-c\+\+/.test(cls) || /\blanguage-c\b(?!pp)/.test(cls)) {
+            code.className = cls.replace(/language-c\+\+/, 'language-cpp').replace(/\blanguage-c\b(?!pp)/, 'language-cpp');
+          }
+        });
+        window.hljs.highlightAll();
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', run);
+      } else {
+        run();
+      }
+    })();
+  </script>
 </BaseLayout>
 
 <style is:global>
@@ -253,6 +278,73 @@ const colorClass = {
   width: 100%;
 }
 
+/* 列表 */
+.csp-content ul,
+.csp-content ol {
+  margin: 0.6rem 0;
+  padding-left: 1.5rem;
+}
+.csp-content ul { list-style: disc; }
+.csp-content ol { list-style: decimal; }
+.csp-content li { margin: 0.3rem 0; }
+.csp-content ul ul,
+.csp-content ol ol,
+.csp-content ul ol,
+.csp-content ol ul { margin: 0.3rem 0; }
+
+/* 引用块（易错点 / 实战技巧） */
+.csp-content blockquote {
+  margin: 1.25rem 0;
+  padding: 0.85rem 1.25rem;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-left: 4px solid #22c55e;
+  border-radius: 0.75rem;
+  color: #166534;
+}
+.csp-content blockquote p { margin: 0.4rem 0; }
+.csp-content blockquote ul,
+.csp-content blockquote ol { margin: 0.4rem 0; padding-left: 1.35rem; }
+.csp-content blockquote code { background: rgba(34, 197, 94, 0.12); color: #14532d; }
+
+/* 表格 */
+.csp-content table {
+  width: 100%;
+  margin: 1.25rem 0;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.csp-content thead th {
+  background: #ecfdf5;
+  color: #065f46;
+  font-weight: 700;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid #a7f3d0;
+  text-align: left;
+  white-space: nowrap;
+}
+.csp-content tbody td {
+  padding: 0.55rem 0.9rem;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+}
+.csp-content tbody tr:nth-child(even) { background: #f9fafb; }
+.csp-content tbody tr:hover { background: #f0fdf4; }
+
+/* 行内代码 */
+.csp-content :not(pre) > code {
+  background: #f1f5f9;
+  color: #be123c;
+  padding: 0.1em 0.4em;
+  border-radius: 0.35em;
+  font-size: 0.88em;
+}
+.csp-content pre code { background: none; color: inherit; padding: 0; }
+
 /* 真题块 */
 .csp-content .quiz-block {
   margin: 1.5rem 0;
@@ -265,16 +357,18 @@ const colorClass = {
 .csp-content .quiz-block p { margin: 0.35rem 0; }
 .csp-content .quiz-block p:first-child { font-weight: 600; }
 
-/* 代码块 */
+/* 代码块（浅色背景 + 语法高亮） */
 .csp-content pre {
   margin: 1.25rem 0;
   padding: 1rem 1.25rem;
-  background: #1e293b;
-  color: #e2e8f0;
+  background: #fafafa;
+  color: #383a42;
+  border: 1px solid #e5e7eb;
   border-radius: 0.75rem;
   overflow-x: auto;
   font-size: 0.85rem;
   line-height: 1.7;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 }
 .csp-content pre.mono {
   background: #f8fafc;
@@ -287,11 +381,20 @@ const colorClass = {
   font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
 }
 
+/* 覆盖 highlight.js 默认容器背景（已由 .csp-content pre 控制） */
+.csp-content pre code.hljs {
+  background: transparent;
+  padding: 0;
+}
+
 /* 移动端适配 */
 @media (max-width: 640px) {
   .csp-content { font-size: 0.9rem; }
   .csp-content figure.figure-grid img { max-width: 100%; }
   .csp-content figure.figure-single img { max-width: 100%; }
   .csp-content pre { font-size: 0.78rem; padding: 0.85rem 1rem; }
+  .csp-content table { font-size: 0.8rem; }
+  .csp-content thead th,
+  .csp-content tbody td { padding: 0.45rem 0.65rem; }
 }
 </style>

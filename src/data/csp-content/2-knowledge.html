@@ -1,0 +1,549 @@
+<h2>一、算法复杂度基础</h2>
+<h3>1.1 什么是算法复杂度</h3>
+<p>算法复杂度是衡量算法效率的核心指标，分为<strong>时间复杂度</strong>和<strong>空间复杂度</strong>：</p>
+<ul>
+<li>时间复杂度：算法运行所需的时间随数据规模增长的趋势，决定了算法能处理的数据上限。</li>
+<li>空间复杂度：算法运行所需的额外内存随数据规模增长的趋势，决定了算法是否会超内存限制。</li>
+</ul>
+<p>影响程序实际运行时间的因素：</p>
+<ol>
+<li>计算机硬件性能</li>
+<li>输入数据的规模</li>
+<li>算法本身的效率</li>
+</ol>
+<p>竞赛中我们只关注第 3 点，即算法本身的渐进增长趋势，以此判断算法能否通过对应数据范围的测试点。</p>
+<h3>1.2 为什么用「大 O 记号」</h3>
+<p>大 O 记号（Big-O Notation）是描述复杂度的标准方式，它<strong>只保留最高阶项，忽略所有低阶项、常数系数和常数项</strong>。 原因：当数据规模 <code>n</code> 足够大时，最高阶项决定了算法的增长速度，常数和低阶项的影响可以忽略不计。</p>
+<ul>
+<li>例：执行次数为 <code>3n² + 5n + 100</code>，时间复杂度记为 <code>O(n²)</code>。</li>
+<li>例：执行次数为 <code>1000</code>（和 n 无关），时间复杂度记为 <code>O(1)</code>。</li>
+</ul>
+<h3>1.3 竞赛默认规则</h3>
+<ol>
+<li>
+<p><strong>默认讨论最坏时间复杂度</strong>：保证算法在任何输入下都能在该时间内运行完成，避免极端数据超时。</p>
+</li>
+<li>
+<p><strong>空间复杂度统计「额外辅助空间」</strong>：输入数据本身占用的空间不计入，只算算法运行时额外开辟的空间。</p>
+</li>
+</ol>
+<figure class="figure-single"><img src="/images/csp/2/big-o.png" alt="数量级函数" loading="lazy" /></figure>
+<h2>二、时间复杂度详解</h2>
+<h3>2.1 计算三步法</h3>
+<ol>
+<li><strong>找到基本语句</strong>：执行次数最多的语句，通常是最内层循环的循环体。</li>
+<li><strong>计算执行次数的数量级</strong>：只保留最高次幂，忽略系数和低阶项。</li>
+<li><strong>用大 O 记号表示</strong>：将数量级放入大 O 中。</li>
+</ol>
+<h3>2.2 常见复杂度阶（从快到慢）</h3>
+<h4>1. 常数阶 O (1)</h4>
+<p>执行次数是固定常数，和数据规模 <code>n</code> 无关。</p>
+<pre><code class="language-cpp">// 实例：交换两个变量
+int a = 10, b = 20;
+swap(a, b);
+
+// 实例：固定次数循环
+for(int i = 1; i &lt;= 100; i++) sum += i;
+</code></pre>
+<blockquote>
+<p>易错点：只要循环次数不随 n 变化，无论循环 100 次还是 10000 次，都是 O (1)。</p>
+</blockquote>
+<h4>2. 对数阶 O (log n)</h4>
+<p>循环次数随 n 呈对数增长，典型特征是循环变量每次倍增 / 倍减。</p>
+<pre><code class="language-cpp">// 实例：循环变量倍增
+int cnt = 0;
+for(int i = 1; i &lt;= n; i *= 2) cnt++;
+</code></pre>
+<p>分析：i 取值为 1,2,4,8...，共执行 <code>log₂n</code> 次，复杂度 O (logn)。</p>
+<p><strong>竞赛常见 O (logn) 场景</strong>：二分查找、快速幂、辗转相除法（gcd）、堆的插入 / 删除。</p>
+<h4>3. 线性阶 O (n)</h4>
+<p>执行次数和 n 成正比，单层循环是最典型代表。</p>
+<pre><code class="language-cpp">// 实例：遍历数组求和
+int sum = 0;
+for(int i = 1; i &lt;= n; i++) sum += a[i];
+</code></pre>
+<h4>4. 线性对数阶 O (n log n)</h4>
+<p>外层一层线性循环，内层一层对数循环，或分治算法的典型复杂度。</p>
+<pre><code class="language-cpp">// 实例：嵌套循环，外层n次，内层logn次
+for(int i = 1; i &lt;= n; i++)
+    for(int j = 1; j &lt;= n; j *= 2)
+        cnt++;
+</code></pre>
+<p><strong>竞赛常见 O (nlogn) 场景</strong>：快速排序、归并排序、堆排序、sort 函数。</p>
+<h4>5. 平方阶 O (n²)</h4>
+<p>两层嵌套循环，每层执行 n 次。</p>
+<pre><code class="language-cpp">// 实例：冒泡排序核心
+for(int i = 1; i &lt;= n; i++)
+    for(int j = 1; j &lt;= n - i; j++)
+        if(a[j] &gt; a[j+1]) swap(a[j], a[j+1]);
+</code></pre>
+<p>分析：总执行次数为 <code>(n-1)+(n-2)+...+1 = n(n-1)/2</code>，最高阶为 n²，复杂度 O (n²)。</p>
+<h4>6. 立方阶 O (n³)</h4>
+<p>三层嵌套循环，常见于 Floyd 最短路、三维 DP。</p>
+<pre><code class="language-cpp">for(int k = 1; k &lt;= n; k++)
+    for(int i = 1; i &lt;= n; i++)
+        for(int j = 1; j &lt;= n; j++)
+            f[i][j] = min(f[i][j], f[i][k] + f[k][j]);
+</code></pre>
+<h4>7. 指数阶 O (2ⁿ)</h4>
+<p>常见于无优化的递归搜索、暴力枚举子集。</p>
+<pre><code class="language-cpp">// 实例：递归求斐波那契数列
+int fib(int n) {
+    if(n &lt;= 1) return n;
+    return fib(n-1) + fib(n-2);
+}
+</code></pre>
+<p>分析：每层递归分支数为 2，深度约为 n，总调用次数约为 2ⁿ级别。</p>
+<pre><code class="language-c++">                            ib(4)
+            /        \
+       fib(3)        fib(2)
+      /     \        /    \
+   fib(2)  fib(1) fib(1) fib(0)
+   /    \
+fib(1) fib(0)
+</code></pre>
+<h4>递归树分析</h4>
+<ul>
+<li>当 <code>n &gt; 1</code> 时，<code>fib(n)</code> 会调用 <code>fib(n-1)</code> 和 <code>fib(n-2)</code>。</li>
+<li>递归树是一棵<strong>满二叉树</strong>（直到叶子），每个内节点有两个子节点。</li>
+<li>树的高度为 <code>n</code>，叶子节点对应 <code>fib(0)</code> 和 <code>fib(1)</code>。</li>
+<li>总节点数（即函数调用次数）约为 <strong>2^n</strong> 量级。</li>
+</ul>
+<p>更精确地，设 <code>T(n)</code> 为计算 <code>fib(n)</code> 所需的调用次数，则：</p>
+<p>T(n)=T(n−1)+T(n−2)+1</p>
+<p>其中 <code>T(0) = T(1) = 1</code>。</p>
+<p><strong><code>+1</code> 代表的是</strong>：计算当前 <code>fib(n)</code> 时，除了递归调用子问题之外，<strong>自身执行的那一次加法操作</strong>所消耗的时间。</p>
+<h4>8. 阶乘阶 O (n!)</h4>
+<p>常见于全排列枚举，效率极低，仅适用于 n≤12 的极小数据。</p>
+<figure class="figure-single"><img src="/images/csp/2/on.png" alt="全排列 " loading="lazy" /></figure>
+<h3>2.3 循环结构复杂度分析规则</h3>
+<ol>
+<li><strong>并列循环</strong>：复杂度相加，取最高阶。 例：一个 O (n) 循环 + 一个 O (n²) 循环，整体复杂度为 O (n²)。</li>
+<li><strong>嵌套循环</strong>：复杂度相乘。 例：外层 n 次，内层 m 次，整体复杂度为 O (n×m)。</li>
+<li><strong>条件分支</strong>：取分支中复杂度更高的作为最坏复杂度。</li>
+</ol>
+<h3>2.4 递归算法复杂度分析</h3>
+<h4>方法一：递归树法</h4>
+<p>核心：画出递归调用树，计算<strong>每层的总工作量 × 递归深度</strong>。</p>
+<p>以归并排序递推式 <code>T(n) = 2T(n/2) + O(n)</code> 为例：</p>
+<ul>
+<li>第 0 层（根）：1 个节点，工作量 O (n)</li>
+<li>第 1 层：2 个节点，每个工作量 O (n/2)，总工作量 O (n)</li>
+<li>第 2 层：4 个节点，每个工作量 O (n/4)，总工作量 O (n)</li>
+<li>...</li>
+<li>共 logn 层，每层总工作量都是 O (n)</li>
+<li>总复杂度：O (n × logn) = O (nlogn)</li>
+</ul>
+<h4>方法二：主定理（Master Theorem）（CSP-S 高频考点）</h4>
+<p>对于递推式 <code>T(n) = a × T(n/b) + f(n)</code>：</p>
+<ul>
+<li><code>a</code>：子问题个数</li>
+<li><code>n/b</code>：每个子问题的规模 </li>
+<li><code>f(n)</code>：分解与合并子问题的工作量</li>
+</ul>
+<p>三种核心情况：</p>
+<ol>
+<li>若 $f(n) &lt; n^(log_b a)$ → $T(n) = O(n^(log_b a))$</li>
+<li>若 $f(n) = n^(log_b a)$ → $T(n) = O(n^(log_b a) × logn)$</li>
+<li>若 $f(n) &gt; n^(log_b a) → T(n) = O(f(n))$</li>
+</ol>
+<p><strong>典型应用</strong>：</p>
+<ul>
+<li>二分查找：$T(n) = T(n/2) + O(1)$ → a=1, b=2, log₂1=0 → 情况 2 → O (logn)</li>
+<li>归并排序：$T(n) = 2T(n/2) + O(n)$ → a=2, b=2, log₂2=1 → 情况 2 → O (nlogn)</li>
+<li>暴力递归斐波那契：不适用主定理（子问题规模不统一）</li>
+</ul>
+<h2>三、空间复杂度详解</h2>
+<h3>3.1 基本概念</h3>
+<p>空间复杂度衡量算法<strong>额外占用的内存空间</strong>随数据规模的增长趋势，同样使用大 O 记号，不计入输入数据本身的空间。</p>
+<h3>3.2 常见场景分析</h3>
+<h4>1. 常数空间 O (1)</h4>
+<p>只开了少量变量，没有随 n 增长的数组 / 集合。</p>
+<pre><code class="language-cpp">// 实例：交换变量、单变量计数
+int max_val = a[1];
+for(int i = 2; i &lt;= n; i++)
+    max_val = max(max_val, a[i]);
+</code></pre>
+<h4>2. 线性空间 O (n)</h4>
+<p>开辟了长度为 n 的数组、队列、栈等。</p>
+<pre><code class="language-cpp">// 实例：辅助数组
+int temp[100005];
+for(int i = 1; i &lt;= n; i++) temp[i] = a[i];
+</code></pre>
+<h4>3. 二维空间 O (n²)</h4>
+<p>开辟了 n×n 的二维数组、二维 DP 表。</p>
+<pre><code class="language-cpp">int f[1005][1005]; // 二维DP数组
+</code></pre>
+<h3>3.3 递归的空间复杂度</h3>
+<p>递归的空间主要消耗在<strong>系统调用栈</strong>上，空间复杂度等于递归的最大深度。</p>
+<ul>
+<li>例：普通递归求阶乘，递归深度为 n → 空间复杂度 O (n)</li>
+<li>例：二分查找的递归实现，递归深度为 logn → 空间复杂度 O (logn)</li>
+<li>例：无优化斐波那契递归，最大递归深度为 n → 空间复杂度 O (n)（注意不是 O (2ⁿ)，因为调用栈是串行的，同一时间只保留一条路径）</li>
+</ul>
+<h2>四、CSP 常考算法复杂度速查表</h2>
+<h3>4.1 排序算法全对比（选择题高频考点）</h3>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>平均时间</th>
+<th>最坏时间</th>
+<th>最好时间</th>
+<th>空间复杂度</th>
+<th>稳定性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>冒泡排序</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td>直接插入排序</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td>选择排序</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+<td>O(1)</td>
+<td>不稳定</td>
+</tr>
+<tr>
+<td>希尔排序</td>
+<td>O(n^1.3)</td>
+<td>O(n²)</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>不稳定</td>
+</tr>
+<tr>
+<td>快速排序</td>
+<td>O(nlogn)</td>
+<td>O(n²)</td>
+<td>O(nlogn)</td>
+<td>O(logn)</td>
+<td>不稳定</td>
+</tr>
+<tr>
+<td>归并排序</td>
+<td>O(nlogn)</td>
+<td>O(nlogn)</td>
+<td>O(nlogn)</td>
+<td>O(n)</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td>堆排序</td>
+<td>O(nlogn)</td>
+<td>O(nlogn)</td>
+<td>O(nlogn)</td>
+<td>O(1)</td>
+<td>不稳定</td>
+</tr>
+<tr>
+<td>计数排序</td>
+<td>O(n+k)</td>
+<td>O(n+k)</td>
+<td>O(n+k)</td>
+<td>O(k)</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td>基数排序</td>
+<td>O(n×k)</td>
+<td>O(n×k)</td>
+<td>O(n×k)</td>
+<td>O(n+k)</td>
+<td>稳定</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>稳定排序定义：值相等的元素，排序后相对顺序不变。 口诀：冒插归基稳，选快希堆不稳。</p>
+<p>选择排序:[5₁, 5₂, 3] </p>
+<ul>
+<li>第1趟：从未排序区 <code>[5₁, 5₂, 3]</code> 中选出最小值 <code>3</code>，与第一个元素 <code>5₁</code> 交换。</li>
+<li>结果：<code>[3, 5₂, 5₁]</code></li>
+</ul>
+</blockquote>
+<h3>4.2 查找算法</h3>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>时间复杂度</th>
+<th>前提条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>顺序查找</td>
+<td>O(n)</td>
+<td>无</td>
+</tr>
+<tr>
+<td>二分查找</td>
+<td>O(logn)</td>
+<td>序列有序</td>
+</tr>
+<tr>
+<td>哈希查找</td>
+<td>O(1)</td>
+<td>哈希表存储</td>
+</tr>
+</tbody>
+</table>
+<h3>4.3 图论与搜索</h3>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>时间复杂度</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DFS/BFS</td>
+<td>O(V+E)</td>
+<td>遍历图、连通块、路径查找</td>
+</tr>
+<tr>
+<td>Dijkstra（朴素）</td>
+<td>O(n²)</td>
+<td>稠密图、非负权最短路</td>
+</tr>
+<tr>
+<td>Dijkstra（堆优化）</td>
+<td>O((n+m)logn)</td>
+<td>稀疏图、非负权最短路</td>
+</tr>
+<tr>
+<td>Floyd</td>
+<td>O(n³)</td>
+<td>多源最短路、n≤300</td>
+</tr>
+<tr>
+<td>Kruskal</td>
+<td>O(mlogm)</td>
+<td>最小生成树、稀疏图</td>
+</tr>
+<tr>
+<td>SPFA</td>
+<td>O(km)~O(nm)</td>
+<td>带负权最短路、判负环</td>
+</tr>
+</tbody>
+</table>
+<h3>4.4 经典动态规划模型</h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>时间复杂度</th>
+<th>空间复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>01 背包</td>
+<td>O(nm)</td>
+<td>O (m)（滚动数组优化）</td>
+</tr>
+<tr>
+<td>完全背包</td>
+<td>O(nm)</td>
+<td>O(m)</td>
+</tr>
+<tr>
+<td>最长公共子序列</td>
+<td>O(nm)</td>
+<td>O(nm)</td>
+</tr>
+<tr>
+<td>最长上升子序列（朴素）</td>
+<td>O(n²)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>最长上升子序列（优化）</td>
+<td>O(nlogn)</td>
+<td>O(n)</td>
+</tr>
+</tbody>
+</table>
+<h3>4.5 STL 常用函数与容器</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sort () 排序</td>
+<td>O(nlogn)</td>
+</tr>
+<tr>
+<td>__gcd (a,b) 最大公约数</td>
+<td>O(log min(a,b))</td>
+</tr>
+<tr>
+<td>string 长度 / 末尾追加</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>string 插入 / 删除 / 查找</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>vector 末尾 push/pop</td>
+<td>均摊 O (1)</td>
+</tr>
+<tr>
+<td>vector 中间插入删除</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>set/map 插入 / 查找 / 删除</td>
+<td>O(logn)</td>
+</tr>
+<tr>
+<td>queue/stack 入队出队</td>
+<td>O(1)</td>
+</tr>
+</tbody>
+</table>
+<h2>五、复杂度与数据范围对应表（竞赛选算法必备）</h2>
+<p>CSP 评测机 1 秒约可执行 <code>10⁸</code> 次基本运算，对应各复杂度可处理的最大数据范围：</p>
+<table>
+<thead>
+<tr>
+<th>时间复杂度</th>
+<th>可处理 n 的上限</th>
+<th>典型算法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O(logn)</td>
+<td>n ≤ 10¹⁸</td>
+<td>二分、快速幂</td>
+</tr>
+<tr>
+<td>O(n)</td>
+<td>n ≤ 10⁸</td>
+<td>遍历、前缀和</td>
+</tr>
+<tr>
+<td>O(nlogn)</td>
+<td>n ≤ 10⁶</td>
+<td>sort、归并排序</td>
+</tr>
+<tr>
+<td>O(n²)</td>
+<td>n ≤ 5000</td>
+<td>冒泡、朴素 DP</td>
+</tr>
+<tr>
+<td>O(n³)</td>
+<td>n ≤ 300</td>
+<td>Floyd、三维 DP</td>
+</tr>
+<tr>
+<td>O(2ⁿ)</td>
+<td>n ≤ 25</td>
+<td>状压 DP、子集枚举</td>
+</tr>
+<tr>
+<td>O(n!)</td>
+<td>n ≤ 12</td>
+<td>全排列枚举</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>实战技巧：看到数据范围就能反推算法复杂度，比如 n=20 大概率是状压，n=1e5 大概率是 O (nlogn) 算法。</p>
+</blockquote>
+<h2>六、高频易错点避坑指南</h2>
+<ol>
+<li><strong>混淆最好和最坏复杂度</strong> 快排平均 O (nlogn)，但最坏是 O (n²)；冒泡最好 O (n)，但最坏是 O (n²)。竞赛默认按最坏情况算。</li>
+<li><strong>递归复杂度错判</strong> 斐波那契递归时间是 O (2ⁿ)，但空间是 O (n)，不要把时间和空间搞混。</li>
+<li><strong>忽略均摊复杂度</strong> vector 的 push_back 最坏 O (n)，但均摊是 O (1)，整体 n 次 push_back 总时间是 O (n)。</li>
+<li><strong>排序稳定性记混</strong> 选择题高频考点，记住稳定排序：冒泡、插入、归并、基数；不稳定：选择、快排、希尔、堆。</li>
+<li><strong>常数项影响判断</strong> 大 O 忽略常数，但实战中 O (2n) 和 O (n) 没有数量级差距，都属于同一复杂度。</li>
+</ol>
+<h2>七、快速判断复杂度的实战技巧</h2>
+<ol>
+<li>
+<p>看循环层数：1 层→O (n)，2 层→O (n²)，3 层→O (n³)（前提是每层都和 n 相关）。</p>
+</li>
+<li>
+<p>看循环变量变化：每次 + 1→线性；每次 ×2→对数。</p>
+</li>
+<li>
+<p>看分治特征：分成两半 + 线性合并→O (nlogn)；分成两半 + O (1) 合并→O (logn)。</p>
+</li>
+<li>
+<p>看排序 / 查找：看到 “有序数组查找” 优先想 O (logn) 二分；看到排序优先想 O (nlogn)。</p>
+</li>
+<li>
+<p>看数据范围：n=1e5 → 排除 O (n²)，只能是 O (n) 或 O (nlogn)。</p>
+</li>
+</ol>
+<h2>八、CSP-J/S 历年真题精讲</h2>
+<div class="quiz-block"><p>【2019-csp-j-5】</p>
+<p>设有 100 个已排好序的数据元素，采用折半查找时，最大比较次数为（  ）。</p>
+<p>A. 7<br />
+B. 10<br />
+C. 6<br />
+D. 8  </p>
+</div><div class="quiz-block"><p>【2020-csp-j-5】</p>
+<p>冒泡排序算法的伪代码如下：</p>
+<pre><code class="language-text">输入：数组 L，n ≥ 1。输出：按非递减顺序排序的 L。
+算法 BubbleSort：
+ 1. FLAG ← n
+ 2. while FLAG &gt; 1 do
+ 3.   k ← FLAG - 1
+ 4.   FLAG ← 1
+ 5.   for j=1 to k do
+ 6.     if L(j) &gt; L(j+1) then do
+ 7.       L(j) ↔ L(j+1)
+ 8.       FLAG ← j
+</code></pre>
+<p>对 <code>n</code> 个数用以上冒泡排序算法进行排序，最少需要比较多少次？（ ）</p>
+<p>A. <code>n^2</code><br />
+B. <code>n-2</code><br />
+C. <code>n-1</code><br />
+D. <code>n</code>  </p>
+</div><div class="quiz-block"><p>【2021-csp-j-4】</p>
+<p>以比较作为基本运算，在 <code>N</code> 个数中找出最大数，最坏情况下所需要的最少的比较次数为（ ）。</p>
+<p>A. <code>N^2</code><br />
+B. <code>N</code><br />
+C. <code>N-1</code><br />
+D. <code>N+1</code>  </p>
+</div><div class="quiz-block"><p>【2022-csp-j-12】</p>
+<p>以下排序算法的常见实现中，哪个选项的说法是错误的：（ ）。</p>
+<p>A. 冒泡排序算法是稳定的<br />
+B. 简单选择排序是稳定的<br />
+C. 简单插入排序是稳定的<br />
+D. 归并排序算法是稳定的  </p>
+</div><div class="quiz-block"><p>【2024-csp-j-9】</p>
+<p>假设有序表中有 1000 个元素，则用二分法查找元素 <code>x</code> 最多需要比较（ ）次。</p>
+<p>A. <code>25</code><br />
+B. <code>10</code><br />
+C. <code>7</code><br />
+D. <code>1</code>  </p>
+</div>
