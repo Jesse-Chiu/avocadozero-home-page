@@ -1,0 +1,248 @@
+<h2>2.1、数据结构的定义</h2>
+<p>数据结构是计算机存储、组织数据的方式。数据结构是指相互之间存在一种或多种特定关系的数据元素的集合。通常情况下，精心选择的数据结构可以带来更高的运行或者存储效率。</p>
+<p>如:数组。</p>
+<h2>2.2、数组有什么特点?</h2>
+<p><strong>(1) 数组(array)的元素(element)或项(item) 的类型是相同的</strong><strong>,占用连续空间</strong></p>
+<p><strong>(2) 数组对某元素的存取是 0(1)时间</strong></p>
+<p><strong>(3) 数组的插入、删除操作是 0(n)时间</strong><strong>移动元素</strong></p>
+<p>由于数组通常的插入、删除操作是 O(n)时间的，在某些特定的条件下就显得低效了。</p>
+<p>因此我们通过对数组元素操作的限制，来达到操作的高效---算法优化的突破点。</p>
+<p>常见的“订制”数组有: 栈、队列、堆等，它们操作的时候效率都很高。</p>
+<p>注:虽然栈、队列、堆可以不用数组实现，但 NOIP 的实践中，用数组实现更简单实用。</p>
+<h2>2.3 栈 (Stack)</h2>
+<figure class="figure-single"><img src="/images/csp/3/img-03.png" alt="示意图" loading="lazy" /></figure>
+<h3>1、栈的特点</h3>
+<p>(1) 栈(stack)是后进先出(last-in-first-out,LIFO)或先进后出(FILO)的</p>
+<p>(2) 栈有三个基础操作压入(push),弹出(pop),取数(getTop)操作都为 0(1)时间</p>
+<p>(3) 栈有一个计数器 counter 或栈顶指针</p>
+<h3>2、栈的基本操作</h3>
+<p>(1) 建栈(int): 在使用栈之前，首先需要建立一个空栈，称建栈:</p>
+<p>(2) 压栈(push): 往顶加入一个新元素，称进栈(压栈);</p>
+<p>(3) 出栈 (pop): 删除栈顶元素，称出栈(退栈、弹出);</p>
+<p>(4) 取栈顶 (gettop): 查看当前的栈顶元素，称读栈;</p>
+<p>(5) 测试栈(empty) 在使用栈的过程中，还要不断测试栈是否为空或已满，称为测试</p>
+<p>(6) 显示栈 (display): 输出栈的所有元素</p>
+<p>(7) 释放栈 (setnul1): 清空栈:</p>
+<h3>3、栈的操作代码</h3>
+<p>初始化、入栈、出栈、显示栈!</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+//常量: 栈的长度
+#define MAXN 5
+using namespace std;
+int stack[MAXN];//数组模拟栈
+int top = -1;//初始化栈指针
+//出栈
+int pop() {
+    int r;
+    if (top &lt; 0) {
+        r = -1;
+        cout &lt;&lt; "栈空！" &lt;&lt; endl;
+    } else {
+        r = stack[top];
+        top--;
+    }
+    return r;
+}
+//入栈
+void push(int value) {
+    if (top &gt;= MAXN - 1) {
+        cout &lt;&lt; "栈满" &lt;&lt; endl;
+    } else {
+        top++;
+        stack[top] = value;
+    }
+}
+//显示栈
+void display() {
+    int i;
+    for (i = top; i &gt;= 0; i--) {
+        cout &lt;&lt; stack[i] &lt;&lt; " ";
+    }
+    cout &lt;&lt; endl;
+}
+int main() {
+    int order;//指令
+    int x, t;
+    cout &lt;&lt; "输入指令：";
+    while (1 == 1) {
+        cout &lt;&lt; "1：入栈，2：出栈，3：显示栈！" &lt;&lt; endl;
+        cin &gt;&gt; order;
+        if (order == 1) {
+            cin &gt;&gt; x;
+            push(x);
+            display();
+        } else if (order == 2) {
+            t = pop();
+            if (t != -1) {
+                cout &lt;&lt; t &lt;&lt; "出栈！" &lt;&lt; endl;
+                display();
+            }
+        } else if (order == 3) {
+            display();
+        }
+    }
+    return 0;
+}</code></pre>
+<h2>2.4 队列</h2>
+<h3>1、什么是队列?</h3>
+<p>队列就是允许在一端进行插入,在另一端进行删除的线性表。允许插入的一端称为队尾,通常用一个队尾指针 r 指向队尾元素，即 r 总是指最后被插入的元素:允许删除的一端称为队首，通常也用一个队首指针 f 指向排头元素的前面。初始时 f=r=9。</p>
+<figure class="figure-single"><img src="/images/csp/3/img-02.png" alt="示意图" loading="lazy" /></figure>
+<p>举例 1: 到医院看病，首先需要到挂号处挂号，然后，按号码顺序救诊。<br/>举例 2: 乘坐公共汽车，应该在车站排队，车来后，按顺序上车。<br/>结论: 在队列这种数据结构中，最先插入在元素将是最先被删除:反之最后插入的元素将最后被删除，因此队列又称为“先进先出”(FIFO-first in first out)的线性表</p>
+<h3>2、列的基本操作</h3>
+<p>(1) 新建队列<br/>(2) 入队<br/>(3) 出队<br/>(4) 判断队列是否为空<br/>(5) 判断队列是否为满<br/>(6) 显示队列元素</p>
+<h3>3、队列操作的代码实现</h3>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#define MAXN 5
+using namespace std;
+//队列
+int queue[MAXN];
+//头指针
+int front = 0;
+//尾指针
+int rear = 0;
+//入队
+void addQueue(int value) {
+    if (rear &gt;= MAXN) {
+        cout &lt;&lt; "队满!" &lt;&lt; endl;
+    } else {
+        queue[rear] = value;
+        rear++;
+    }
+}
+//出队
+int delQueue() {
+    int r;
+    if (front == rear) {
+        cout &lt;&lt; "队空" &lt;&lt; endl;
+        r = -1;
+    } else {
+        r = queue[front];
+        front++;
+    }
+    return r;
+}
+//显示队
+void display() {
+    int i;
+    for (i = front; i &lt; rear; i++) {
+        cout &lt;&lt; queue[i] &lt;&lt; " ";
+    }
+    cout &lt;&lt; endl;
+}
+int main() {
+    int order;//口令
+    int value, t;
+    cout &lt;&lt; "输入指令" &lt;&lt; endl;
+    while (true) {
+        cout &lt;&lt; "1入队，2出队，3显示！" &lt;&lt; endl;
+        cin &gt;&gt; order;
+        if (order == 1) {
+            cin &gt;&gt; value;
+            addQueue(value);
+            display();
+        } else if (order == 2) {
+            t = delQueue();
+            if (t != -1) {
+                cout &lt;&lt; t &lt;&lt; "已经出队" &lt;&lt; endl;
+                display();
+            } else {
+                cout &lt;&lt; "队列已空" &lt;&lt; endl;
+            }
+        } else if (order == 3) {
+            display();
+        } else {
+            cout &lt;&lt; "口令错误！" &lt;&lt; endl;
+        }
+    }
+}</code></pre>
+<table><tbody><tr><td>10</td><td>20</td><td>30</td><td>40</td><td></td><td></td><td></td></tr></tbody></table>
+<p>front = -1   real = 4</p>
+<h3>4、循环队列的使用</h3>
+<p>上述通过数组来实现队列的方法，如果进行插入一次，删除一次的操作，只要数组使用过一遍数组就会被用光。当数组仿真队列的元素全部出队以后，队的首部就会出现需多空位无法使用，导致空间浪费。</p>
+<figure class="figure-single"><img src="/images/csp/3/img-01.png" alt="示意图" loading="lazy" /></figure>
+<p>解决方法:</p>
+<p>将线型数组模拟成环形数组。但无论在线型数组中还是环形数组中，都有一个问题:无法判断队空还是队满；</p>
+<p>因为队空的条件是：</p>
+<p>front == rear;</p>
+<p>队满的条件也是：</p>
+<p>front == rear；</p>
+<p>为了解决这个问题，<strong><span style="color:#FF0000">我们在入队时少用一个数据元素空间</span></strong><strong>。</strong></p>
+<p>这样，判断队满的方式为：(rear + 1) % MAXN == front</p>
+<p>判断队空的方式为：rear == front。</p>
+<p>循环队列求队列元素个数：(rear-front+n)%n。</p>
+<p><strong><span style="color:#FF0000">写循环队列时，rear 指向队列的最后一个元素的后一个元素</span></strong>。</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#define MAXN 5
+using namespace std;
+//队列
+int queue[MAXN];
+//头指针
+int front;
+//尾指针
+int rear;
+//入队
+void addQueue(int value) {
+    //元素从未出队的情况下，队满
+    if (front == 0 &amp;&amp; (rear + 1) % MAXN == front) {
+        cout &lt;&lt; "队满" &lt;&lt; endl;
+        //有元素出队，队满
+    } else if ((rear + 1) % MAXN == front) {
+        cout &lt;&lt; "队满" &lt;&lt; endl;
+    } else {
+        queue[rear] = value;
+        rear = (rear + 1) % MAXN;
+    }
+}
+
+//出队
+int delQueue() {
+    int r;
+    if (front == rear) {
+        cout &lt;&lt; "队空" &lt;&lt; endl;
+        r = -1;
+    } else {
+        r = queue[front];
+        queue[front] = -1;// 出队标记
+        front = (front + 1) % MAXN;
+    }
+    return r;
+}
+
+void display() {
+    if (front == rear) {
+        cout &lt;&lt; "队空" &lt;&lt; endl;
+    } else {
+        int i = front;
+        do {
+            cout &lt;&lt; queue[i] &lt;&lt; " ";
+            i = (i + 1) % MAXN;
+        } while (i != rear);
+    }
+    cout &lt;&lt; endl;
+}
+int main() {
+    int order;//口令
+    int value, t;
+    cout &lt;&lt; "输入指令" &lt;&lt; endl;
+    while (true) {
+        cout &lt;&lt; "1入队，2出队，3显示！" &lt;&lt; endl;
+        cin &gt;&gt; order;
+        if (order == 1) {
+            cin &gt;&gt; value;
+            addQueue(value);
+            display();
+        } else if (order == 2) {
+            t = delQueue();
+            if (t != -1) {
+                cout &lt;&lt; t &lt;&lt; "已经出队" &lt;&lt; endl;
+                display();
+            } else {
+                cout &lt;&lt; "队列已空" &lt;&lt; endl;
+            }
+        } else if (order == 3) {
+            display();
+        } else {
+            cout &lt;&lt; "口令错误！" &lt;&lt; endl;
+        }
+    }
+}</code></pre>

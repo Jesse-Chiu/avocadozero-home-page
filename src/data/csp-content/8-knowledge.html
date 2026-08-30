@@ -1,0 +1,85 @@
+<h2>8.1 逻辑运算基础</h2>
+<p>逻辑运算先掌握各种运算，注意运算符的级别比较，做题是要细心。</p>
+<h3>1、概念介绍</h3>
+<p><strong> 非： !(</strong>¬<strong>)        与：&amp;&amp;(</strong>∧<strong>)        或：||(</strong>V<strong>)        异或：^(</strong><strong>⨁</strong><strong>) </strong></p>
+<h3>2、运算级比较</h3>
+<p><strong>括号   &gt; </strong><strong>非  &gt; 与  &gt;  或、异或    （ ||和^是同级的）</strong></p>
+<table><thead><tr><th>优先级</th><th>运算符</th><th>说明</th><th>结合性</th></tr></thead><tbody><tr><td>1（最高）</td><td>::</td><td>作用域解析</td><td>→</td></tr><tr><td>2</td><td>() [] -&gt; . a++ a--</td><td>函数调用、下标、成员、后置自增/减</td><td>→</td></tr><tr><td>3</td><td>++a --a + - ! ~ * &amp; (type) sizeof</td><td>前置自增/减、正负、逻辑非、取反、解引用、取地址、强制类型转换、大小</td><td>←</td></tr><tr><td>4</td><td>.* -&gt;*</td><td>成员指针</td><td>→</td></tr><tr><td>5</td><td>* / %</td><td>乘、除、取模</td><td>→</td></tr><tr><td>6</td><td>+ -</td><td>加、减</td><td>→</td></tr><tr><td>7</td><td>&lt;&lt; &gt;&gt;</td><td>左移、右移</td><td>→</td></tr><tr><td>8</td><td>&lt; &lt;= &gt; &gt;=</td><td>关系比较</td><td>→</td></tr><tr><td>9</td><td>== !=</td><td>相等性判断</td><td>→</td></tr><tr><td>10</td><td>&amp;</td><td>按位与</td><td>→</td></tr><tr><td>11</td><td>^</td><td>按位异或</td><td>→</td></tr><tr><td>12</td><td>|</td><td>按位或</td><td>→</td></tr><tr><td>13</td><td>&amp;&amp;</td><td>逻辑与</td><td>→</td></tr><tr><td>14</td><td>||</td><td>逻辑或</td><td>→</td></tr><tr><td>15</td><td>?:</td><td>三目条件运算符</td><td>←</td></tr><tr><td>16</td><td>= += -= *= /= %= &lt;&lt;= &gt;&gt;= &amp;= ^= |=</td><td>赋值及复合赋值</td><td>←</td></tr><tr><td>17（最低）</td><td>,</td><td>逗号运算符</td><td>→</td></tr></tbody></table>
+<blockquote><p><strong>注意：同级的运算符不分高低，计算时按照从左到右运算。</strong></p></blockquote>
+<div class="quiz-block">
+<p><strong>例题1．</strong>若A = True，B = False，C = True，D = False，以下逻辑运算表达式真的有（    ）。</p>
+<p>A．（A∧B）∨（C∧D ∨¬A）              B．（（¬A ∧ B）∨ C）∧¬B </p>
+<p>C．（B∨C∨D）∨D∧A                    D．  A ∧（D ∨¬C）∧B</p>
+<p><span style="color:#4472C4">答案 B</span><span style="color:#4472C4">、C</span><span style="color:#4472C4">：一个个算结果，比如A选项（A∧B）∨（C∧D∨</span><span style="color:#4472C4">¬</span><span style="color:#4472C4">A） ，根据运算级的比较，我们可以定下运算的顺序，然后按运算顺序计算结果。注意，这类题是有个小技巧的。比如A选项可以先看中间的∨，为什么呢？因为∨的左右有一边是真就行，可以不去看另外一边。</span></p>
+<p><span style="color:#4472C4">A选项的结果是：（A∧B）∨（C∧D ∨</span><span style="color:#4472C4">¬</span><span style="color:#4472C4">A），（A∧B）=假，（C∧D ∨</span><span style="color:#4472C4">¬</span><span style="color:#4472C4">A）中C∧D =假，</span><span style="color:#4472C4">¬</span><span style="color:#4472C4">A=假，所以（C∧D ∨</span><span style="color:#4472C4">¬</span><span style="color:#4472C4">A）=假。于是A选项可以简写为：假∨（假 ∨假）= 假。</span></p>
+<p><span style="color:#4472C4">B选项的结果是：（（</span><span style="color:#4472C4">¬</span><span style="color:#4472C4">A ∧ B）∨ C）∧</span><span style="color:#4472C4">¬</span><span style="color:#4472C4">B，如果</span><span style="color:#4472C4">¬</span><span style="color:#4472C4">B是假那么就可以不去看前面的（（</span><span style="color:#4472C4">¬</span><span style="color:#4472C4">A ∧ B）∨ C），可惜的是</span><span style="color:#4472C4">¬</span><span style="color:#4472C4">B是真，那么就要看（（</span><span style="color:#4472C4">¬</span><span style="color:#4472C4">A ∧ B）∨ C），发现C是真，所以不看（</span><span style="color:#4472C4">¬</span><span style="color:#4472C4">A ∧ B），于是B选项可以简写为：（？∨ 真）∧ 真 = 真。</span></p>
+<p><span style="color:#4472C4">C选项的结果是：（B∨C∨D）∨D∧A ，D∧A=假，所以不得不看前面部分（B∨C∨D），只要BCD有一个是真，那么（B∨C∨D）=真，而容易发现C=true。所以C选项可以简写为：真∨ 假 = 真。 </span></p>
+<p><span style="color:#4472C4">D选项的结果是：A ∧（D ∨</span><span style="color:#4472C4">¬</span><span style="color:#4472C4">C）∧B，我们很容易发现D选项的特殊结构为 ？∧？∧？，三个？有一个是假，那么D为假，A和B不用计算便可看出，所以先发现B=假，所以D=假。</span></p>
+</div>
+<div class="quiz-block">
+<p><strong>例题2．</strong>计算 23 + 2 | 2 &amp; 5 * 3 - 6 ^ 5 =（   ）。</p>
+<p><span style="color:#4472C4">解析：</span><span style="color:#4472C4">* &gt; / &gt; % &gt; + &gt; - &gt; &amp; &gt; ^ &gt; |</span></p>
+<p><span style="color:#4472C4"><strong>23 + 2 | 2 &amp; 5 * 3 - 6 ^ 5 </strong></span></p>
+<p><span style="color:#4472C4"><strong>=&gt; (23 + 2) | ((2 &amp; ((5 * 3) – 6)) ^ 5) =&gt; 25 | 5</strong></span></p>
+<p><span style="color:#4472C4"><strong>=&gt; 29</strong></span></p>
+</div>
+<h2>8.2 前缀、中缀、后缀表达式</h2>
+<p>前缀表达式、中缀表达式、后缀表达式都是四则运算的表达方式，用以四则运算表达式求值，即数学表达式的求值。<span style="color:#FF0000">中缀表达式就是常见的运算表达式，如</span></p>
+<p><span style="color:#FF0000">(3+4</span><span style="color:#FF0000">)</span><span style="color:#FF0000"> * </span><span style="color:#FF0000">5-6</span>。</p>
+<p>前缀表达式又称波兰式，前缀表达式的运算符位于操作数之前，比如：- × + 3 4 5 6。</p>
+<p>前缀表达式和后缀表达式都符合计算机的逻辑，方便计算机计算数据。</p>
+<figure><img src="/images/csp/8/img-01.png" alt="前缀、中缀、后缀表达式示意图" loading="lazy"></figure>
+<h3>1、前缀表达式</h3>
+<h4>A、前缀表达式求值</h4>
+<p><strong>从</strong><strong>右至左</strong>扫描表达式，遇到数字时，将数字压入堆栈，遇到运算符时，弹出栈顶的两个数，用运算符对它们做相应的计算（<span style="color:#FF0000"><strong>栈顶元素 top 和 次顶元素</strong></span>），并将结果入栈；重复上述过程直到表达式最左端，最后运算得出的值即为表达式的结果。</p>
+<p>例如前缀表达式：- ×+ 3 4 5 6求值过程如下：</p>
+<p>（1）从右至左扫描，将6、5、4、3压入堆栈</p>
+<p>（2）遇到 + 运算符，因此弹出3和4（ 3为栈顶元素，4为次顶元素，注意与后缀表达式做比较)，计算出3+4的值，得7，再将7入栈</p>
+<p>（3）接下来是×运算符，因此弹出7和5，计算出7×5 = 35，将35入栈</p>
+<p>（4）最后是-运算符，计算出35-6 的值，即29，由此得出最终结果。</p>
+<div class="quiz-block">
+<p>【NOIP2010提高组】前缀表达式“+3*2+5 12”的值是( C )</p>
+<p>A.23          B.25        C.37          D.65</p>
+</div>
+<h4>B、将中缀表达式转换为前缀表达式</h4>
+<p>转换过程需要用到栈，具体过程为：从<strong>右向左读取表达式</strong></p>
+<p>1）如果遇到操作数，我们就直接将其输出。</p>
+<p>2）如果遇到操作符，则我们将其放入到栈中，遇到右括号时我们也将其放入栈中。</p>
+<p>3）如果遇到一个左括号，则将栈元素弹出，将弹出的操作符输出直到遇到右括号为止。</p>
+<p>注意，右括号只弹出并不输出。</p>
+<p>4）如果遇到任何其他的操作符，如（“+”，“*”，“（”）等，从栈中弹出元素直</p>
+<p>到遇到发现<strong>相同或更低</strong><strong>(</strong><span style="color:#FF0000"><strong>相同优先级不弹出</strong></span><strong>)</strong>优先级的元素(或者栈为空) 为止。弹出完这些元素后，才将遇到的操作符压入到栈中。有一点需要注意，只有在遇到〞(”的情况下我们才弹出〞）”，其它情况我们都不会弹出〞）”。</p>
+<p>5）如果我们读到了输入的末尾，则将栈中所有元素依次弹出。</p>
+<p>6）最后，将弹出的结果，<span style="color:#FF0000"><strong>再次逆序</strong></span>，得到最终的结果。</p>
+<p>例如：</p>
+<p>1+((2+3)×4)-5 转换为前缀表达式，结果是：  - + 1 X + 2 3 4 5          </p>
+<p>1+2*3+(4*5+6)*7 转换为前缀表达式，结果是： + + 1 * 2 3 * + * 4 5 6 7   </p>
+<h3>2、后缀表达式</h3>
+<p>后缀表达式又称逆波兰表达式，与前缀表达式相似，只是运算符位于操作数之后;比如：3 4+5×6-</p>
+<h4>A、后缀表达式计算机求值</h4>
+<p>与前缀表达式类似，只是顺序是<span style="color:#FF0000"><strong>从</strong></span><span style="color:#FF0000"><strong>左至</strong></span><span style="color:#FF0000"><strong>右</strong></span></p>
+<p>从<strong>左至右</strong>扫描表达式，遇到数字时，将数字压入堆栈，遇到运算符时，弹出栈顶的两个数，用运算符对它们做相应的计算（<span style="color:#FF0000"><strong>次顶元素 和 top 栈顶元素</strong></span>），并将结果入栈：重复上述过程直到表达式最右端，最后运算得出的值即为表达式的结果</p>
+<p>例如后缀表达式“3 4+5×6-”。</p>
+<p>从左至右扫描，将3和4压入堆栈：</p>
+<p>遇到+运算符，因此弹出 4和3（4为栈顶元素，3为次顶元素，注意与前缀表达式做比较），计算出 3+4 的值，得7，再将7入栈;</p>
+<p>将5入栈：</p>
+<p>接下来是X运算符，因此弹出5和7，计算出7×5-35，将35入栈；</p>
+<p>将6入栈：</p>
+<p>最后是-运算符，计算出35-6 的值，即29，由此得出最终结果。</p>
+<h4>B、将中缀表达式转换为后缀表达式</h4>
+<p>转换过程需要用到栈，具体过程如下，<span style="color:#FF0000"><strong>从</strong></span><span style="color:#FF0000"><strong>左</strong></span><span style="color:#FF0000"><strong>向</strong></span><span style="color:#FF0000"><strong>右扫描表达式</strong></span>：</p>
+<p>1）如果遇到操作数，我们就直接将其输出。</p>
+<p>2）如果遇到操作符，则我们将其放入到栈中，遇到左括号时我们也将其放入栈中。</p>
+<p>3）如果遇到一个右括号，则将栈元素弹出，将弹出的操作符输出直到遇到左括号为止。</p>
+<p>注意，左括号只弹出并不输出。</p>
+<p>4）如果遇到任何其他的操作符，如（“+”，“*”“（”）等，从栈中弹出元素直</p>
+<p>到遇到发现<strong>更低优先级</strong><strong>(相同优先级也要弹出</strong><strong>)</strong>的元素(或者栈为空） 为止。弹出完这些元素后，才将遇到的操作符压入到栈中。有一点需要注意，只有在遇到〞）”的情况下我们才弹出〞（“，其他情况我们都不会弹出〞（“。</p>
+<p>5）如果我们读到了输入的末尾，则将栈中所有元素依次弹出。</p>
+<p>例如：</p>
+<p>中缀表达式 1+((2+3)×4)-5转换为后缀表达式的结果为：  <span style="color:#FF0000">1 2 3 + 4 x + 5 -</span>    </p>
+<p>中缀表达式 a+b*c+(d*e+f)*g，其转换成后缀表达式则为： <span style="color:#FF0000">a b c x + d e x f + g x +</span>   </p>
+<h2>8.3 总结</h2>
+<p>（1）前缀、后缀表达式计算：<span style="color:#FF0000"><strong>借助栈计算，前缀用栈顶和次顶算，后缀用次顶和栈顶算</strong></span></p>
+<p>（2）根据中缀求前缀、后缀：</p>
+<p>a、尝试算选项，看哪个选项能算到中缀</p>
+<p>b、画二叉树，写前缀、后缀</p>

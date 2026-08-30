@@ -1,0 +1,281 @@
+<h2>7.1 排列组合的基础知识</h2>
+
+<h3>（1）两个基础问题</h3>
+<p>问题一：从甲、乙、丙3名同学中选出 2 名去参加某天一项活动，有多少种不同的选法？写出这些选法？</p>
+<p>解析：</p>
+<p><span style="color:#2E74B5">甲、乙；甲、丙；乙、丙</span><span style="color:#2E74B5"> </span></p>
+<p><span style="color:#2E74B5">3 种</span></p>
+
+<p>问题二：从甲、乙、丙3名同学中选出 2名去参加某天的一项活动，其中1名同学参加上午的活动，1名同学参加下午的活动，有多少种不同的选法，写出这些选法？</p>
+<p>解析：</p>
+<p><span style="color:#2E74B5">选甲乙去：甲、乙；乙、甲；</span></p>
+<p><span style="color:#2E74B5">选甲丙去：甲、丙；丙、甲；</span></p>
+<p><span style="color:#2E74B5">选乙丙去：乙、丙；丙、乙：</span></p>
+<p><span style="color:#2E74B5">6种</span></p>
+
+
+<h3>（2）排列组合的定义</h3>
+<p>组合的定义：  从n个不同元素中取出m（m≤n）个元素并成一组，叫做从n个不同元素中取出m个元素的一个组合  。</p>
+
+<p>排列的定义：  从n个不同元素中取出m（m≤n）个元素，按照一定的顺序排成二列，叫做从 n 个不同元素中取出 m个元素的一个排列  。</p>
+
+<p>注意掌握它们的区别：排列与元素的顺序有关，而组合则与元素的顺序无关。</p>
+
+<h3>（3）请判断如下问题是组合问题还是排列问题？</h3>
+<p>(a)设集合A={a,b,c,d,e}，则集合A 的含有3个元素的子集有多少个？( 组合问题 )</p>
+<p>(b)某铁路线上有5个车站，则这条铁路线上共需准备多少种车票？( 排列问题 )</p>
+<p>(c)10 名同学分成人数相同的数学和英语两个学习小组，共有多少种分法？( 组合问题 )</p>
+<p>(d)10 人聚会，见面后每两人之间要握手相互问候，共需握手多少次？( 组合问题 )</p>
+<p>(e)从4个风景点中选出2个游览，有多少种不同的方法？( 组合问题 )</p>
+<p>(f)从4 个风景点中选出2 个，并确定这2 个风景点的游览顺序，有多少种不同的方法？( 排列问题 )</p>
+<p>(4）请尝试写出 a,b,c这3个元素，选取2个元素的排列和组合的结果分别有哪些？</p>
+<p>组合结果：    ab ac bc                                                     </p>
+<p>排列结果：    ab ba ac ca bc cb                                            </p>
+
+
+<h3>2、排列</h3>
+<p>从n个不同元素中取出m（m≤n）个元素的所有排列的个数，叫做从n个不同元素中取</p>
+<p>出m个元素的排列数，用符号A<sub>n</sub><sup>m</sup>表示（也可写为P)。</p>
+
+<p>A<sub>n</sub><sup>m</sup> = n(n-1)(n -2)..(n - m +1)</p>
+<p>A<sub>n</sub><sup>m</sup>=<span class="omml-frac"><span class="num">n!</span><span class="den">(n-m)!</span></span></p>
+
+<p>问题1：分别从3个不同的乒乓球中选择2个乒乓球依次放在2个不同的盒子里，每个</p>
+<p>盒子各1个，求有多少种不同的选择方法？</p>
+<p>解: <span style="color:#2E74B5">A</span><span style="color:#2E74B5"><sup>2</sup></span><span style="color:#2E74B5"><sub>3</sub></span><span style="color:#2E74B5"> = 6</span></p>
+
+<p>问题2：分别从6个不同的乒乓球中选择3个乒乓球，依次放在3个不同的盒子里，每</p>
+<p>个盒子1个，请问有多少种放法？</p>
+<p>解: <span style="color:#2E74B5">A</span><span style="color:#2E74B5"><sup>3</sup></span><span style="color:#2E74B5"><sub>6</sub></span><span style="color:#2E74B5"> = 120</span></p>
+
+<h3>3、组合</h3>
+<p>从n个不同元素中取出m（m≤n）个元素的所有组合的个数，叫做从n个不同元素中取</p>
+<p>出m个元素的组合数，用符号C表示.</p>
+
+<p>A<sub>n</sub><sup>m</sup>= C<sub>n</sub><sup>m</sup>* A<sub>m </sub><sup>m</sup>= C<sub>n</sub><sup>m</sup>* m！</p>
+<p>C<sub>n</sub><sup>m</sup>=<span class="omml-frac"><span class="num">A<sub>n</sub><sup>m</sup></span><span class="den">A<sub>m</sub><sup>m</sup></span></span>=<span class="omml-frac"><span class="num">n(n - 1)(n - 2) ⋯ (n - m + 1)</span><span class="den">m!</span></span></p>
+<p>C<sub>n</sub><sup>m</sup>=<span class="omml-frac"><span class="num">n!</span><span class="den">m!(n-m)!</span></span></p>
+<p>例子：计算如下算式的运算结果</p>
+<p>(a) C<sub>7</sub><sup>4</sup></p>
+<p>(b) C<sub>10</sub><sup>4</sup></p>
+<p>(c)已知C<sub>n</sub><sup>3</sup>= A<sub>n</sub><sup>2</sup>，求n的值？</p>
+<p>答案：</p>
+<p>(a)        <span style="color:#2E74B5">35</span>          </p>
+<p>(b)        <span style="color:#2E74B5">210</span>          </p>
+<p>(c)        <span style="color:#2E74B5">8</span>           </p>
+
+
+<p>例子：甲、乙、丙、丁4支足球队举行单循环赛；</p>
+<p>(1)各队要举办多少场比赛？列出所有各场比赛的双方；</p>
+<p>答案：</p>
+<p>C<sub>4</sub><sup>2</sup><span style="color:#2E74B5"> </span><span style="color:#2E74B5">= 6</span></p>
+<p><span style="color:#2E74B5">甲乙、甲丙、甲丁、乙丙、乙丁、丙丁</span></p>
+
+<p>(2)有多少种冠亚军的组合？列出所有冠亚军的可能情况：</p>
+<p>答案：A<sub>4</sub><sup>2</sup>=12</p>
+
+<p>例子：一位教练的足球队共有17名初级学员，他们中以前没有一人参加过比赛。按照足球比赛规则，比赛时一个足球队的上场队员是11人；</p>
+<p>（1）这位教练从这 17名学员中可以形成多少种学员上场方案？</p>
+<p>答案：C<sub>17</sub><sup>11</sup><span style="color:#2E74B5"> </span><span style="color:#2E74B5">= 12376</span></p>
+
+<p>（2）如果在选出11名上场队员时，还要确定其中的守门员，那么教练员有多少种方式做这件事情？</p>
+<p>答案：C<sub>17</sub><sup>10</sup><span style="color:#2E74B5">*</span>C<sub>7</sub><sup>1</sup><span style="color:#2E74B5"> </span><span style="color:#2E74B5">/ </span>C<sub>17</sub><sup>11</sup><span style="color:#2E74B5">*</span>C<sub>11</sub><sup>1</sup><span style="color:#2E74B5"> </span><span style="color:#2E74B5">/ </span>C<sub>17</sub><sup>1</sup><span style="color:#2E74B5">*</span>C<sub>16</sub><sup>10</sup><span style="color:#2E74B5"> </span><span style="color:#2E74B5">= 136136</span></p>
+
+
+<p><strong><span style="font-weight:700">例子：</span></strong></p>
+<p>（1）平面内有10个点，以其中每2个点为端点的线段共有多少条？</p>
+<p>答案：C<sub>10</sub><sup>2</sup><span style="color:#2E74B5"> </span><span style="color:#2E74B5">= 45</span></p>
+
+<p>（2）平面内有10个点，以其中每2 个点为端点的有向线段共有多少条？</p>
+<p>答案：A<sub>10</sub><sup>2</sup><span style="color:#2E74B5"> </span><span style="color:#2E74B5">= 90</span></p>
+
+<p><strong><span style="font-weight:700">例子：</span></strong></p>
+<p>（1）凸五边形有多少条对角线？</p>
+<p>答案：C<sub>5</sub><sup>2</sup><span style="color:#2E74B5"> </span><span style="color:#2E74B5">– 5(5 </span><span style="color:#2E74B5">条边不是对角线</span><span style="color:#2E74B5">) = 5</span></p>
+
+<p>（2）凸n（n3）边形有多少条对角线？</p>
+<p>答案：C<sub>n</sub><sup>2</sup><span style="color:#2E74B5"> </span><span style="color:#2E74B5">– </span><span style="color:#2E74B5">n</span></p>
+
+<h3>4、排列组合解题技巧</h3>
+
+<h3>（1）知识点小结</h3>
+
+<p><span style="font-weight:700">A、分类计数原理</span>：做一件事情，完成它可以有n类办法，在第一类办法中有m种不同的方法，在第二类办法中有m种不同的方法，⋯，在第n类办法中有 m种不同的方法，那么完成这件事共有 N =  m<sub>1</sub>+m<sub>2</sub>+⋯+m<sub>n</sub><sub>. </sub>种不同的方法。</p>
+
+<p><span style="font-weight:700">B、分步计数原理：</span>做一件事情，完成它需要分成n个步骤，做第一步有m 种不同的方</p>
+<p>法，做第二步有种不同的方法，⋯，做第n步有 m<sub>n</sub>种不同的方法，那么完成这件事有</p>
+<p>N =  m<sub>1</sub>*m<sub>2</sub>*⋯m<sub>n</sub><sub>. </sub><sub> </sub>，种不同的方法。</p>
+
+<p><span style="font-weight:700">C、可重排列</span><span style="font-weight:700">：</span>在m个不同的元素中，每次取出n个元素，元素可以重复出现，按照一定的顺序那么第一、第二⋯第n位是的选取元素的方法都是m种；所以从m个不同的元素中，每次取出n个元素的可重复的排列数为  m<sup>n</sup>  <sup> </sup></p>
+
+<h3>D、解排列组合问题</h3>
+<p>① 要弄清一件事是“分类”还是“分步”完成；</p>
+<p>② 对于元素之间的关系，还要考虑是“有序的”还是“无序的，也就是会正确使用分</p>
+<p>类计数原理和分步计数原理、排列定义和组合定义；</p>
+
+<h3>（2）解题技巧</h3>
+<h4>技巧1：相邻问题—捆绑法</h4>
+<p>例：7名学生站成一排，甲、乙必须站在一起，有多少不同排法？</p>
+<p><span style="color:#2E74B5">解：</span><span style="color:#2E74B5">两个元素排在一起的问题可用“捆绑”法解决，先将甲乙二人看作一个元素与其他</span></p>
+<p><span style="color:#2E74B5">五人进行排列，并考虑甲乙二人的顺序，所以共有 A(6/6）*A(2/2)=1440种。</span></p>
+
+<p>例：5个男生3个女生排成一排，3个女生要排在一起，有多少种不同的排法？</p>
+
+<p><span style="color:#2E74B5">解：</span><span style="color:#2E74B5">因为女生要排在一起，所以可以将3个女生看成是一个人，与5个男生作全排列</span><span style="color:#2E74B5">,</span><span style="color:#2E74B5">因此有 </span><span style="color:#2E74B5"> A(6/6) </span><span style="color:#2E74B5"> 种排法，其中女生内部也有 </span><span style="color:#2E74B5"> A(3/3) </span><span style="color:#2E74B5"> 种排法;根据乘法原理，共有 </span><span style="color:#2E74B5"> A(3/3）* A(6/6) = 4320 </span><span style="color:#2E74B5"> 种不同的排法。</span></p>
+
+
+<h4>技巧2：不相邻问题—一选空插入法</h4>
+<p>例：7名学生站成一排，甲乙互不相邻，有多少不同排法？</p>
+
+<p><span style="color:#2E74B5">解：</span><span style="color:#2E74B5">甲、乙二人不相邻的排法一般应用“插空”法，所以甲、乙二人不相邻的排法总数计算应为： </span><span style="color:#2E74B5"> A(5/5)*A(2/6)=3600 </span><span style="color:#2E74B5"> 种。</span></p>
+
+
+<p>例：学校组织老师学生一起看电影，同一排电影票 12张，8个学生，4个老师，要求老师在学生中间，且老师互不相邻，共有多少种不同的坐法？（写出计算公式，不需要计算）</p>
+
+<p><span style="color:#2E74B5">解：</span><span style="color:#2E74B5">先排学生共有 </span><span style="color:#2E74B5"> A(8/8) </span><span style="color:#2E74B5"> 种排法，然后把老师插入学生之间的空档，共有7个空档可插，选其中的</span><span style="color:#2E74B5"> </span><span style="color:#2E74B5"> 4 </span><span style="color:#2E74B5"> 个空档，共有 </span><span style="color:#2E74B5"> A(4/7</span><span style="color:#2E74B5">) </span><span style="color:#2E74B5"> 种选法。根据乘法原理，共有的不同坐法为 </span><span style="color:#2E74B5"> A(8/8)* A(4/7)=33868800</span><span style="color:#2E74B5">。</span></p>
+
+
+<h4>技巧3：复杂问题—一总体排除法或排异法</h4>
+<p>例：正六边形的中心和顶点共7个点,以其中3个点为顶点的三角形共有 32 个。</p>
+
+<p><span style="color:#2E74B5">解：</span><span style="color:#2E74B5">从7 个点中取3 个点的取法有</span><span style="color:#2E74B5">C(3/7</span><span style="color:#2E74B5">)</span><span style="color:#2E74B5">种，但其中正六边形的对角线所含的中心和顶点三点共线不能组成三角形，有3条，所以满足条件的三角形共有</span><span style="color:#2E74B5"> C(3/7)-3=32 </span><span style="color:#2E74B5">个。</span></p>
+
+
+<p>例：从43 人中任抽5人，正、副班长、团支部书记至少有一人在内的抽法有多少种？</p>
+
+<p><span style="color:#2E74B5">解：</span><span style="color:#2E74B5">43 人中任抽5人的方法C(5/43）种，正副班长，团支部书记都不在内的抽法有C(5/40)种,所以正副班长，团支部书记至少有1人在内的抽法有 </span><span style="color:#2E74B5">C(5/43)-C(5/40</span><span style="color:#2E74B5">)</span><span style="color:#2E74B5"> 种。</span></p>
+
+<p><span style="color:#2E74B5">解法2</span><span style="color:#2E74B5">:</span><span style="color:#2E74B5"> </span><span style="color:#2E74B5">使用分类计数原理，可以分为1个人在内，2个人在内，3个人在内；</span></p>
+<p><span style="color:#2E74B5">共计</span><span style="color:#2E74B5"> </span><span style="color:#2E74B5">= </span>C<sub>3</sub><sup>1</sup><span style="color:#2E74B5">*</span>C<sub>40</sub><sup>4</sup><span style="color:#2E74B5"> </span><span style="color:#2E74B5">+ </span>C<sub>3</sub><sup>2</sup><span style="color:#2E74B5">*</span>C<sub>40</sub><sup>3</sup><span style="color:#2E74B5"> </span><span style="color:#2E74B5">+ </span>C<sub>3</sub><sup>3</sup><span style="color:#2E74B5">*</span>C<sub>40</sub><sup>2</sup><span style="color:#2E74B5"> </span><span style="color:#2E74B5">= 304590</span></p>
+
+
+<h4>技巧4：特殊元素——优先考虑法</h4>
+<p>例：乒乓球队的 10 名队员中有3名主力队员，派5名队员参加比赛，3名主力队员要安排在第一、三、五位置，其余7名队员选2 名安排在第二、四位置，那么不同的出场安排共有(           )种。</p>
+<p><span style="color:#2E74B5">解：</span><span style="color:#2E74B5">由于第一、三、五位置特殊，只能安排主力队员，有 </span><span style="color:#2E74B5"> A(3/3) </span><span style="color:#2E74B5"> 种排法，而其余7名队员选出</span><span style="color:#2E74B5"> </span><span style="color:#2E74B5">2 名安排在第二、四位置，有 </span><span style="color:#2E74B5">A(2/7)</span><span style="color:#2E74B5"> 种排法，所以不同的出场安排共有A(3/3)*A(2/7) = 252种。</span></p>
+
+
+<h4>技巧5：多元问题一一分类讨论法</h4>
+<p>例：某班新年联欢会原定的5个节目己排成节目单，开演前又增加了两个新节目；如果将这两个节目插入原节目单中，那么不同插法的种数为      42        </p>
+<p>解：增加的两个新节目，可分为相邻与不相邻两种情况</p>
+
+<p>(1)不相邻：共有  A(2/6)  种：</p>
+<p>(2)相邻：共有   A(2/2)*A(1/6)   种。故不同插法的种数为：  30+12=42    ；</p>
+
+<p>该题的另外一个解法为：</p>
+<p>(1)7个节目的总排法为  A(7/7)   </p>
+<p>(2)但其中5 个节目是预先排好的，排法为   A(5/5)   </p>
+<p>(3)那么剩余的2 个节目的排法就要去掉这个重复的 5 个节目的排法，结果为 A(7/7)/A(5/5) = 7*6 = 42 </p>
+
+
+<h4>技巧 6：混合问题——先选后排法</h4>
+<p>例：从黄瓜、白菜、油菜、扁豆4种蔬菜品种中选出3种，分别种在不同土质的三块土地上，其中黄瓜必须种植，不同的种植方法共有          种。</p>
+
+<p><span style="color:#2E74B5">解：</span><span style="color:#2E74B5">先选后排，分步实施。由题意，不同的选法有</span><span style="color:#2E74B5"> </span><span style="color:#2E74B5"> C(2/3</span><span style="color:#2E74B5">)</span><span style="color:#2E74B5"> </span><span style="color:#2E74B5"> 种，不同的排法有</span><span style="color:#2E74B5"> </span><span style="color:#2E74B5">A(3/3</span><span style="color:#2E74B5">)</span><span style="color:#2E74B5">故不同的种植方法共有 </span><span style="color:#2E74B5"> C(2/3)*A(3/3) = 18 </span><span style="color:#2E74B5"> </span></p>
+
+<h4>技巧7：相同元素分配--档板分隔法</h4>
+<p><strong><span style="font-weight:700;color:#FF0000">挡板法的使用前提：（1）元素相同</span><span style="font-weight:700;color:#FF0000"> </span><span style="font-weight:700;color:#FF0000">(2</span><span style="font-weight:700;color:#FF0000">)</span><span style="font-weight:700;color:#FF0000">结果有序</span></strong></p>
+<p>例：8本相同的书发给3个同学，每人至少一本，求不同分法的种数有__种。</p>
+
+<p><span style="color:#2E74B5">解：</span><span style="color:#2E74B5">8本相同书，有7个空格，插入2块板子，分成3份，C(2/7）=21种。</span></p>
+
+<p>例：8本相同的书发给3个同学，<span style="font-weight:700">可以有同学没有</span>，求不同分法的种数有种。</p>
+
+<p><span style="color:#2E74B5">解：</span><span style="color:#2E74B5">先</span><span style="color:#2E74B5">把</span><span style="color:#2E74B5"> 3 本空的书</span><span style="color:#2E74B5">分给</span><span style="color:#2E74B5">3</span><span style="color:#2E74B5">个同学，一起放到</span><span style="color:#2E74B5">集合中，有11本</span><span style="color:#2E74B5">书</span><span style="color:#2E74B5">，分给3人，</span><span style="color:#2E74B5">可以有同学没有</span><span style="color:#2E74B5">C(2/10)。</span></p>
+
+<p>例：8个相同的球，放到3个相同的盘子中，每个盘子至少有1个，有几种放法？</p>
+
+<p><span style="color:#2E74B5">解：</span><span style="color:#2E74B5">采用枚举法，116、125、134、224、233，共有5种放法</span><span style="color:#2E74B5">，</span><span style="font-weight:700;color:#FF0000">注意这题是没有顺序要求，所以不能用挡板法</span></p>
+
+<p>例：把 10 本相同的书发给编号为1，2，3的三个学生阅览室，每个阅览室分得的书的本数不小于其编号数，试求不同分法的种数有种。</p>
+
+<p>解：<span style="color:#2E74B5">先分别给</span><span style="font-weight:700;color:#2E74B5">1、2、3</span><span style="color:#2E74B5"> 号阅览室分配 </span><span style="font-weight:700;color:#2E74B5">0、1、2</span><span style="color:#2E74B5">本书，然后把剩下的 7 本书分配给这3个阅览室，要求每个阅览室至少再分到1本。那么在7本书中有6个空，任意选取2个空，就可以把这 7 本书分成左、中、右3个部分，分别分给3 个图书室，所以不同的分法共有C(2/6)=15</span></p>
+
+
+<h4>技巧8：转化法</h4>
+<p>例：高二年级8个班，组织一个 12个人的年级学生分会，每班要求至少1人，名额分配方案有             种？</p>
+
+<p>转化法：对于某些较复杂的或较抽象的排列组合问题，可以利用转化思想，将其化归简单的、具体的问题来求解。</p>
+
+<p><span style="color:#2E74B5">解：</span><span style="color:#2E74B5">此题若直接去考虑的话，就会比较复杂。但如果我们将其转化为等价的其他问题，</span></p>
+<p><span style="color:#2E74B5">就会显得比较清楚，方法简单，结果容易理解。此题可以转化为：插板问题，结果为</span></p>
+<p><span style="color:#2E74B5">C(7/11) = 330</span></p>
+
+
+<h3>5、关于排列组合问题的小结</h3>
+<p>分清排列（先取再排）和组合（只取不排）</p>
+<p>注：按指定的一种顺序排列的问题，实质是组合问题</p>
+
+
+
+<h2>7.2 基本的解题方法</h2>
+<p>(1)特优法：优先处理特殊元素（位置）法：</p>
+<p>(2)捆绑法：某些元素要求必须相邻时，可以先将这些元素看作一个元素，与其他元素排列后，再考虑相邻元素的内部排列。</p>
+<p>(3)插空法：某些元素不相邻排列时，可以先排其他元素，再将这些不相邻元素插入空挡。</p>
+<p>(4）对于含“至多”、“至少”的问题，宜用排除法或分类解决；</p>
+<p>涉及“多面手”的问题，一般分类解决。</p>
+<p>(5)不同元素的均匀分组：将m 个不同元素均匀分成n组，有()种分法；</p><figure><img src="/images/csp/7/img-01.png" alt="公式"/></figure>
+
+<p>例：6个不同颜色的乒乓球分成3组，每组 2,个，请问有多少种分法？</p>
+
+<p><span class="omml-frac"><span class="num">C<sub>6</sub><sup>2</sup>C<sub>4</sub><sup>2</sup>C<sub>2</sub><sup>2</sup></span><span class="den">A<sub>3</sub><sup>3</sup></span></span></p>
+
+<p>(6) 挡板法：相同元素分配问题</p>
+<p>将n个相同元素分给m个不同单位，每个单位至少一个元素，有<span style="font-weight:700">(</span>  C<sub>n-1</sub><sup>m-1</sup>   )种分法；</p>
+
+<h2>7.3 常用的原理小结</h2>
+<h3>1、容斥原理</h3>
+<p>容斥原理是在计数时，必须确保没有重复，没有遗漏，使重叠部分不被重复计算。</p>
+<p>基本思想是：</p>
+<p>1、先不考虑重叠的情况，把包含于某内容中的所有对象的数目先计算出来；</p>
+<p>2、然后再把计数时重复计算的数目排斥出去，使得计算的结果既无遗漏又无重复。</p>
+<p>如果被计数的事物有A、B、C三类，那么，A类和B类和C类元素个数总和=A类元素个数+B类元素个数+C类元素个数 - 既是A类又是B类的元素个数 - 既是A类又是C类的元素个数 - 既是B类又是C类的元素个数+既是A类又是B类而且是C类的元素个数。</p>
+
+<p>(A∪B∪C) = A+B+C - A∩B - B∩C - C∩A + A∩B∩C)</p>
+<p>(A ∪B) = A + B – A ∩ B</p>
+<p>例:</p>
+<p>A = {1,2,3,4}</p>
+<p>B = {3,4,5,6}</p>
+<p>求: A∪B= A+ B- A∩B={1,2,3,4,3,4,5,6}-{3,4}={1,2,3,4,5,6}</p>
+
+<p>例如：一次期末考试，某班有15人数学得满分，有12 人语文得满分，并且有4人语、数都是满分，那么这个班至少有一门得满分的同学有多少人？</p>
+
+<p><span style="color:#4472C4">解析：被计数的事物有语、数得满分两类，“数学得满分”称为“A 类元素”，“语文得满分”称为“B类元素”，“语、数都是满分”称为“既是A类又是B类的元素”，“至少有一门得满分的同学”称为“A类和B类元素个数”的总和。为 </span></p>
+<p><span style="color:#4472C4">(A</span><span style="color:#4472C4"> </span>∪B<span style="color:#4472C4">)</span><span style="color:#4472C4"> = A + B – A </span>∩ B<span style="color:#4472C4"> </span><span style="color:#4472C4">= </span><span style="color:#4472C4">15+12-4</span><span style="color:#4472C4">=</span><span style="color:#4472C4">23.</span></p>
+
+<div class="quiz-block">
+<p>【NOIP2018 普及组】 13. 10000 以内，与 10000 互质的正整数有( B )个。</p>
+<p>A. 2000       B. 4000       C. 6000       D. 8000</p>
+
+<p><span style="color:#2E74B5">解析</span><span style="color:#2E74B5">:互质的意思，与10000没有公约数，即不能被10000 的质因子整除。</span></p>
+<p><span style="color:#2E74B5">10000 分解质因子：10000 = 2*2*2*2*5*5*5*5-</span></p>
+<p><span style="color:#2E74B5">10000以内被2整除的数有 5000个</span></p>
+<p><span style="color:#2E74B5">10000 以内被 5整除的数有2000个</span></p>
+<p><span style="color:#2E74B5">两者存在重复计算的数，即被10 整除的数，有1000个</span></p>
+<p><span style="color:#2E74B5">被2或5整除的数有：5000 + 2000 - 1000 = 6000</span></p>
+<p><span style="color:#2E74B5">互质的数有：10000</span><span style="color:#2E74B5"> </span><span style="color:#2E74B5">– 6000</span><span style="color:#2E74B5"> </span><span style="color:#2E74B5">= 4000个</span></p>
+
+</div>
+<h3>2、鸽巢原理/抽屉原理</h3>
+<p>桌上有十个苹果，要把这十个苹果放到九个抽屉里，无论怎样放，我们会发现至少会有一个抽屉里面放不少于两个苹果。这一现象就是我们所说的“抽屉原理”。</p>
+<p>抽屉原理的一般含义为：“如果每个抽屉代表一个集合，每一个苹果就可以代表一个元素，假如有 n+1 个元素放到n个集合中去，其中必定有一个集合里至少有两个元素。”抽屉原理有时也被称为鸽巢原理。它是组合数学中一个重要的原理。</p>
+<p>抽屉原理的另一个表达：<span style="font-weight:700">如果有n个集合和 kn+1 个元素，将元素放入集合中之后，至少有1个集合中有k+1个元素</span>。</p>
+<p>运用抽屉原理的核心是分析清楚问题中，哪个是物件，哪个是抽屉。</p>
+
+<p>例子：属相是有12个，那么任意 37个人中，一个属相至少不少于多少个人。</p>
+
+<p><span style="color:#2E74B5">解析：</span><span style="color:#2E74B5">根据鸽巢原理（也称为鸽笼原理或抽屉原理），当将多个对象放入少量的容器时，至少有一个容器会包含多个对象。在这个问题中，属相可以看作容器，人数可以看作对象。如果有12个属相，那么按照鸽巢原理，当任意37个人中，每个人都归属于某个属相，至少有一个属相会包含不少于 ceil(37/12) 个人，其中 ceil 表示向上取整。</span></p>
+<p><span style="color:#2E74B5">计算 ceil(37/12) 得到 4。因此，任意37个人中，至少有一个属相会包含不少于4个人。</span></p>
+
+<div class="quiz-block">
+<p>【NOIP2019 普及组】12.一副纸牌除掉大小王有52张牌，四种花色，每种花色13张。假设从这 52 张牌中随机抽取 13 张纸牌，则至少( A )张牌的花色一致。</p>
+<p>A. 4          B. 2.       C.3.          D.5<span style="color:#2E74B5">解析</span><span style="color:#2E74B5">:</span><span style="color:#2E74B5"> </span><span style="color:#2E74B5">根据抽屉原理，如果我们从一副不含大小王的52张纸牌中随机抽取13张纸牌，然后考虑每种花色作为“抽屉”，我们有4个“抽屉”（每种花色一个抽屉）和13张“物品”（纸牌）。现在，我们要将这13张纸牌放入这4个抽屉中。</span></p>
+<p><span style="color:#2E74B5">根据抽屉原理，至少有一个抽屉内的纸牌数量大于等于总纸牌数除以抽屉数的平均值，即：至少纸牌数量 = ceil(13 / 4) = 4</span></p>
+<p><span style="color:#2E74B5">因此，从这副52张纸牌中随机抽取13张纸牌，至少会有4张纸牌的花色是一致的。</span></p>
+<p><span style="color:#2E74B5">解析</span><span style="color:#2E74B5">:</span><span style="color:#2E74B5"> </span></p>
+<p><span style="color:#2E74B5">0000x-&gt;1种</span></p>
+<p><span style="color:#2E74B5">000xx-&gt;4种</span></p>
+<p><span style="color:#2E74B5">00xxx-&gt;7种</span></p>
+<p><span style="color:#2E74B5">0xxxx-&gt;4种（1115 1124 1133 1223)</span></p>
+<p><span style="color:#2E74B5">xxxxx-&gt;2种（11114 11123)</span></p>
+
+</div>

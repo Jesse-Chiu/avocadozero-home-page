@@ -1,0 +1,426 @@
+<h2>4.1 指针(Pointer)</h2>
+<h3>1、什么是指针?</h3>
+<p>指针 (Pointer):<strong>变量的地址</strong>，通过它能找到以它为地址的内存单元。<br/><strong>例子:理解指针的概念，区分什么是地址(指针)，什么是地址指向的值!</strong><br/><strong>理解如何通过指针修改变量的值!</strong></p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    int x = 19;
+    //定义指针，指向 x 的地址
+    int *p = &amp;x;
+    //p 是 int*类型的指针(整数的地址)
+    cout &lt;&lt; p &lt;&lt; endl;
+    //*p 不是地址，是 p 这个地址指向的值
+    cout &lt;&lt; *p &lt;&lt; endl;
+    //修改指针指向的变量的值
+    *p = *p + 2;
+    cout &lt;&lt; p &lt;&lt; &quot;&quot; &lt;&lt; *p &lt;&lt; endl;
+    cout &lt;&lt; x &lt;&lt; endl;
+    //数组的本质是数组中下标为 0 的元素的地址
+    int arr[5] = {0};
+    cout &lt;&lt; &amp;arr &lt;&lt; &quot; &quot; &lt;&lt; &amp;arr[0] &lt;&lt; &quot; &quot; &lt;&lt; arr &lt;&lt; endl;
+    //采用 scanf 读入
+    int a, b;
+    scanf(&quot;%d%d&quot;, &amp;a, &amp;b);
+    printf(&quot;a=%d\n&quot;, a);
+    printf(&quot;b-%d\n&quot;, b);
+    printf(&quot;%d+%d-=%d\n&quot;, a, b, a + b);
+    return 0;
+}</code></pre>
+<p>问题:对比如下代码输出的结果，理解指针和普通变量的不同</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    int x = 10;
+    int y = x;
+    y = y + 2;
+    cout &lt;&lt; y &lt;&lt; endl &lt;&lt; x &lt;&lt; endl;
+    int *p = &amp;x;
+    *p = *p + 2;
+    cout &lt;&lt; *p &lt;&lt; endl &lt;&lt; x &lt;&lt; endl;
+    int a = 10;
+    int *p2 = &amp;a;
+    cout &lt;&lt; p2 &lt;&lt; &quot; &quot; &lt;&lt; a &lt;&lt; endl;
+    (*p2)++;//注意++的优先级高于*
+    cout &lt;&lt; p2 &lt;&lt; &quot; &quot; &lt;&lt; a &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<p><span style="color:#FF0000">例子</span><span style="color:#FF0000">:*p++</span><span style="color:#FF0000">和</span><span style="color:#FF0000">(*p)++</span><span style="color:#FF0000">的区别</span></p>
+<pre><code class="language-cpp">intx = 19:
+int*p = &amp;x;
+cout&lt;&lt;p&lt;&lt;endl&lt;&lt;x&lt;&lt;end1;
+*p++;//++的优先级高于*
+cout&lt;&lt;p&lt;&lt;endl&lt;&lt;x&lt;&lt;endl;</code></pre>
+<p><span style="color:#FF0000">注意</span><span style="color:#FF0000">:</span><span style="color:#FF0000">上述代码并不能通过指针修改</span><span style="color:#FF0000">X</span><span style="color:#FF0000">的值，</span><span style="color:#FF0000">*p++</span><span style="color:#FF0000">相当于</span><span style="color:#FF0000">p++</span><span style="color:#FF0000">是在对指针的值自增</span><span style="color:#FF0000">(</span><span style="color:#FF0000">相当于地址值自增</span><span style="color:#FF0000">)</span><span style="color:#FF0000">。</span></p>
+<h3>2、结构体指针示例</h3>
+<p>例子:理解结构体指针的各种定义方法</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+struct stu {
+    char name[1001];
+    double score;
+};
+int main() {
+    // 定义结构体变量
+    struct stu s;
+    strcpy(s.name, &quot;ZhangSan&quot;);
+    s.score = 99.99;
+    //输出结构体
+    cout &lt;&lt; s.name &lt;&lt; &quot; &quot; &lt;&lt; s.score &lt;&lt; endl;
+
+    //定义指针，指向结构体 struct stu *stu = &amp;s; struct 可以省略
+    stu *stu1 = &amp;s;
+    //在结构体指针中，不能用.来指向结构体成员变量(stu 是地址)
+    cout &lt;&lt; stu1-&gt;name &lt;&lt; &quot; &quot; &lt;&lt; stu1-&gt;score &lt;&lt; endl;
+    //(*stu)是结构体
+    cout &lt;&lt; (*stu1).name &lt;&lt; &quot; &quot; &lt;&lt; (*stu1).score &lt;&lt; endl;
+
+    //new 结构体对象，直接赋值给一个指针
+    stu *stu2 = new stu;
+    strcpy(stu2-&gt;name, &quot;ZhangSan&quot;);
+    stu2-&gt;score = 99.8;
+    cout &lt;&lt; stu2-&gt;name &lt;&lt; &quot; &quot; &lt;&lt; stu2-&gt;score &lt;&lt; endl;
+    delete stu2;//释放内存
+
+    //malloc 结构体对象，直接赋值给一个指针
+    stu *stu3 = NULL;
+    //sizeof(): 计算一个变量占用的字节数
+    stu3 = (stu *) malloc(sizeof(stu));
+    strcpy(stu3-&gt;name, &quot;Wangwu&quot;);
+    stu3-&gt;score = 98;
+    cout &lt;&lt; stu3-&gt;name &lt;&lt; &quot; &quot; &lt;&lt; stu3-&gt;score &lt;&lt; endl;
+    free(stu3);//释放内存
+    return 0;
+}</code></pre>
+<p>注意:理解malloc和free函数的作用!<br/>(1) malloc:<strong>动态内存分配</strong>，用于申请一块连续的指定大小的内存块区域并返回分配的内存区域地址。<br/>(2) free函数能释放某个动态分配的地址，表明不再使用这块动态分配的内存了，实现把之前动态申请的内存返还给系统。<br/>(3)<strong>如果结构体中有</strong><strong>string</strong><strong>类型的成员，那么不能使用</strong><strong>malloc</strong><strong>动分配内存</strong><strong>(</strong><strong>可以使用</strong><strong>new)</strong><strong>，这是因为</strong><strong>malloc/free</strong><strong>和</strong><strong>new/delete</strong><strong>的重要区别之一是</strong>:<br/>new 会先调用 operator new 函数，申请足够的内存 (通常底层使用 malloc 实现)。然后调用类型的构造函数，初始化成员变量，最后返回自定义类型指针。delete 先调用析构函数，然后调用 operator delete 函数释放内存 (通常底层使用 free 实现)。<br/>malloc/free 是库函数，只能动态的申请和释放内存，无法强制要求其做自定义类型对象构造和析构工作。<br/>所以 string 的构造函数并没有被调用，name 没有被初始化，改为 new 能正常运行。</p>
+<h2>4.2 链表</h2>
+<h3>1、链表介绍</h3>
+<h3>(1) 线性表的优点</h3>
+<p>A、无需为表示结点间的逻辑关系而增加额外的存储空间:<br/>B、可方便地随机存取表中的任一元素。</p>
+<h3>(2) 线性表的缺点</h3>
+<p>A、插入或删除平均需要移动一半的结点<br/>B、顺序表要求占用连续的存储空间;<br/>问题:存储一个班同学的成绩(人数不确定)，如何存储?<br/>解决方法 1:定义尽可能长的数组来存储!</p>
+<table><tbody><tr><td>90</td><td>88</td><td>67</td><td>89</td><td>77</td><td>56</td><td>90</td><td>…</td><td>98</td><td>100</td></tr></tbody></table>
+<p>解决方法 2:利用链表来存储!</p>
+<figure><img src="/images/csp/4/img-01.png" alt="链表示意图" loading="lazy"></figure>
+<p>注意:<strong>链表结构并不一定占用连续的内存空间，其占用的内存空间可以不连续!</strong></p>
+<h3>(3)表的基本概念</h3>
+<p>A.结点(Node)组成</p>
+<table><tbody><tr><td>数据域</td><td>指针域</td></tr></tbody></table>
+<p>B.数据域:存储数据元素本身<br/>C.指针域:存储邻接元素的存储地址(位置)<br/>D.链接方式:<br/>单链表:每个结点只有一个指针域。<br/>双向链表:每个结点有两个指针域<br/>循环链表:是一个首尾相接的链表<br/>E.头指针 : 指向链表头结点的指针</p>
+<h3>2、链表的基本操作</h3>
+<p>(1)要实现的基本操作:<br/>add(<strong>int </strong>x):在链表未尾追加元素(注意头结点)<br/>insert(<strong>int </strong>n,<strong>int</strong><strong> </strong>x):在链表中插入一个元素(注意头结点)<br/>deldata(<strong>int </strong>data):删除链表中第一个出现的 data 的值(注意: 如果 data 是头节点)<br/>delpos(<strong>int </strong>n):删除链表的第n个节点(注意如果 n=l，也就是删除头结点的情况)<br/>display():显示链表</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+//结点定义
+struct Node {
+    int data;
+    struct Node *next;
+};
+//头结点Node
+Node *head = NULL;
+//在链表末尾追加
+void add(int x) {
+    //如果有 head 的值
+    if (head != NULL) {
+        //要追加的节点
+        Node *a = new Node;
+        a-&gt;data = x;
+        a-&gt;next = NULL;
+        Node *p = head;
+        //移动到最后一个节点
+        while (p-&gt;next != NULL) {
+            p = p-&gt;next;
+        }
+        p-&gt;next = a;
+    } else {
+        head = new Node;
+        head-&gt;data = x;
+        head-&gt;next = NULL;
+    }
+}
+//在中间追加元素 (在第 n 个元素的位置)
+void insert(int n, int x) {
+    //新节点
+    Node *d = new Node;
+    d-&gt;data = x;
+    d-&gt;next = NULL;
+    //如果是头结点
+    if (n == 1) {
+        d-&gt;next = head;
+        head = d;
+    } else {
+        int i;
+        Node *p = head;
+        for (i = 1; i &lt;= n - 2; i++) {
+            p = p-&gt;next;
+            if (p == NULL) {
+                break;
+            }
+        }
+        if (p == NULL) {
+            cout &lt;&lt; &quot;n 有误&quot; &lt;&lt; endl;
+        } else {
+            d-&gt;next = p-&gt;next;
+            p-&gt;next = d;
+        }
+    }
+}
+//删除链表中第一个出现的 data
+void delData(int data) {
+    Node *p = head, *pre = NULL;
+    while (p != NULL) {
+        if (data == p-&gt;data) {
+            if (p == head) {
+                head = p-&gt;next;
+            } else {
+                pre-&gt;next = p-&gt;next;
+            }
+            delete p;
+            break;
+        }
+        pre = p;
+        p = p-&gt;next;
+    }
+}
+//删除某个位置的元素
+void delPos(int n) {
+    Node *p = head, *t;
+    //如果要删除头节点
+    if (n == 1) {
+        if (head != NULL) {
+            head = head-&gt;next;
+            delete p;
+        } else {
+            cout &lt;&lt; &quot;链表空&quot; &lt;&lt; endl;
+        }
+    } else {
+        int i;
+        //移动到要删除位置之前的节点
+        for (i = 1; i &lt;= n - 2; i++) {
+            p = p-&gt;next;
+            if (p == NULL) break;
+        }
+        if (p == NULL || p-&gt;next == NULL) {
+            cout &lt;&lt; &quot;n 的值有误!&quot; &lt;&lt; endl;
+        } else {
+            t = p-&gt;next;
+            p-&gt;next = t-&gt;next;
+            delete t;
+        }
+    }
+}
+//输出链表
+void display() {
+    Node *p = head;
+    while (p != NULL) {
+        cout &lt;&lt; p-&gt;data &lt;&lt; &quot; &quot;;
+        p = p-&gt;next;
+    }
+    cout &lt;&lt; endl;
+}
+int main() {
+    int order, x, p;
+    cout &lt;&lt; &quot;输入指令:&quot;;
+    while (1 == 1) {
+        cout &lt;&lt; &quot;1:追加,2:插入,3:删除值,4:删除位置,5:显示!&quot; &lt;&lt; endl;
+        cin &gt;&gt; order;
+        if (order == 1) {
+            cin &gt;&gt; x;
+            add(x);
+            display();
+        } else if (order == 2) {
+            cin &gt;&gt; p &gt;&gt; x;
+            insert(p, x);
+            display();
+        } else if (order == 3) {
+            cin &gt;&gt; x;
+            delData(x);
+            display();
+        } else if (order == 4) {
+            cin &gt;&gt; x;
+            delPos(x);
+            display();
+        } else if (order == 5) {
+            display();
+        }
+    }
+}</code></pre>
+<p><strong>单向链表操作的重点:</strong></p>
+<h3>1、在头部位置插入 p</h3>
+<pre><code class="language-cpp">p-&gt;next = head;
+head = p;</code></pre>
+<h3>2、在p后面插入 d</h3>
+<pre><code class="language-cpp">d-&gt;next = p-&gt;next;
+p-&gt;next = d;</code></pre>
+<h3>3、删除 p，p 的前一个元素是 pre</h3>
+<pre><code class="language-cpp">pre-&gt;next = p-&gt;next;
+delete p;</code></pre>
+<p><strong>注意双向列表的操作</strong></p>
+<figure><img src="/images/csp/4/img-02.png" alt="链表示意图" loading="lazy"></figure>
+<p><strong>插入的实现:</strong><strong></strong></p>
+<pre><code class="language-cpp">e-&gt;prev= p;
+e-&gt;next = p-&gt;next;
+p-&gt;next-&gt;prev=e;
+p-&gt;next = e;</code></pre>
+<p><strong>删除的实现:</strong></p>
+<pre><code class="language-cpp">p2-&gt;next = p2-&gt;next-&gt;next;
+p3-&gt;next-&gt;prev=p2;
+delete p3;</code></pre>
+<h2>4.3 链式栈</h2>
+<figure><img src="/images/csp/4/img-03.png" alt="链表示意图" loading="lazy"></figure>
+<p><strong>入栈的实现:</strong></p>
+<pre><code class="language-cpp">p-&gt;next = top;
+top = p;//修改栈顶位置</code></pre>
+<p><strong>出栈的实现:</strong></p>
+<pre><code class="language-cpp">p = top;
+p = p-&gt;next;
+delete top;
+top = p;</code></pre>
+<h3>(1)栈的基本操作</h3>
+<p>push(intx):入栈<br/>pop(): 出栈<br/>display(): 显示栈</p>
+<h3>(2)实现代码</h3>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+//栈元素
+struct Stack {
+    int data;
+    struct Stack *next;
+};
+//栈顶指针
+Stack *top = NULL;
+//入栈
+void push(int x) {
+    Stack *p = new Stack;
+    p-&gt;data = x;
+    p-&gt;next = top;
+    top = p;//修改栈顶位置
+}
+//出栈
+void pop() {
+    Stack *p = top;
+    if (p != NULL) {
+        cout &lt;&lt; p-&gt;data &lt;&lt; &quot;出栈&quot; &lt;&lt; endl;
+        p = p-&gt;next;
+        delete top;
+        top = p;//修改指针位置
+    } else {
+        cout &lt;&lt; &quot;栈空&quot; &lt;&lt; endl;
+    }
+}
+//获得栈长度
+int getLen() {
+    int len = 0;
+    Stack *p = top;
+    while (p != NULL) {
+        len++;
+        p = p-&gt;next;
+    }
+    return len;
+}
+//显示栈元素
+void display() {
+    Stack *p = top;
+    while (p != NULL) {
+        cout &lt;&lt; p-&gt;data &lt;&lt; &quot; &quot;;
+        p = p-&gt;next;
+    }
+    cout &lt;&lt; endl;
+}
+int main() {
+    int order, x;
+    cout &lt;&lt; &quot;输入指令:&quot; &lt;&lt; endl;
+    while (1 == 1) {
+        cout &lt;&lt; &quot;1:入栈,2:出栈,3:显示,4:求栈长!&quot; &lt;&lt; endl;
+        cin &gt;&gt; order;
+        if (order == 1) {
+            cin &gt;&gt; x;
+            push(x);
+            display();
+        } else if (order == 2) {
+            pop();
+            display();
+        } else if (order == 3) {
+            display();
+        } else if (order == 4) {
+            cout &lt;&lt; getLen() &lt;&lt; endl;
+        }
+    }
+    return 0;
+}</code></pre>
+<h2>4.4 链式队列</h2>
+<figure><img src="/images/csp/4/img-04.png" alt="链表示意图" loading="lazy"></figure>
+<p><strong>入队的实现</strong><strong>:</strong></p>
+<pre><code class="language-cpp">rear-&gt;next = e;
+rear = e;//修改尾指针位置</code></pre>
+<p><strong>出队的实现</strong><strong>:</strong></p>
+<pre><code class="language-cpp">t = front;
+front=front-&gt;next;
+if(front == NULL) rear = NULL:
+deletet;</code></pre>
+<h3>(1)队列基本操作</h3>
+<p>add(<strong>int</strong>x):入队<br/>del():出队<br/>display():显示队</p>
+<h3>(2)实现代码</h3>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+//队列节点
+struct Queue {
+    int data;
+    struct Queue *next;
+};
+//队头
+Queue *front = NULL;
+//队尾
+Queue *rear = NULL;
+//入队
+void add(int value) {
+    Queue *e = new Queue;
+    e-&gt;data = value;
+    e-&gt;next = NULL;
+    //队列第一个元素
+    if (front == NULL) {
+        front = e;
+    } else {
+        rear-&gt;next = e;
+    }
+    rear = e;
+}
+//出队
+void del() {
+    Queue *t;//如果对列有元素
+    if (front != NULL) {
+        cout &lt;&lt; front-&gt;data &lt;&lt; &quot;出队&quot; &lt;&lt; endl;
+        t = front;
+        front = front-&gt;next;
+        if (front == NULL) rear = NULL;
+        delete t;
+    } else {
+        cout &lt;&lt; &quot;队列空&quot; &lt;&lt; endl;
+    }
+}
+//显示队
+void display() {
+    Queue *p = front;
+    while (p != NULL) {
+        cout &lt;&lt; p-&gt;data &lt;&lt; &quot; &quot;;
+        p = p-&gt;next;
+    }
+    cout &lt;&lt; endl;
+}
+int main() {
+    int order, x;
+    cout &lt;&lt; &quot;输入指令:&quot; &lt;&lt; endl;
+    while (1 == 1) {
+        cout &lt;&lt; &quot;1:入队,2:出队,3:显示队!&quot; &lt;&lt; endl;
+        cin &gt;&gt; order;
+        if (order == 1) {
+            cin &gt;&gt; x;
+            add(x);
+            display();
+        } else if (order == 2) {
+            del();
+            display();
+        } else if (order == 3) {
+            display();
+        }
+    }
+    return 0;
+}</code></pre>

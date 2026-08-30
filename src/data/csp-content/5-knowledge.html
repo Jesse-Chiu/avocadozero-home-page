@@ -1,0 +1,126 @@
+<h2>5.1 树</h2>
+<h3>1、常见的数据结构?</h3>
+<p>(1)集合<br/>集合的定义是由一组无序且唯一(即不能重复)的项组成的。不包含任何元素的集合就叫做空集。</p>
+<figure><img src="/images/csp/5/img-01.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<p>(2)线性结构<br/>线性结构是一个有序数据元素的集合常用的线性结构有:线性表，栈，队列，双队列，数组，串。</p>
+<table><tbody><tr><td>元素1</td><td>元素2</td><td>元素3</td><td>元素4</td><td>元素5</td></tr></tbody></table>
+<p>0              1            2            3           4</p>
+<p>(3)树形结构<br/>n 个有限节点组成一个具有层次关系的集合。</p>
+<figure><img src="/images/csp/5/img-02.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<p>(4)图形结构<br/>图形结构 -- 多个对多个，如图。</p>
+<figure><img src="/images/csp/5/img-03.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<h3>2、什么是树?</h3>
+<p>树:是一种数据结构，它是由 n (n&gt;=0) 个有限节点组成一个具有层次关系的集合。树是一类非线性结构。这种结构结点之间有分支，并具有层次关系。它非常类似于自然界中的树。<br/>树的作用:表达家谱顺序、行政组织结构、计算机文件结构、书的教材章节结构等。</p>
+<figure><img src="/images/csp/5/img-04.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<p><strong>树形结构的特征：</strong><br/><span style="color:#FF0000">1、每个结点可以有若干子，但只能有1个父，根没有父；</span><br/><span style="color:#FF0000">2、1棵树只能有1个根</span><span style="color:#FF0000">;</span><br/><span style="color:#FF0000">3、n个结点的树，有n-1条边;</span><br/><span style="color:#FF0000">4、树上没有回路，从任意点A 出发，到另一点 B,只有1条路径；</span></p>
+<h3>3、树的基本概念</h3>
+<p>(1)树是 n (n&gt;=0) 个结点的有限集<br/>(2)当 n=0 时称为空树;<br/>(3)当n&gt;0 时为非空树，在任意一棵非空树中，有<strong>且仅有一个称为根</strong>的结点，其余的结点可分为 m(m &gt;= 0)个互不相交的有限集 T1T2,…Tm，其中每一个集合叉称为一棵树，并且称为根的子树;同理，每一棵子树叉可以分为若干个互不相交的有限集…</p>
+<figure><img src="/images/csp/5/img-05.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<p><strong>总结树的特性:</strong><br/>(1) 空树是树的特例;<br/>(2) 非空树中<strong>至少有一个结点，称为树的根</strong>，只有根结点的树称为最小树,<br/>(3) 在含有多个结点的树中，除根结点外，其余结点构成若干棵子树，<strong>且各子树间互不相交</strong></p>
+<figure><img src="/images/csp/5/img-06.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<figure><img src="/images/csp/5/img-07.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<h3>4、树的基本术语</h3>
+<p>(1) 树的结点:包含一个数据元素及若干个指向其子树的分支;<br/><strong><span style="color:#FF0000">(2) 结点的度:</span></strong>一个结点拥有的子树数目;<br/><strong><span style="color:#FF0000">(3) 树的度:</span></strong>一棵树上所有结点度的最大值;<br/><strong><span style="color:#FF0000">(4) 叶子结点(终端结点):</span></strong>度为零的结点;<br/><strong><span style="color:#FF0000">(5) 分支结点 (非终端结点):</span></strong>度大于零的结点;<br/>(6) 路径(从根到结点的):由从根到该结点所经分支和结点构成 ;<br/>(7) 孩子结点:结点的子树的根称为该结点的孩子结点;<br/>(8) 双亲结点:相应地，该结点称为孩子的双亲结点;<br/>(9) 兄弟:具有同一父结点的子结点互称兄弟;<br/>(10) 堂兄弟:其双亲在同一层的结点互为堂兄弟;<br/>(11) 祖先结点:从根到该结点所经分支上的所有结点;<br/>(12) 子孙结点:以某结点为根的子树中任一结点都称为该结点的子孙;<br/>(13) 结点的层次:从根结点到该结点所经过的路径长度加 1 ;<br/><strong><span style="color:#FF0000">(14) 树的深度:</span></strong>树中叶了结点具有的最大层次数;<br/>(15) 树的宽度:整棵树中某一层中最多的结点数称为树的宽度;<br/>(16) 有序树:如果将树中结点的各子树看成从左至右是有次序的(即不能互换)，则称<br/>该树为有序树，与之相对的是无序树 ;<br/>(17) 第一个孩子:在有序树中，最左边的子树的根称为第一个孩子 ;<br/>(18) 最后一个孩子:在有序树中，最右边的子树的根称为最后一个孩子;</p>
+<p><strong>练习:参照下图的树，回答下列问题</strong></p>
+<figure><img src="/images/csp/5/img-08.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<p>(1) 该树有哪些结点  ABCDEFGHIKLM  其中的叶子节点有  EKLGHIM  ，分支节点有 ABCDFJ 。<br/>(2) 结点A的度为 3 ，结点B 的度为 2 ，树的度为  3 。<br/>(3) 请写出 A 节点到 K 节点经过的路径   A-&gt;B-&gt;F-&gt;K。<br/>(4) H 结点的兄弟结点有 I、J   ,堂兄弟结点有   E、F、G  。<br/>(5) F结点的祖先结点有  B、A  ，子孙结点有   K、L   。<br/>(6) 该树的深度为 4 ，树的宽度为 6 。</p>
+<h3>5、树的表示方法</h3>
+<p>了解树的表示方法</p>
+<figure><img src="/images/csp/5/img-09.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<p><strong>树</strong><strong>（孩子-兄弟）表示法</strong><br/><span style="color:#FF0000">在这种存储方式下，每个结点包括三部分的内容：</span><span style="color:#FF0000">结点值、指向该结点第一个孩子结点的指</span><span style="color:#FF0000">针</span><span style="color:#FF0000">和指向该结点下一个兄弟结点的指</span><span style="color:#FF0000">针</span>。</p>
+<table><tbody><tr><td>FirstChild</td><td>Data</td><td>Nextsiblings</td></tr></tbody></table>
+<figure><img src="/images/csp/5/img-10.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+// 树节点结构
+struct TreeNode {
+    char data;            // 节点数据
+    TreeNode *firstChild; // 第一个孩子节点指针
+    TreeNode *nextSibling; // 下一个兄弟节点指针
+};
+
+// 插入孩子节点
+void insertChild(TreeNode *&amp;parent, char val) {
+    TreeNode *newNode = new TreeNode;
+    newNode-&gt;data = val;
+    newNode-&gt;firstChild = NULL;
+    newNode-&gt;nextSibling = NULL;
+    if (parent-&gt;firstChild == nullptr) {
+        parent-&gt;firstChild = newNode;
+    } else {
+        TreeNode *curr = parent-&gt;firstChild;
+        while (curr-&gt;nextSibling != nullptr) {
+            curr = curr-&gt;nextSibling;
+        }
+        curr-&gt;nextSibling = newNode;
+    }
+}
+// 打印树
+void printTree(TreeNode *root) {
+    if (root == nullptr) {
+        return;
+    }
+    cout &lt;&lt; root-&gt;data &lt;&lt; &quot; &quot;;
+    printTree(root-&gt;firstChild);
+    printTree(root-&gt;nextSibling);
+}
+
+int main() {
+    // 创建根节点
+    TreeNode *root = new TreeNode;
+    root-&gt;data = &#x27;A&#x27;;
+    root-&gt;firstChild = NULL;
+    root-&gt;nextSibling = NULL;
+
+    // 插入孩子节点
+    insertChild(root, &#x27;B&#x27;);
+    insertChild(root, &#x27;C&#x27;);
+    insertChild(root, &#x27;D&#x27;);
+
+    // 插入孩子节点的孩子节点
+    insertChild(root-&gt;firstChild-&gt;nextSibling, &#x27;E&#x27;);
+    insertChild(root-&gt;firstChild-&gt;nextSibling, &#x27;F&#x27;);
+
+    // 打印树
+    printTree(root);
+    return 0;
+}</code></pre>
+<h2>5.2 二叉树</h2>
+<h3>1、什么是二叉树？</h3>
+<p>二叉树是n(n≥0）个结点的有限集合，这个集合或是<strong>空集</strong>，或是由一个根结点以及两棵互<br/>不相交的、被称为根的左子树和右子树所组成：左子树和右子树分别叉是一棵二叉树。<br/>二叉树的特点：每个结点至多只有两棵子树，且二叉树的子树有左右之分，其次序不能任<br/>意颠倒</p>
+<figure><img src="/images/csp/5/img-11.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<p><strong>问题：二叉树和树有哪些不同？</strong><br/>树中结点的最大度数没有限制，而二叉树结点的最大度数为2。<br/>树的结点无左、右之分，而二叉树的结点有左右之分。<br/><strong>问题：</strong>具有3个结点的二叉树可能有   5   种不同形态？普通树有   2   种不同的形态？请分别画出他们。</p>
+<figure><img src="/images/csp/5/img-12.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<h3>2、满二叉树和完全二叉树</h3>
+<p><strong>满二叉树:</strong>棵深度为 k 且有<span style="color:#FF0000">  </span><strong><span style="color:#FF0000">2</span></strong><strong><span style="color:#FF0000"><sup>k</sup></span></strong><strong><span style="color:#FF0000">-1</span></strong><strong><span style="color:#FF0000">  </span></strong> 个结点的二叉树。(特点:每一层上的结点数都是最大结点数)</p>
+<figure><img src="/images/csp/5/img-13.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<p><strong>完全二叉树:</strong> 深度为 k 的，有 n 个结点的二叉树，当且仅当其每一个结点都与深度为k<br/>的满二叉树中编号从 1至n的结点一一对应(<strong>特点: 至多只有最下面两层的结点的度可以小于 2，且倒二层如果只有一个孩子，那必是左孩子。</strong>)</p>
+<figure><img src="/images/csp/5/img-14.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<p>注意:满二叉树是叶子一个也不少的树，而完全二叉树虽然前 n-1 层是满的，但最底层却允许在右边缺少连续若干个结点。满二叉树是完全二叉树的一个特例。一棵深度为k的完全二叉树，至少有<strong><span style="color:#FF0000">  </span></strong><strong><span style="color:#FF0000">  </span></strong><strong><span style="color:#FF0000">2</span></strong><strong><span style="color:#FF0000"><sup>k-1</sup></span></strong><strong><span style="color:#FF0000"> </span></strong>个结点，最多有<strong><span style="color:#FF0000"> </span></strong><strong><span style="color:#FF0000">   </span></strong><strong><span style="color:#FF0000">2</span></strong><strong><span style="color:#FF0000"><sup>k</sup></span></strong><strong><span style="color:#FF0000">-1</span></strong><span style="color:#FF0000"> </span>个结点。</p>
+<h3>3、二叉树的性质</h3>
+<p>性质 1: 在二叉树的第i 层上至多有<strong><span style="color:#FF0000">2</span></strong><strong><span style="color:#FF0000"><sup>i</sup></span></strong><strong><span style="color:#FF0000"><sup>-1</sup></span></strong>个结点 (i&gt;=1)。<br/>问题:在第i层上至少有<strong><span style="color:#FF0000"> </span></strong><strong><span style="color:#FF0000">   </span></strong><strong><span style="color:#FF0000">1</span></strong><strong><span style="color:#FF0000"> </span></strong>个结点。<br/>性质 2: 深度为 h 的二叉树至多有2<sup>h</sup>-1 个结点 (h&gt;=1)。<br/>问题:一棵深度为k 且有<span style="color:#FF0000"> </span><span style="color:#FF0000">  </span><span style="color:#FF0000">   </span><strong><span style="color:#FF0000">2</span></strong><strong><span style="color:#FF0000"><sup>k</sup></span></strong><strong><span style="color:#FF0000">-1</span></strong><strong><span style="color:#FF0000">  </span></strong> 个结点的二叉树称为满二叉树。<br/>问题:颗深度为 k 的二叉树，至少有<span style="color:#FF0000">  </span><span style="color:#FF0000">   </span><strong><span style="color:#FF0000">k</span></strong><strong><span style="color:#FF0000">  </span></strong>个结点。</p>
+<figure><img src="/images/csp/5/img-15.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<p>性质 3: 对任何一棵二叉树，如果其叶结点数 n0，度为 2 的结点数为 n2，则一定满足: <strong><span style="color:#FF0000">n</span></strong><strong><span style="color:#FF0000">0</span></strong><strong><span style="color:#FF0000"> = n</span></strong><strong><span style="color:#FF0000">2</span></strong><strong><span style="color:#FF0000">+1</span></strong><strong><span style="color:#FF0000"> </span></strong><strong><span style="color:#FF0000">    </span></strong><strong><span style="color:#FF0000"> </span></strong>。<br/>推导: 这个结论可以通过树的性质和节点度数的关系来推导得出。首先，让我们定义一些术语：<br/>n0：表示叶节点（度为0）的数量。<br/>n1：表示度为1的节点的数量。<br/>n2：表示度为2的节点的数量。<br/>对于一棵树而言，总的节点数可以表示为：<strong>总节点数 = n0 + n1 + n2</strong>。<br/>而节点的度数之间存在一个关系：<strong>总边数 = 0 * n0 + 1 * n1 + 2 * n2</strong>。这是因为每条边连接两个节点，所以总的边数等于节点的度数之和。<br/>另外，一棵树的边数等于节点数减1，即：<strong>总边数 = 总节点数 - 1</strong>。<br/>将以上两个等式联立，得到：<br/>0 * n0 + 1 * n1 + 2 * n2 = 总节点数 – 1<br/>=&gt;  0 * n0 + 1 * n1 + 2 * n2 = n0 + n1 + n2 – 1<br/>=&gt; n1 + 2*n2 = n0 + n1 + n2 – 1<br/>=&gt;  n0 = n2 + 1<br/>这个等式告诉我们，度为1的节点的数量与总节点数和度为2的节点数之间存在一个关系。而在一棵树中，总节点数是固定的，度为1的节点和度为2的节点之间是互相排斥的，即一个节点要么是度为1，要么是度为2。所以，当度为1的节点数量确定后，度为2的节点数量也就确定了。<br/>因此，根据题目的条件，n0 = n2 + 1，我们可以推导出对于任何一棵二叉树，其叶节点数和度为2的节点数满足 n0 = n2 + 1。<br/><span style="color:#FF0000">1.</span><strong><span style="color:#FF0000">完全二叉树</span></strong><span style="color:#FF0000">，如果有度为1的结点，度为1的结点最多只有1个。</span><br/><span style="color:#FF0000">2.</span><strong><span style="color:#FF0000">完全二叉树</span></strong><span style="color:#FF0000">，如果没有度为1的结点，总结点的数量是奇数</span><span style="color:#FF0000">，</span><span style="color:#FF0000">如果有度为1的结点，总结点数量是偶数。</span><br/>问题 1: 一棵完全二叉树有 5000 个结点，可以计算出其叶结点的个数是     2500      <br/>n0+n1+n2=5000<br/>n0+1+n0-1=5000<br/>2*n0=5000<br/>n0=2500<br/>问题2: 一棵完全二叉树有2023个结点，请问：<br/>该二叉树：<br/>度为0（叶子）的结点有几个：（ 1012  ）<br/>度为1的结点有几个：（0  ）<br/>度为2的结点有几个：（1011  ）<br/><span style="color:#5B9BD5">n0+n1+n2=2023</span><br/><span style="color:#5B9BD5">n0+0+n0-1=2023</span><br/><span style="color:#5B9BD5">2*n0=2024</span><br/><span style="color:#5B9BD5">n0=1012</span><br/>性质 4: 具有 n 个结点的完全二叉树的深度为  floor(log2n)+1   。<br/>问题: 一棵二叉树，共有2023个结点：问：该二叉树高度最小值是     11     <br/>最大值是      2023       。<br/>最小值:套用公式4，最大值，每层一个。<br/>性质 5:对于一棵 n 个结点的完全二叉树，对任一个结点(编号为i)<br/>如果i=1，则结点i为根，无<strong> </strong><strong>父结点</strong><strong> </strong>;如果i&gt;1，则其父结点编号为  <span style="color:#5B9BD5">floor(i/2)</span>     <br/>如果 2i&gt;n，则结点i   <span style="color:#5B9BD5">无子节点</span>    ，即结点i为  <span style="color:#5B9BD5">叶结点</span>    ;否则左孩子编号为    <span style="color:#5B9BD5"> </span><span style="color:#5B9BD5">2i</span>  <br/>如果 2i+1&gt;n，则结点i无    <span style="color:#5B9BD5">右孩子</span>  ,否则右孩子编号为      <span style="color:#5B9BD5"> </span><span style="color:#5B9BD5">2i+1</span> </p>
+<figure><img src="/images/csp/5/img-16.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<h3>4、二叉树的存储</h3>
+<h3>(1)表示方法一：数组表示法</h3>
+<p>对于完全二叉树，用一组地址连续的存储单元依次自上而下、自左至右存储完全二叉<br/>树上的结点元素。</p>
+<figure><img src="/images/csp/5/img-17.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<p>对于一般二叉树，则应将其每个结点与完全二叉树上的结点相对照，存储在一维数组<br/>的相应位置中。</p>
+<figure><img src="/images/csp/5/img-18.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<h3>(2)表示方法二：字符串表示法</h3>
+<p>本质上来说，还是数组表示法。</p>
+<figure><img src="/images/csp/5/img-19.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<h3>(3)表示方法三：链式存储</h3>
+<p>采用：含有两个指针域的结点结构体及链表的结构进行存储。<br/>结点结构：</p>
+<table><tbody><tr><td>LeftChild</td><td>Data</td><td>RightChild</td></tr></tbody></table>
+<figure><img src="/images/csp/5/img-20.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<p>问题:在 n 个结点的二叉树链表中，有<strong><span style="color:#FF0000"> </span></strong><strong><span style="color:#FF0000">n+1</span></strong><strong><span style="color:#FF0000"> </span></strong>个空指针域，有 <strong><span style="color:#FF0000">n-1</span></strong><strong> </strong>个非空指针域。<br/>解析:对于树中的每个节点，除了根节点之外，它都有一个父节点。由于每个节点只有一个父节点，因此除了根节点之外的每个节点都有一个非空指针域指向其父节点,因此有 n-1 非空指针域。 </p>
+<h3>5、遍历方案</h3>
+<p>一棵非空的二叉树由根结点及左、右子树这三个基本部分组成。因此，在任一给定结点上，可以按某种次序执行三个操作:<br/>(1) 访问根结点 (D) ;<br/>(2) 遍历该结点的左子树 (L) ;<br/>(3) 遍历该结点的右子树 (R) ;<br/><strong>遍历方案:</strong><br/>DLR: 先序遍历 (Preorder Traverse，亦称前序遍历)<br/>---- 访问根结点、遍历左树、遍历右树。<br/>LDR: 中序遍历 (Inorder Traverse )<br/>---- 遍历左树、访问根结点、遍历右树<br/>LRD: 后序遍历 (Postorder Traverse) <br/>---- 遍历左树、遍历右树、访问根结点。</p>
+<figure><img src="/images/csp/5/img-21.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<p>先序遍历的结果为:   <strong><span style="color:#5B9BD5">A B C D E F G H K</span></strong><strong>       </strong><br/>中序遍历的结果为:   <strong><span style="color:#5B9BD5">B D C A E H G K F</span></strong><strong>       </strong><br/>后序遍历的结果为:   <strong><span style="color:#5B9BD5">D C B H K G F E A</span></strong>       </p>
+<figure><img src="/images/csp/5/img-22.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<p>先序遍历的结果为:      <span style="color:#5B9BD5">A B D E C F G</span>      <br/>中序遍历的结果为:      <span style="color:#5B9BD5">D B E A F C G</span>      <br/>后序遍历的结果为:      <span style="color:#5B9BD5">D E B F G C A</span>      <br/><strong>重要结论：</strong>若二叉树中各结点的值均不相同，则：由二叉树的  <strong>前序序列和</strong><strong>中</strong><strong>序序列</strong><strong> </strong><strong> </strong>，或由其其  <strong>后序序列和中序序列</strong><strong> </strong><strong> </strong>均能唯一地确定一棵二叉树，但由前序序列和后序宇列却不一定能唯一地确定一棵二叉树。<br/>问题：已知一棵二叉树的中序序列和后序序列分别是 BDCEAFHG 和 DECBHGFA，请画出这棵二叉树。</p>
+<figure><img src="/images/csp/5/img-23.png" alt="树和二叉树示意图" loading="lazy"></figure>
+<p><strong>问题：</strong><br/>二叉树的先序序列和中序序列相同的条件是  <strong>任何结点至多只有右子树，没有左子树或是空树</strong><strong> </strong><strong> </strong>。<br/>二叉树的中序序列和后序序列相同的条件是  <strong>任何结点至多只有左子树，没有右子树或是空树</strong><strong> </strong><strong> </strong>。<br/>二叉树的先序序列和后序序列相同的条件是  <strong>只有根结点</strong><strong> </strong><strong> </strong><strong>。</strong></p>

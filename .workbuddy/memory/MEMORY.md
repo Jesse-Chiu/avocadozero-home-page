@@ -43,6 +43,14 @@
 - GitHub Pages构建：npm run build:github
 - Gitee Pages构建+部署：npm run deploy:gitee
 
+## 内容导入规范（CSP 课件）
+- **代码必须语法高亮**：所有导入的课件内容，C++ 代码块必须输出 `<pre><code class="language-cpp">`（转换时把 c++/c 语言标记统一为 cpp），由 `public/vendor/hljs/` 本地 highlight.js（atom-one-light 浅色主题）客户端高亮；禁止纯文本代码块
+- 代码块样式：浅色背景（`#fafafa`）+ 边框 + 投影，不用深色
+- 图片放 `public/images/csp/{章号}/`，HTML 中路径 `/images/csp/{章号}/`，由 `[type].astro` 统一替换为带 base 的 path()
+- docx 转换保留：红色标注（`color:#FF0000`）、加粗、上标 `<sup>`、表格、真题高亮块（quiz-block）
+- 转换后检查文档尾部是否夹带原文档水印（如「牛油果零壹信奥🥑」），需清除
+- 内容文件：`src/data/csp-content/{id}-{knowledge|practice}.html`
+
 ## Gitee Pages 部署注意事项
 - 部署分支：`pages`（根目录）
 - 免费版需在 Gitee 后台手动点击「更新」按钮
