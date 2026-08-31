@@ -62,7 +62,7 @@ const colorClass = {
   <section class="bg-gradient-to-b from-green-50/40 via-white to-white border-b border-green-100/50">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
       <nav class="flex items-center gap-2 text-sm text-gray-500 mb-4">
-        <a href={path('/csp/intro')} class="hover:text-green-600 transition-colors">初赛知识点</a>
+        <a href={path(`/csp/intro?group=${chapter.group}`)} class="hover:text-green-600 transition-colors">初赛知识点</a>
         <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>
@@ -155,7 +155,7 @@ const colorClass = {
       <!-- Type switcher + nav -->
       <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
         <a
-          href={path('/csp/intro')}
+          href={path(`/csp/intro?group=${chapter.group}`)}
           class="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-green-600 transition-colors"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -119,7 +119,7 @@ const pageDesc = '登录后查看 CSP 初赛知识点导航';
     // 已登录则直接跳转
     if (isLoggedIn()) {
       const url = new URL(window.location.href);
-      const next = url.searchParams.get('next') || '/csp/intro';
+      const next = url.searchParams.get('next') || '/csp/';
       window.location.replace(next);
     }
 
@@ -140,7 +140,7 @@ const pageDesc = '登录后查看 CSP 初赛知识点导航';
 
     function getQueryParam(name: string): string {
       const url = new URL(window.location.href);
-      return url.searchParams.get(name) || '/csp/intro';
+      return url.searchParams.get(name) || '/csp/';
     }
 
     if (form) {

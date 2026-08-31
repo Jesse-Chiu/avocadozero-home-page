@@ -17,6 +17,8 @@ export interface CspChapter {
   practice: string;
   icon: string;
   color: 'blue' | 'green' | 'purple' | 'orange' | 'pink' | 'cyan' | 'amber' | 'indigo';
+  /** 所属组别：J = CSP-J 入门级（普及组），S = CSP-S 提高级（提高组） */
+  group: 'J' | 'S';
 }
 
 export const CSP_CHAPTERS: CspChapter[] = [
@@ -27,6 +29,7 @@ export const CSP_CHAPTERS: CspChapter[] = [
     practice: '计算机常识、进制转换、存储单位、网络协议等选择题练习',
     icon: '💻',
     color: 'blue',
+    group: 'J',
   },
   {
     id: '2',
@@ -35,6 +38,7 @@ export const CSP_CHAPTERS: CspChapter[] = [
     practice: '复杂度分析、基础算法应用题目',
     icon: '🧮',
     color: 'green',
+    group: 'J',
   },
   {
     id: '3',
@@ -43,6 +47,7 @@ export const CSP_CHAPTERS: CspChapter[] = [
     practice: '栈/队列基础操作题、应用场景分析题',
     icon: '📚',
     color: 'purple',
+    group: 'J',
   },
   {
     id: '4',
@@ -51,6 +56,7 @@ export const CSP_CHAPTERS: CspChapter[] = [
     practice: '链表遍历、插入删除、链式结构应用题',
     icon: '🔗',
     color: 'orange',
+    group: 'J',
   },
   {
     id: '5',
@@ -59,6 +65,7 @@ export const CSP_CHAPTERS: CspChapter[] = [
     practice: '二叉树遍历题、树的性质计算题',
     icon: '🌳',
     color: 'pink',
+    group: 'J',
   },
   {
     id: '6',
@@ -67,6 +74,7 @@ export const CSP_CHAPTERS: CspChapter[] = [
     practice: '图的存储、遍历、最短路径基础题',
     icon: '🕸️',
     color: 'cyan',
+    group: 'J',
   },
   {
     id: '7',
@@ -75,6 +83,7 @@ export const CSP_CHAPTERS: CspChapter[] = [
     practice: '排列组合计算、计数原理应用题',
     icon: '🎲',
     color: 'amber',
+    group: 'J',
   },
   {
     id: '8',
@@ -83,9 +92,24 @@ export const CSP_CHAPTERS: CspChapter[] = [
     practice: '命题判断、逻辑运算、真值表绘制题',
     icon: '🧠',
     color: 'indigo',
+    group: 'J',
+  },
+  {
+    id: '9',
+    title: 'Linux 编程环境',
+    knowledge: 'Linux 终端常用命令、Vim 编辑器、g++ 编译选项、time 计时、GDB 调试工具',
+    practice: '历年 CSP-S / NOIP 初赛 Linux 环境真题演练',
+    icon: '🐧',
+    color: 'orange',
+    group: 'S',
   },
 ];
 
 export function getChapterById(id: string): CspChapter | undefined {
   return CSP_CHAPTERS.find((c) => c.id === id);
+}
+
+/** 按组别获取章节（J = 普及组，S = 提高组） */
+export function getChaptersByGroup(group: 'J' | 'S'): CspChapter[] {
+  return CSP_CHAPTERS.filter((c) => c.group === group);
 }
