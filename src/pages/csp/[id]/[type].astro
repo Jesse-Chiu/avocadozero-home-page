@@ -188,6 +188,11 @@ const colorClass = {
     requireAuth();
   </script>
 
+  <!-- KaTeX：本地数学公式渲染（支持 $inline$ 与 $$display$$） -->
+  <link rel="stylesheet" href={`${path('/vendor/katex/katex.min.css')}`} />
+  <script is:inline src={`${path('/vendor/katex/katex.min.js')}`}></script>
+  <script is:inline src={`${path('/vendor/katex/auto-render.min.js')}`}></script>
+
   <!-- highlight.js：客户端语法高亮（浅色主题） -->
   <link rel="stylesheet" href={`${path('/vendor/hljs/atom-one-light.min.css')}`} />
   <script is:inline src={`${path('/vendor/hljs/highlight.min.js')}`}></script>
@@ -207,6 +212,29 @@ const colorClass = {
           }
         });
         window.hljs.highlightAll();
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', run);
+      } else {
+        run();
+      }
+    })();
+  </script>
+
+  <!-- KaTeX 自动渲染：对 .csp-content 内 $...$ 与 $$...$$ 渲染 -->
+  <script is:inline>
+    (function () {
+      function run() {
+        if (!window.renderMathInElement) { setTimeout(run, 50); return; }
+        window.renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$',  right: '$',  display: false },
+            { left: '\\(', right: '\\)', display: false },
+            { left: '\\[', right: '\\]', display: true },
+          ],
+          throwOnError: false,
+        });
       }
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', run);
@@ -412,6 +440,20 @@ const colorClass = {
   background: transparent;
   padding: 0;
 }
+
+/* KaTeX 公式样式微调 */
+.csp-content .katex { font-size: 1.05em; }
+.csp-content .katex-display {
+  margin: 1.25rem 0;
+  padding: 0.5rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.csp-content .katex-display > .katex {
+  display: inline-block;
+  text-align: center;
+}
+.csp-content code .katex { font-size: 1em; }
 
 /* 移动端适配 */
 @media (max-width: 640px) {

@@ -143,9 +143,9 @@ fib(1) fib(0)
 </ul>
 <p>三种核心情况：</p>
 <ol>
-<li>若 $f(n) &lt; n^(log_b a)$ → $T(n) = O(n^(log_b a))$</li>
-<li>若 $f(n) = n^(log_b a)$ → $T(n) = O(n^(log_b a) × logn)$</li>
-<li>若 $f(n) &gt; n^(log_b a) → T(n) = O(f(n))$</li>
+<li>若 $f(n) < n^{\log_b a}$ → $T(n) = O(n^{\log_b a})$</li>
+<li>若 $f(n) = n^{\log_b a}$ → $T(n) = O(n^{\log_b a} \cdot \log n)$</li>
+<li>若 $f(n) > n^{\log_b a}$ → $T(n) = O(f(n))$</li>
 </ol>
 <p><strong>典型应用</strong>：</p>
 <ul>

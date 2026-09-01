@@ -103,6 +103,15 @@ export const CSP_CHAPTERS: CspChapter[] = [
     color: 'orange',
     group: 'S',
   },
+  {
+    id: '10',
+    title: '最小生成树',
+    knowledge: '生成树与最小生成树概念、Kruskal（加边法）、Prim（加点法）、两种算法的复杂度与适用场景',
+    practice: 'Kruskal / Prim 构造最小生成树真题演练',
+    icon: '🌲',
+    color: 'green',
+    group: 'S',
+  },
 ];
 
 export function getChapterById(id: string): CspChapter | undefined {

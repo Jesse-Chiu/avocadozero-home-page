@@ -60,22 +60,3 @@
 <p>BFS:V1 -&gt; V2 -&gt; V3 -&gt; V4 -&gt; V5 -&gt; V6 -&gt; V7 -&gt; V8</p>
 <figure><img src="/images/csp/6/img-22.png" alt="图论示意图" loading="lazy"></figure>
 <p>BFS:V3-&gt;V2-&gt;V1-&gt;V6-&gt;V4-&gt;V5-&gt;V9-&gt;V8-&gt;V7</p>
-<h2>6.4 图的最小生成树</h2>
-<h3>1、生成树问题</h3>
-<p>在一个含有n个顶点的连通图中，必能从中选出<span style="color:#FF0000"> </span><span style="color:#FF0000">   </span><span style="color:#FF0000">n-1条</span><span style="color:#FF0000"> </span>边构成一个极小连通子图，它含有图中全部n 个顶点，但只有足以构成一棵树的n-1 条边，称这棵树为连通图的生成树。例<br/>如，对下图（a）进行深度优先搜索遍历过程中经过的边和全部顶点构成的极小连通子图(b)即为(a)的一棵生成树。</p>
-<figure><img src="/images/csp/6/img-23.png" alt="图论示意图" loading="lazy"></figure>
-<figure><img src="/images/csp/6/img-24.png" alt="图论示意图" loading="lazy"></figure>
-<h3>2、最小生成树</h3>
-<p>在含有n个顶点的连通网中<span style="color:#FF0000"> </span><span style="color:#FF0000">选择n-1条边</span><span style="color:#FF0000"> </span><span style="color:#FF0000">    </span>，构成一棵极小连通子图，并使该连通子图中n-1条边上权值之和达到最小，则称其为连通网的最小生成树。例如，对于如图所示的连通网可以有多棵权值总和不相同的生成树。</p>
-<figure><img src="/images/csp/6/img-25.png" alt="图论示意图" loading="lazy"></figure>
-<figure><img src="/images/csp/6/img-26.png" alt="图论示意图" loading="lazy"></figure>
-<p>应用：n个城市建网，如何选择n-1条线路，使总费用最少？<br/>构造最小生成树的算法有许多，基本原则是：</p>
-<blockquote><p>尽可能选取权值最小的边，但不能构成回路；</p></blockquote>
-<blockquote><p>选择n-1条边构成最小生成树。</p></blockquote>
-<h3>（1）克鲁斯卡尔(Kruskal) 算法</h3>
-<p>基本思想： 按照权值从小到大的顺序选择n-1条边，并保证这 n-1条边不构成回路 。<br/>具体做法： 首先构造一个只含n个顶点的森林，然后依权值从小到大从连通网中选择边加入到森林中，并使森林中不产生回路，直至森林变成一棵树为止。</p>
-<figure><img src="/images/csp/6/img-27.png" alt="图论示意图" loading="lazy"></figure>
-<h3>（2） 普里姆(Prim） 算法</h3>
-<p>普里姆算法构造最小生成树的过程是从一个顶点 U={u0} 作初态，不断寻找与U中顶点相邻且代价最小的边的另一个顶点，扩充到U集合直至 U=V 为止。</p>
-<figure><img src="/images/csp/6/img-28.png" alt="图论示意图" loading="lazy"></figure>
-<p>比较以上两种算法可见：<br/>A、Kurskal 算法主要对边进行操作，又称为“加边法”，其时间复杂度为 O(eloge)。这种方法比较适用于稀疏图。<br/>B、 Prim 算法主要对顶点进行操作，又称为“加点法”，其时间复杂度为0(n<sup>2</sup>）。比较适用于稠密图。</p>
