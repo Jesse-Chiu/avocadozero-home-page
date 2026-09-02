@@ -1,0 +1,229 @@
+<h2>11.1 散列表的基本概念</h2>
+<p>线性表和树表的查找都是通过比较关键字的方法，查找的效率取决于关键字的比较次数。有没有一种查找方法可以不进行关键字比较，直接找到目标？</p>
+<p>散列表（Hash Table，又称哈希表）根据关键字直接进行访问。散列表通过散列函数将关键字映射到存储地址，建立了关键字和存储地址之间的一种<strong>直接映射关系</strong>。</p>
+<figure><img src="/images/csp/11/img-01.png" alt="关键字(17,24,48,25)经H(key)=key%5散列到存储地址的示意图" loading="lazy"></figure>
+<p class="img-caption">关键字 $key=(17, 24, 48, 25)$，散列函数 $H(key)=key\%5$ 散列到存储地址</p>
+<p>理想情况下，散列表查找的时间复杂度为 $O(1)$。但是散列函数可能把两个或两个以上的关键字映射到同一地址，发生「<strong>冲突</strong>」（Collision），发生冲突的不同关键字称为「<strong>同义词</strong>」（Synonym）。例如 48 和 13 通过 $H(key)=key\%5$ 映射地址都是 3，互为同义词。</p>
+<p>因此设计散列函数时应尽量减少冲突；如果冲突无法避免，则需要设计处理冲突的方法。</p>
+
+<h2>11.2 散列函数</h2>
+<p>散列函数（Hash function）是将关键字映射到存储地址的函数，记为 $hash(key) = Addr$。设计散列函数需遵循两个原则：</p>
+<ol>
+  <li>散列函数尽可能简单，能够快速计算关键字的散列地址。</li>
+  <li>散列函数映射的地址应均匀分布在整个地址空间，避免聚集，以减少冲突。</li>
+</ol>
+<blockquote><p>散列函数设计原则的 4 字箴言：<strong>简单、均匀</strong>。</p></blockquote>
+
+<h3>11.2.1 常见构造方法</h3>
+<h4>（1）直接定址法</h4>
+<p>直接取关键字的某个线性函数作为散列函数：</p>
+<p>$$hash(key) = a \times key + b$$</p>
+<p>其中 $a$、$b$ 为常数。</p>
+<p><strong>适用场景</strong>：事先知道关键字，关键字集合不是很大且连续性较好。关键字如果不连续，则有大量空位，造成空间浪费。</p>
+
+<h4>（2）除留余数法</h4>
+<p>除留余数法是一种最简单、最常用的构造散列函数的方法，并且不需要事先知道关键字的分布。假定散列表的表长为 $m$，取一个不大于表长的最大<strong>素数</strong> $p$，则设计散列函数为：</p>
+<p>$$hash(key) = key \bmod p$$</p>
+<p>为什么要选择 $p$ 为素数？当 $p$ 取合数时，容易与关键字中的某些因子发生共振，分布不均匀；取素数可以让关键字尽可能均匀分布在散列空间中，减少冲突。</p>
+
+<h4>（3）补充：其他常用方法</h4>
+<ul>
+  <li><strong>数字分析法</strong>：事先知道关键字集合，可从中提取分布均匀的若干位作为散列地址（适用于关键字位数较多、分布已知）。</li>
+  <li><strong>平方取中法</strong>：取关键字平方后的中间几位作为地址，适用于关键字每一位分布都不够均匀的场合。</li>
+  <li><strong>折叠法</strong>：将关键字分割成若干段后叠加求和（舍去进位）作为地址，适用于关键字位数较多。</li>
+  <li><strong>随机数法</strong>：$hash(key) = \text{random}(key)$，关键字长度不等时构造较简单，但随机性使构造结果难以复现。</li>
+</ul>
+
+<h2>11.3 冲突处理方法</h2>
+<p>无论如何设计散列函数，都无法避免冲突。发生冲突时需要进行处理，常见方法分为 3 种：</p>
+<ol>
+  <li><strong>开放地址法</strong>（Open Addressing，又称闭散列）</li>
+  <li><strong>链地址法</strong>（拉链法，Separate Chaining）</li>
+  <li><strong>建立公共溢出区</strong></li>
+</ol>
+
+<h3>11.3.1 开放地址法（闭散列）</h3>
+<p>开放地址法是线性存储空间上的解决方案，发生冲突时采用冲突处理方法在线性存储空间上探测其他位置：</p>
+<p>$$hash'(key) = (hash(key) + d_i) \bmod m$$</p>
+<p>其中 $hash(key)$ 为原散列函数，$hash'(key)$ 为探测函数，$d_i$ 为增量序列，$m$ 为表长。根据增量序列不同，开放地址法又分为<strong>线性探测法</strong>、<strong>二次探测法</strong>、<strong>随机探测法</strong>、<strong>再散列法</strong>。</p>
+
+<h4>（1）线性探测法</h4>
+<p>线性探测的增量序列：</p>
+<p>$$d_i = 1, 2, 3, \ldots, m-1$$</p>
+<p>例：关键字 $(14, 36, 42, 38, 40, 15, 19, 12, 51, 65, 34, 25)$，表长为 15，散列函数 $hash(key)=key\%13$，采用线性探测法处理冲突，构造该散列表：</p>
+<figure><img src="/images/csp/11/img-02.png" alt="线性探测初始：key%13的地址分布" loading="lazy"></figure>
+<p class="img-caption">14→1、36→10、42→3、38→12（其它发生冲突的位置将按线性探测后移）</p>
+<blockquote><p><strong>注意</strong>：线性探测法很简单，只要有空间就一定能够探测到位置。但是，处理冲突过程中会出现非同义词之间对同一个散列地址争夺的现象，称为「<strong>堆积</strong>」（Primary Clustering）。堆积会大大降低查找效率。</p></blockquote>
+
+<h5>① 查找成功的平均查找长度</h5>
+<p>假设查找概率均等（12 个关键字，每个查找概率为 $1/12$），查找成功的平均查找长度等于所有关键字查找成功的比较次数 $c_i$ 乘以查找概率 $p_i$ 之和：</p>
+<figure><img src="/images/csp/11/img-03.png" alt="ASL_succ 公式" loading="lazy"></figure>
+<figure><img src="/images/csp/11/img-05.png" alt="线性探测构造完成的散列表（含比较次数）" loading="lazy"></figure>
+<p class="img-caption">线性探测构造完成的散列表（含每个关键字的比较次数）</p>
+
+<h5>② 查找失败的平均查找长度</h5>
+<p>本题散列函数为 $hash(key)=key\%13$，计算得到的散列地址为 $0, 1, \ldots, 12$，一共有 13 种情况。则查找失败的平均查找长度：</p>
+<figure><img src="/images/csp/11/img-04.png" alt="ASL_unsucc 公式" loading="lazy"></figure>
+<p>如果关键字不相等，则继续按线性探测向后查找，遇到空位时判定查找失败。空位也算作一次比较。</p>
+
+<h4>（2）二次探测法</h4>
+<p>二次探测法采用前后跳跃式探测，发生冲突时按以下顺序探测：</p>
+<p>$$d_i = 1^2,\ -1^2,\ 2^2,\ -2^2,\ \ldots,\ k^2,\ -k^2\ (k \le m/2)$$</p>
+<blockquote><p>二次探测法跳跃式探测，效率较高，但可能出现明明有空间却探测不到的情况而存储失败（线性探测只要有空间就一定能探测成功）。</p></blockquote>
+<figure><img src="/images/csp/11/img-06.png" alt="二次探测构造的散列表" loading="lazy"></figure>
+<figure><img src="/images/csp/11/img-07.png" alt="二次探测负值处理说明" loading="lazy"></figure>
+<figure><img src="/images/csp/11/img-08.png" alt="二次探测失败示例" loading="lazy"></figure>
+
+<h4>（3）随机探测法 / 再散列法</h4>
+<p><strong>随机探测法</strong>：$d_i$ 是一组伪随机数列（如 $d_i = \text{pseudo-random}(i)$）。能打散堆积，但依赖随机种子，可复现性较差。</p>
+<p><strong>再散列法（双散列）</strong>：准备多个散列函数 $H_1, H_2, \ldots, H_k$，冲突时按顺序切换散列函数，$d_i = i \cdot H_2(key)$。最坏情况下的探测序列覆盖整个表，工程实现常用。</p>
+
+<h3>11.3.2 链地址法（拉链法）</h3>
+<p>如果不同关键字通过散列函数映射到同一地址，这些关键字为同义词，将<strong>所有的同义词存储在一个线性链表</strong>中。查找、插入、删除操作主要在这个链表中进行。拉链法适用于经常进行插入、删除的场景。</p>
+<figure><img src="/images/csp/11/img-09.png" alt="链地址法构造的散列表（拉链法）" loading="lazy"></figure>
+<p class="img-caption">链地址法构造的散列表——每个地址维护一个链表（图中比较次数即该链表的查找长度）</p>
+<blockquote><p>链地址法与开放地址法对比：<br>
+· 开放地址法把所有记录存在同一张表里，节省指针但容易堆积。<br>
+· 链地址法每条链独立，插入/删除高效，且<strong>装填因子 $\alpha$ 可以 $\ge 1$</strong>，更适合实际工程。</p></blockquote>
+
+<h2>11.4 散列查找的性能分析</h2>
+<p>散列表虽然建立了关键字与存储位置之间的直接映射，但冲突不可避免。查找不同关键字的比较次数不同，因此散列表的查找效率通过<strong>平均查找长度（ASL）</strong>衡量。其查找效率取决于 3 个因素：</p>
+<ol>
+  <li><strong>散列函数</strong>：计算简单、均匀分布，冲突少则 ASL 低。</li>
+  <li><strong>装填因子</strong> $\alpha$：<br>$$\alpha = \frac{\text{散列表中填入的关键字数量}}{\text{散列表的长度}}$$装填因子反映散列表的装满程度，$\alpha$ 越小冲突越少，$\alpha$ 越大冲突越多。$\alpha$ 过小则空间浪费。</li>
+  <li><strong>处理冲突的方法</strong>：开放地址法 vs 链地址法，对 ASL 影响显著。</li>
+</ol>
+<p>常见组合下 ASL 的近似估计：</p>
+<ul>
+  <li>线性探测：$ASL_{succ} \approx \dfrac{1}{2}\left(1 + \dfrac{1}{1-\alpha}\right)$，$ASL_{unsucc} \approx \dfrac{1}{2}\left(1 + \dfrac{1}{(1-\alpha)^2}\right)$</li>
+  <li>链地址法：$ASL_{succ} \approx 1 + \dfrac{\alpha}{2}$，$ASL_{unsucc} \approx \alpha + e^{-\alpha}$</li>
+</ul>
+
+<h2>11.5 历年真题</h2>
+
+<div class="quiz-block">
+<p><strong>【2025-S-06】</strong>在一个大小为 13 的哈希表中，使用闭散列法的线性探查来解决冲突。哈希函数为 $H(key) = key \bmod 13$。依次插入关键字 18, 26, 35, 9, 68, 74。插入 74 后，它最终被放置在哪个索引位置？</p>
+<p>A. 5　　B. 7　　C. 9　　D. 11</p>
+<p>解析：<strong>答案 D</strong>。线性探查即「冲突后往后找空位」，逐步模拟：</p>
+<ul>
+  <li>18 → 5</li>
+  <li>26 → 0</li>
+  <li>35 → 9</li>
+  <li>9 → 9 冲突，放到 10</li>
+  <li>68 → 3</li>
+  <li>74 → 9 冲突，再到 10 冲突，再到 11</li>
+</ul>
+<p>所以 74 最终放在 <strong>11</strong>。</p>
+</div>
+
+<div class="quiz-block">
+<p><strong>【2024-S-10】</strong>在设计一个哈希表时，为了减少冲突，需要使用适当的哈希函数和冲突解决策略。已知某哈希表中有 $n$ 个键值对，装载因子为 $\alpha$（$0 \lt \alpha \le 1$）。在使用开放地址法解决冲突的过程中，<strong>最坏情况下</strong>查找一个元素的时间复杂度为（　）。</p>
+<p>A. $O(1)$　　B. $O(\log n)$　　C. $O\!\left(\dfrac{1}{1-\alpha}\right)$　　D. $O(n)$</p>
+<p>解析：<strong>答案 D</strong>。最坏情况是哈希函数把所有键都映射到同一槽位，导致所有元素在探测序列中形成长链（线性探测时所有元素连续占据一段位置）。此时要查找一个不存在的元素可能要探测整个表，遍历 $n$ 个元素，时间复杂度为 $O(n)$。$O\!\left(\dfrac{1}{1-\alpha}\right)$ 是开放地址法<strong>平均</strong>查找复杂度的近似，不是最坏情况。</p>
+</div>
+
+<div class="quiz-block">
+<p><strong>【2023-S-05】</strong>以下对数据结构的表述不恰当的一项是（　）。</p>
+<p>A. 队列是一种先进先出（FIFO）的线性结构</p>
+<p>B. 哈夫曼树的构造过程主要是为了实现图的深度优先搜索</p>
+<p>C. 散列表是一种通过散列函数将关键字映射到存储位置的数据结构</p>
+<p>D. 二叉树是一种每个结点最多有两个子结点的树结构</p>
+<p>解析：<strong>答案 B</strong>。哈夫曼树的构造是为了数据压缩（生成哈夫曼编码），与图的深度优先搜索（DFS）完全无关。其余 A、C、D 均正确。</p>
+</div>
+
+<div class="quiz-block">
+<p><strong>【2022-S-12】</strong>给定地址区间为 $0 \sim 9$ 的哈希表，哈希函数 $h(x) = x \bmod 10$，采用线性探查（冲突则往后探查，地址 9 冲突则从 0 重新开始）。哈希表初始为空，依次存储 (71, 23, 73, 99, 44, 79, 89)，问 89 存储在哪个地址？</p>
+<p>A. 9　　B. 0　　C. 1　　D. 2</p>
+<p>解析：<strong>答案 D</strong>。逐步插入：</p>
+<ul>
+  <li>71 → $71\%10=1$ → 地址 1</li>
+  <li>23 → $23\%10=3$ → 地址 3</li>
+  <li>73 → $73\%10=3$ 冲突 → 探查 4 → 地址 4</li>
+  <li>99 → $99\%10=9$ → 地址 9</li>
+  <li>44 → $44\%10=4$ 冲突 → 探查 5 → 地址 5</li>
+  <li>79 → $79\%10=9$ 冲突 → 探查 0 → 地址 0</li>
+  <li>89 → $89\%10=9$ 冲突 → 探查 0 已占 → 探查 1 已占 → 探查 2 空 → <strong>地址 2</strong></li>
+</ul>
+</div>
+
+<div class="quiz-block">
+<p><strong>【2021-S-06】</strong>现有一个地址区间为 $0 \sim 10$ 的哈希表，冲突时往后找第一个空的地址存储（到 10 冲突则从 0 重新开始）。依次存储 (0,1,2,3,4,5,6,7)，哈希函数为 $h(x) = x^2 \bmod 11$。请问 7 存储在哪个地址？</p>
+<p>A. 5　　B. 6　　C. 7　　D. 8</p>
+<p>解析：<strong>答案 C</strong>。逐步插入：</p>
+<ul>
+  <li>0 → $0 \bmod 11 = 0$ → 0</li>
+  <li>1 → $1 \bmod 11 = 1$ → 1</li>
+  <li>2 → $4 \bmod 11 = 4$ → 4</li>
+  <li>3 → $9 \bmod 11 = 9$ → 9</li>
+  <li>4 → $16 \bmod 11 = 5$ → 5</li>
+  <li>5 → $25 \bmod 11 = 3$ → 3</li>
+  <li>6 → $36 \bmod 11 = 3$ 冲突 → 4 已占、5 已占、6 空 → 6</li>
+  <li>7 → $49 \bmod 11 = 5$ 冲突 → 6 已占、7 空 → <strong>7</strong></li>
+</ul>
+</div>
+
+<div class="quiz-block">
+<p><strong>【2020-S-05】</strong>将 (2, 7, 10, 18) 分别存储到地址区间为 $0 \sim 10$ 的哈希表中，如果哈希函数为 $h(x) = \underline{\quad\quad}$，将<strong>不会产生冲突</strong>。</p>
+<p>A. $x^2 \bmod 11$　　B. $2x \bmod 11$　　C. $x \bmod 11$　　D. $\left\lfloor x/2 \right\rfloor \bmod 11$</p>
+<p>解析：<strong>答案 D</strong>。逐一计算：</p>
+<ul>
+  <li>A. $x^2 \bmod 11$：$2^2=4$、$7^2 \bmod 11 = 5$、$10^2 \bmod 11 = 1$、$18^2 \bmod 11 = 5$ → 7 和 18 冲突。</li>
+  <li>B. $2x \bmod 11$：4、3、9、3 → 7 和 18 冲突。</li>
+  <li>C. $x \bmod 11$：2、7、10、7 → 7 和 18 冲突。</li>
+  <li>D. $\lfloor x/2 \rfloor \bmod 11$：1、3、5、9 → 全部不同，无冲突。</li>
+</ul>
+</div>
+
+<h2>11.6 哈希表在各领域的典型应用</h2>
+<p>哈希表的思想「用空间换时间、提供近似 $O(1)$ 查找」被广泛工程化，下面分类介绍常见用途。</p>
+
+<h3>11.6.1 编程语言与标准库</h3>
+<ul>
+  <li><strong>C++ STL</strong>：<code>std::unordered_map</code> / <code>std::unordered_set</code>（基于哈希表，平均 $O(1)$）；C++11 起的 <code>std::unordered_multimap/multiset</code> 支持重复键。</li>
+  <li><strong>Python</strong>：<code>dict</code> 与 <code>set</code> 底层均为哈希表（开放地址法）。</li>
+  <li><strong>Java</strong>：<code>HashMap</code> / <code>HashSet</code>（拉链法 + 红黑树化，链表长度超过 8 时转树）。</li>
+  <li><strong>Go</strong>：<code>map</code> 底层为哈希桶实现；并发安全场景需用 <code>sync.Map</code>。</li>
+</ul>
+
+<h3>11.6.2 数据库与存储</h3>
+<ul>
+  <li><strong>哈希索引</strong>：等值查询（<code>WHERE id = ?</code>）时性能接近 $O(1)$，但不支持范围查询；PostgreSQL、MySQL、Oracle 均提供。</li>
+  <li><strong>自适应哈希索引</strong>：InnoDB 会自动在内存中为热点页建立哈希索引，避免 B+Tree 走多层查找。</li>
+  <li><strong>KV 数据库</strong>：Redis、Memcached、LevelDB/RocksDB 的 MemTable 本质都是哈希索引 + 跳表/B+Tree 的混合。</li>
+  <li><strong>LSM 树</strong>：写入先用哈希/跳表暂存，后台刷盘为有序 SSTable，兼顾写入与查询。</li>
+</ul>
+
+<h3>11.6.3 系统与网络</h3>
+<ul>
+  <li><strong>缓存系统</strong>：CDN、浏览器缓存、CPU L1/L2/L3 Cache 都使用哈希表（按地址/键查数据块）。</li>
+  <li><strong>一致性哈希（Consistent Hashing）</strong>：分布式缓存/数据库分片时将节点和数据按同一哈希环分布，节点增减只影响相邻环段，是 Redis Cluster、Memcached 客户端分片的核心。</li>
+  <li><strong>负载均衡</strong>：Nginx、HAProxy 根据请求 IP/URL 哈希到固定后端，保证同一用户落到同一台机器（会话保持）。</li>
+  <li><strong>路由与 ARP</strong>：交换机维护 (MAC → 端口) 哈希表用于帧转发；操作系统维护 (IP → MAC) 哈希表用于 ARP 解析。</li>
+</ul>
+
+<h3>11.6.4 安全与密码学</h3>
+<ul>
+  <li><strong>密码学哈希函数</strong>：MD5、SHA-1、SHA-256、SHA-3、BLAKE2 等，将任意长度输入映射为固定长度摘要，用于<strong>完整性校验</strong>、<strong>数字签名</strong>、<strong>口令存储加盐</strong>。</li>
+  <li><strong>消息认证码 HMAC</strong>：基于密钥化哈希，用于 API 签名、JWT 验证。</li>
+  <li><strong>区块链</strong>：比特币/以太坊使用 SHA-256 + Merkle 树组织交易；工作量证明（PoW）需反复寻找哈希以 <code>0000...</code> 开头的区块头。</li>
+  <li><strong>Git</strong>：每个对象（commit、tree、blob）用 SHA-1 哈希作为文件名（<code>.git/objects/</code> 目录），天然支持去重与完整性校验。</li>
+</ul>
+
+<h3>11.6.5 数据处理与算法</h3>
+<ul>
+  <li><strong>去重 / 频次统计</strong>：处理大数据流（如词频、日志分析）时，<code>unordered_map&lt;key, count&gt;</code> 是竞赛和工程首选。</li>
+  <li><strong>布隆过滤器（Bloom Filter）</strong>：用多个哈希函数将元素映射到位数组，<strong>空间效率极高</strong>，但有误判率，常用于爬虫 URL 去重、垃圾邮件过滤、缓存穿透防护。</li>
+  <li><strong>Rabin-Karp 字符串匹配</strong>：用滚动哈希在 $O(n+m)$ 时间内找子串，是 <code>grep</code>、文本编辑器「查找」功能的底层算法之一。</li>
+  <li><strong>局部敏感哈希（LSH）</strong>：哈希后保持相似项落在同一桶，用于海量向量的近似最近邻（ANN）搜索，被推荐系统、图像检索、RAG 检索引擎广泛采用。</li>
+  <li><strong>特征哈希（Hashing Trick）</strong>：机器学习中把高维稀疏特征直接哈希到低维空间，节省内存（scikit-learn <code>HashingVectorizer</code>）。</li>
+</ul>
+
+<h3>11.6.6 编译与工程工具</h3>
+<ul>
+  <li><strong>符号表（Symbol Table）</strong>：编译器/解释器用哈希表维护「标识符 → 类型/地址」映射，是语义分析、代码生成的基础。</li>
+  <li><strong>文件去重与对象存储</strong>：云存储、网盘通过文件内容的哈希判断重复（Content-Addressable Storage），相同文件只存一份。</li>
+  <li><strong>拼写检查</strong>：词典载入哈希表，编辑时实时查错。</li>
+  <li><strong>DNS 缓存</strong>：本地域名解析器维护 (域名 → IP) 哈希表，加速重复访问。</li>
+</ul>
+
+<blockquote><p><strong>总结</strong>：哈希表凭借「平均 $O(1)$ 的查找、插入、删除」成为软件工程的底层基石。从语言标准库到数据库索引、从密码学到分布式系统，它都是最常用的数据结构之一。理解其工作原理与 ASL 分析，是 CSP-S 与 NOIP 选手必须掌握的核心考点。</p></blockquote>

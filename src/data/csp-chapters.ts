@@ -112,6 +112,15 @@ export const CSP_CHAPTERS: CspChapter[] = [
     color: 'green',
     group: 'S',
   },
+  {
+    id: '11',
+    title: 'Hash 散列表',
+    knowledge: '散列函数（直接定址/除留余数）、冲突处理（开放地址法/链地址法）、ASL 分析与装填因子',
+    practice: '历年 CSP-S 哈希表真题演练（线性探查、ASL 计算、函数选择）',
+    icon: '🔑',
+    color: 'purple',
+    group: 'S',
+  },
 ];
 
 export function getChapterById(id: string): CspChapter | undefined {
