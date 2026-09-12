@@ -1,0 +1,160 @@
+<h2>13.1 什么是 Master 定理？</h2>
+<p>Master 定理（主定理）是算法分析中用来<strong>快速求解分治算法递归式时间复杂度</strong>的一个公式化工具，是 CSP-S 初赛的高频考点。它适用于形如</p>
+<p>\[ T(n) = a \cdot T\left(\frac{n}{b}\right) + O(n^c) \]</p>
+<p>的递归式，其中：</p>
+<ul>
+<li>\(a \ge 1\)：<strong>子问题的个数</strong>（每次递归产生几个子问题）；</li>
+<li>\(b &gt; 1\)：每个子问题的<strong>规模缩小倍数</strong>（规模变为原来的 \(1/b\)）；</li>
+<li>\(O(n^c)\)：<strong>分解和合并操作</strong>所需的时间（\(c\) 为常数）。</li>
+</ul>
+<blockquote><p><strong>适用条件</strong>：所有子问题的规模必须相同（即都是 \(n/b\)），且 \(a\)、\(b\)、\(c\) 均为常数。</p></blockquote>
+
+<h2>13.2 三种情况（核心公式）</h2>
+<p>令 \(d = \log_b a\)（即以 \(b\) 为底 \(a\) 的对数），比较 \(d\) 与 \(c\) 的大小：</p>
+<table>
+<thead><tr><th>情况</th><th>条件</th><th>时间复杂度</th><th>直观理解</th></tr></thead>
+<tbody>
+<tr><td><strong>情况一</strong></td><td>\(d &lt; c\)</td><td>\(O(n^c)\)</td><td>合并操作占主导，叶子节点工作量可忽略</td></tr>
+<tr><td><strong>情况二</strong></td><td>\(d = c\)</td><td>\(O(n^c \log n)\)</td><td>每层工作量相同，共 \(\log n\) 层</td></tr>
+<tr><td><strong>情况三</strong></td><td>\(d &gt; c\)</td><td>\(O(n^d) = O(n^{\log_b a})\)</td><td>子问题数量占主导，合并操作可忽略</td></tr>
+</tbody>
+</table>
+<blockquote><p><strong>记忆口诀</strong>：<strong>比大小，谁大听谁的；相等加 log。</strong></p></blockquote>
+
+<h2>13.3 详细推导与直观理解</h2>
+<h3>递归树视角</h3>
+<p>将递归过程展开成一棵树：</p>
+<ul>
+<li>第 \(0\) 层：\(1\) 个节点，工作量 \(n^c\)；</li>
+<li>第 \(1\) 层：\(a\) 个节点，每节点工作量 \((n/b)^c\)，总工作量 \(a \cdot (n/b)^c\)；</li>
+<li>第 \(2\) 层：\(a^2\) 个节点，每节点工作量 \((n/b^2)^c\)，总工作量 \(a^2 \cdot (n/b^2)^c\)；</li>
+<li>……</li>
+<li>第 \(k\) 层：\(a^k\) 个节点，总工作量 \(a^k \cdot (n/b^k)^c = n^c \cdot (a/b^c)^k\)。</li>
+</ul>
+<p><strong>关键比值</strong>：\(r = \dfrac{a}{b^c}\)</p>
+<ul>
+<li>若 \(r &lt; 1\)（即 \(a &lt; b^c\)，等价于 \(\log_b a &lt; c\)）：每层工作量递减，总工作量由第 0 层决定 → \(O(n^c)\)；</li>
+<li>若 \(r = 1\)（即 \(a = b^c\)，等价于 \(\log_b a = c\)）：每层工作量相同，共 \(\log_b n\) 层 → \(O(n^c \log n)\)；</li>
+<li>若 \(r &gt; 1\)（即 \(a &gt; b^c\)，等价于 \(\log_b a &gt; c\)）：每层工作量递增，总工作量由叶子层决定 → \(O(n^{\log_b a})\)。</li>
+</ul>
+
+<h2>13.4 详细例题</h2>
+<h3>例 1：归并排序</h3>
+<p>\[ T(n) = 2T(n/2) + O(n) \]</p>
+<ul>
+<li>\(a = 2,\ b = 2,\ c = 1\)，\(d = \log_2 2 = 1\)；</li>
+<li>因为 \(d = c = 1\)，属于<strong>情况二</strong>；</li>
+<li>时间复杂度：\(O(n^1 \log n) = O(n \log n)\)。</li>
+</ul>
+<h3>例 2：二分查找</h3>
+<p>\[ T(n) = T(n/2) + O(1) \]</p>
+<ul>
+<li>\(a = 1,\ b = 2,\ c = 0\)，\(d = \log_2 1 = 0\)；</li>
+<li>因为 \(d = c = 0\)，属于<strong>情况二</strong>；</li>
+<li>时间复杂度：\(O(n^0 \log n) = O(\log n)\)。</li>
+</ul>
+<h3>例 3：二叉树遍历</h3>
+<p>\[ T(n) = 2T(n/2) + O(1) \]</p>
+<ul>
+<li>\(a = 2,\ b = 2,\ c = 0\)，\(d = \log_2 2 = 1\)；</li>
+<li>因为 \(d = 1 &gt; c = 0\)，属于<strong>情况三</strong>；</li>
+<li>时间复杂度：\(O(n^1) = O(n)\)。</li>
+</ul>
+<h3>例 4：Strassen 矩阵乘法</h3>
+<p>\[ T(n) = 7T(n/2) + O(n^2) \]</p>
+<ul>
+<li>\(a = 7,\ b = 2,\ c = 2\)，\(d = \log_2 7 \approx 2.807\)；</li>
+<li>因为 \(d &gt; c\)，属于<strong>情况三</strong>；</li>
+<li>时间复杂度：\(O(n^{\log_2 7}) \approx O(n^{2.807})\)。</li>
+</ul>
+<h3>例 5：递归式 \(T(n) = 3T(n/4) + n \log n\)</h3>
+<ul>
+<li>\(a = 3,\ b = 4\)，但 \(f(n) = n \log n\)，不是纯 \(n^c\) 形式；</li>
+<li>严格来说，Master 定理的标准形式要求 \(f(n) = O(n^c)\)，这里 \(f(n)\) 带 log 因子，需要判断是否属于情况二的扩展；</li>
+<li>实际上 \(\log_4 3 \approx 0.793 &lt; 1\)，属于情况一，但 \(f(n) = n \log n\) 比 \(n^c\) 稍大；</li>
+<li>更严谨地，此式属于<strong>情况一的扩展</strong>，结果为 \(O(n \log n)\)。</li>
+</ul>
+<blockquote><p><strong>注意</strong>：Master 定理的三种标准形式要求 \(f(n)\) 是纯多项式 \(n^c\)。如果 \(f(n)\) 带有 \(\log\) 因子，需要更细致的分析。</p></blockquote>
+<h3>例 6：补充情况</h3>
+<p>\[ T(n) = 2T(n/2) + O(n \log n) \]</p>
+<ul>
+<li>这里 \(f(n) = n \log n\)，不属于标准 Master 定理的三种情况（因为 \(f(n)\) 不是纯 \(n^c\)）；</li>
+<li>但根据扩展结论，时间复杂度为：\[ O(n \cdot (\log n)^2) \]</li>
+</ul>
+<p><strong>推导思路</strong>：递归树中，每层工作量为 \(n \log(n/2^k)\)，共 \(\log n\) 层，求和近似为 \(O(n \log^2 n)\)。</p>
+
+<h2>13.5 常见陷阱与注意事项</h2>
+<table>
+<thead><tr><th>陷阱</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td><strong>子问题规模必须相同</strong></td><td>如 \(T(n) = T(n-1) + T(n-2) + 1\) 不能用 Master 定理</td></tr>
+<tr><td><strong>\(f(n)\) 必须是纯多项式</strong></td><td>如 \(f(n) = n \log n\) 需要扩展分析</td></tr>
+<tr><td><strong>\(a\)、\(b\) 必须是常数</strong></td><td>不能依赖于 \(n\)</td></tr>
+<tr><td><strong>底数 \(b\) 必须 &gt; 1</strong></td><td>否则递归不收敛</td></tr>
+<tr><td><strong>正则条件（情况三）</strong></td><td>需要验证 \(a f(n/b) \le c f(n)\)，大部分题目自动满足</td></tr>
+<tr><td><strong>不要混淆 \(\log_b a\) 与 \(\log_a b\)</strong></td><td>注意底数和真数的位置</td></tr>
+</tbody>
+</table>
+
+<h2>13.6 扩展：带有 log 因子的情况</h2>
+<p>若 \(T(n) = aT(n/b) + O(n^c \log^k n)\)，则：</p>
+<ul>
+<li>若 \(\log_b a &lt; c\)：\(O(n^c \log^k n)\)；</li>
+<li>若 \(\log_b a = c\)：\(O(n^c \log^{k+1} n)\)；</li>
+<li>若 \(\log_b a &gt; c\)：\(O(n^{\log_b a})\)。</li>
+</ul>
+<p><strong>例</strong>：\(T(n) = 2T(n/2) + O(n \log n)\)，\(a=2,\ b=2,\ c=1,\ k=1\)，\(\log_b a = 1 = c\)，所以 \(O(n \log^2 n)\)。</p>
+
+<h2>13.7 练习题</h2>
+<h3>练习 1</h3>
+<p>\[ T(n) = 4T(n/2) + O(n) \] 求时间复杂度。</p>
+<p><strong>答案</strong>：\(a=4,\ b=2,\ c=1\)，\(d = \log_2 4 = 2 &gt; 1\)，情况三，\(O(n^2)\)。</p>
+<h3>练习 2</h3>
+<p>\[ T(n) = 2T(n/4) + O(\sqrt{n}) \] 求时间复杂度。</p>
+<p><strong>答案</strong>：\(a=2,\ b=4,\ c=0.5\)，\(d = \log_4 2 = 0.5 = c\)，情况二，\(O(\sqrt{n} \log n)\)。</p>
+<h3>练习 3</h3>
+<p>\[ T(n) = 8T(n/2) + O(n^2) \] 求时间复杂度。</p>
+<p><strong>答案</strong>：\(a=8,\ b=2,\ c=2\)，\(d = \log_2 8 = 3 &gt; 2\)，情况三，\(O(n^3)\)。</p>
+<h3>练习 4</h3>
+<p>\[ T(n) = T(n/2) + O(n) \] 求时间复杂度。</p>
+<p><strong>答案</strong>：\(a=1,\ b=2,\ c=1\)，\(d = \log_2 1 = 0 &lt; 1\)，情况一，\(O(n)\)。</p>
+<h3>练习 5</h3>
+<p>\[ T(n) = 2T(n/2) + O(n^2) \] 求时间复杂度。</p>
+<p><strong>答案</strong>：\(a=2,\ b=2,\ c=2\)，\(d = \log_2 2 = 1 &lt; 2\)，情况一，\(O(n^2)\)。</p>
+<h3>练习 6</h3>
+<p>\[ T(n) = 3T(n/3) + O(n) \] 求时间复杂度。</p>
+<p><strong>答案</strong>：\(a=3,\ b=3,\ c=1\)，\(d = \log_3 3 = 1 = c\)，情况二，\(O(n \log n)\)。</p>
+<h3>练习 7</h3>
+<p>\[ T(n) = 2T(n/2) + O(n \log^2 n) \] 求时间复杂度。</p>
+<p><strong>答案</strong>：属于扩展情况，\(a=2,\ b=2,\ c=1,\ k=2\)，\(d = c = 1\)，所以 \(O(n \log^3 n)\)。</p>
+
+<h2>13.8 总结速查表</h2>
+<table>
+<thead><tr><th>递归式形式</th><th>条件</th><th>时间复杂度</th></tr></thead>
+<tbody>
+<tr><td>\(T(n) = aT(n/b) + O(n^c)\)</td><td>\(\log_b a &lt; c\)</td><td>\(O(n^c)\)</td></tr>
+<tr><td>\(T(n) = aT(n/b) + O(n^c)\)</td><td>\(\log_b a = c\)</td><td>\(O(n^c \log n)\)</td></tr>
+<tr><td>\(T(n) = aT(n/b) + O(n^c)\)</td><td>\(\log_b a &gt; c\)</td><td>\(O(n^{\log_b a})\)</td></tr>
+<tr><td>\(T(n) = aT(n/b) + O(n^c \log^k n)\)</td><td>\(\log_b a = c\)</td><td>\(O(n^c \log^{k+1} n)\)</td></tr>
+</tbody>
+</table>
+<p><strong>核心步骤</strong>：</p>
+<ol>
+<li>识别 \(a\)、\(b\)、\(c\)；</li>
+<li>计算 \(d = \log_b a\)；</li>
+<li>比较 \(d\) 与 \(c\)；</li>
+<li>套用公式。</li>
+</ol>
+
+<h2>13.9 历年真题</h2>
+<div class="quiz-block">
+<p><strong>【2025-S-11】</strong>递归关系式 $T(n) = 2T(n/2) + O(n^2)$ 描述了某个分治算法的时间复杂度。请问该算法的时间复杂度是多少？</p>
+<p>A. O(n)</p>
+<p>B. O(n log n)</p>
+<p>C. O(n²)</p>
+<p>D. O(n² log n)</p>
+<p><strong>答案：C</strong></p>
+<p><strong>解析</strong>：递归式为 \(T(n) = 2T\left(\frac{n}{2}\right) + O(n^2)\)。根据 Master 定理：\(a = 2\)，\(b = 2\)，\(c = 2\)，\(\log_b a = \log_2 2 = 1\)。比较 \(\log_b a\) 与 \(c\)：</p>
+<p>\[ \log_b a = 1 &lt; 2 = c \]</p>
+<p>属于 Master 定理的<strong>情况一</strong>（合并代价占主导），因此 \(T(n) = O(n^c) = O(n^2)\)，所以选 <strong>C</strong>。</p>
+</div>

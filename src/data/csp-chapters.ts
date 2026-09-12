@@ -121,6 +121,24 @@ export const CSP_CHAPTERS: CspChapter[] = [
     color: 'purple',
     group: 'S',
   },
+  {
+    id: '12',
+    title: '欧拉图与一笔画',
+    knowledge: '欧拉通路/欧拉回路、无向图与有向图充要条件、奇度点判定、Fleury 与 Hierholzer 算法',
+    practice: '一笔画判断、最少笔画数计算、欧拉图概念辨析与建模应用题',
+    icon: '✏️',
+    color: 'cyan',
+    group: 'S',
+  },
+  {
+    id: '13',
+    title: 'Master 定理',
+    knowledge: '分治递归式 T(n)=aT(n/b)+O(n^c) 三种情况的复杂度判定、递归树推导、带 log 因子的扩展形式',
+    practice: 'Master 定理三种情况判定练习、递归式复杂度计算与历年真题演练',
+    icon: '📐',
+    color: 'blue',
+    group: 'S',
+  },
 ];
 
 export function getChapterById(id: string): CspChapter | undefined {

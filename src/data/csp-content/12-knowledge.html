@@ -1,0 +1,157 @@
+<h2>12.1 从七桥问题说起</h2>
+<p>18 世纪的哥尼斯堡（今加里宁格勒）被河分成四块陆地，彼此之间共有 7 座桥相连。当时的人们提出了一个问题：<strong>能否从某地出发，经过每座桥恰好一次，最后回到出发点？</strong></p>
+<p>1736 年，数学家欧拉（Euler）把四块陆地抽象成 4 个点、7 座桥抽象成 7 条边，证明了这是不可能完成的——因为这幅图中<strong>奇度点太多</strong>。这项工作标志着<strong>图论</strong>的诞生，「一笔画问题」也由此成为图论中最经典的问题之一。</p>
+<figure><img src="/images/csp/12/img-01.png" alt="哥尼斯堡七桥问题示意图" loading="lazy"></figure>
+<blockquote><p>上图是一个<strong>多重图</strong>（两点之间可以有多条边）。A 点度数为 5，B、C、D 度数均为 3，四个点全是奇度点，因此既不能一笔画，更不能回到起点。</p></blockquote>
+
+<h2>12.2 基本定义</h2>
+<p>把「一笔画」翻译成图论语言，有下面几个概念：</p>
+<ul>
+<li><strong>欧拉通路（欧拉路径，Eulerian Path）</strong>：图中存在一条路径，<strong>经过每条边恰好一次</strong>。直观理解：笔不离开纸，把每条边都画一遍，起点和终点可以不同。</li>
+<li><strong>欧拉回路（Eulerian Circuit / Eulerian Cycle）</strong>：起点与终点<strong>相同</strong>的欧拉通路。即从某点出发，每条边恰好走一次，最后回到起点。</li>
+<li><strong>欧拉图（Eulerian Graph）</strong>：存在欧拉回路的图。</li>
+<li><strong>半欧拉图（Semi-Eulerian Graph）</strong>：存在欧拉通路、但不存在欧拉回路的图。</li>
+</ul>
+<p>注意区分「经过每条<strong>边</strong>一次」与「经过每个<strong>点</strong>一次」——后者是<strong>哈密顿路径</strong>问题，两者完全不同，初赛选择题经常拿这一点设置干扰项。</p>
+
+<h2>12.3 无向图存在欧拉通路的充要条件</h2>
+<p>这是本讲的核心，初赛几乎每年都以「给图判断能否一笔画」的形式考查。</p>
+<h3>1、存在欧拉回路的充要条件</h3>
+<p>无向图存在欧拉回路，当且仅当同时满足：</p>
+<ul>
+<li><strong>连通性</strong>：所有度数大于 0 的顶点是连通的（度数为 0 的孤立点不影响）；</li>
+<li><strong>度数条件</strong>：<strong>每个顶点的度数都是偶数</strong>（奇度点的个数为 0）。</li>
+</ul>
+<h3>2、存在欧拉通路（但不要求回路）的充要条件</h3>
+<p>无向图存在欧拉通路，当且仅当同时满足：</p>
+<ul>
+<li><strong>连通性</strong>：同上，所有有边的点连通；</li>
+<li><strong>度数条件</strong>：<strong>奇度点的个数为 0 或 2</strong>。
+<ul>
+<li>奇度点 0 个：图存在<strong>欧拉回路</strong>（从任意点出发都能回到出发点）；</li>
+<li>奇度点 2 个：图存在一条<strong>一笔画路径</strong>，且必须以这两个奇度点分别作为<strong>起点和终点</strong>；</li>
+<li>奇度点大于 2 个：不是一笔画。</li>
+</ul></li>
+</ul>
+<blockquote><p>两个定理的唯一差别在于<strong>奇度点的个数</strong>：0 个 ⟺ 有回路（欧拉图）；恰好 2 个 ⟺ 有通路但无回路（半欧拉图）；超过 2 个 ⟺ 连一笔画都做不到。</p></blockquote>
+<blockquote><p>注意：「连通」是<strong>全局</strong>概念，必须整幅图（忽略孤立点后）连成一片，不能只考虑局部连通。</p></blockquote>
+
+<h2>12.4 有向图存在欧拉通路的充要条件</h2>
+<p>有向图的「一笔画」要沿着箭头方向走，判定条件也换成入度 / 出度：</p>
+<h3>1、存在欧拉回路的充要条件</h3>
+<ul>
+<li><strong>基图连通</strong>（把有向边看成无向边后图是连通的）；</li>
+<li><strong>每个顶点的入度 = 出度</strong>。</li>
+</ul>
+<h3>2、存在欧拉通路的充要条件</h3>
+<ul>
+<li><strong>基图连通</strong>；</li>
+<li>度数满足：
+<ul>
+<li><strong>最多一个顶点</strong>满足 出度 − 入度 = 1（它只能作为<strong>起点</strong>）；</li>
+<li><strong>最多一个顶点</strong>满足 入度 − 出度 = 1（它只能作为<strong>终点</strong>）；</li>
+<li>其余所有顶点 入度 = 出度。</li>
+</ul></li>
+</ul>
+
+<h2>12.5 解题模板：一查连通、二数奇点</h2>
+<p>拿到「能否一笔画」的题目，按固定两步走，几秒出答案：</p>
+<ol>
+<li><strong>查连通</strong>：忽略度数为 0 的孤立点，剩下的部分是否连成一片？不连通直接判「否」；</li>
+<li><strong>数奇点</strong>：逐点标出度数，数一数度数为奇数的点有几个：
+<ul>
+<li>0 个 → 存在欧拉回路，是欧拉图；</li>
+<li>2 个 → 存在欧拉通路（半欧拉图），从其中一个奇点画到另一个；</li>
+<li>其他 → 不能一笔画。</li>
+</ul></li>
+</ol>
+<p><strong>补充结论（多笔画问题）</strong>：由握手定理可知<strong>奇度点总是偶数个</strong>。若连通图有 $2k$ 个奇度点（$k \ge 1$），则至少需要 $k$ 笔才能画完；欧拉回路图（0 个奇度点）只需 1 笔。初赛有时会问「最少几笔画出」，用「奇度点个数 ÷ 2」即可作答。</p>
+<p>另一个常用恒等式（握手定理）：所有顶点度数之和 $= 2 \times$ 边数，可用来快速校验数出的度数对不对。</p>
+
+<h2>12.6 例题：下列哪一个是欧拉图？</h2>
+<div class="quiz-block">
+<p><strong>【例题】判断下列 6 幅图中，哪一个是欧拉图（存在欧拉回路）？</strong></p>
+<figure><img src="/images/csp/12/img-02.png" alt="例题A：蝴蝶图" loading="lazy"></figure>
+<figure><img src="/images/csp/12/img-03.png" alt="例题B：正方形加对角线" loading="lazy"></figure>
+<figure><img src="/images/csp/12/img-04.png" alt="例题C：一棵树" loading="lazy"></figure>
+<figure><img src="/images/csp/12/img-05.png" alt="例题D：完全图K5" loading="lazy"></figure>
+<figure><img src="/images/csp/12/img-06.png" alt="例题E：两个正方形共享一条边" loading="lazy"></figure>
+<figure><img src="/images/csp/12/img-07.png" alt="例题F：六边形加三条对角线" loading="lazy"></figure>
+<p><strong>逐项分析：</strong></p>
+<ul>
+<li><span style="color:#2E7D32"><strong>A）是一个欧拉图</strong></span>——两个三角形共享顶点 O，度数 O=4，其余全是 2，<strong>无奇度点</strong>且连通，存在欧拉回路；</li>
+<li><span style="color:#C62828"><strong>B）不是一个欧拉图</strong></span>——A、C 两点度数为 3，<strong>恰好 2 个奇度点</strong>：只存在欧拉通路（半欧拉图），不存在回到起点的回路；</li>
+<li><span style="color:#C62828"><strong>C）不是一个欧拉图</strong></span>——树中存在度数为 1 的叶子（D、E、F），奇度点 3 个，连一笔画都做不到；</li>
+<li><span style="color:#2E7D32"><strong>D）是一个欧拉图</strong></span>——完全图 $K_5$ 每个点与另外 4 点相邻，度数全为 4，无奇度点且连通；</li>
+<li><span style="color:#C62828"><strong>E）不是一个欧拉图</strong></span>——公共边上的 B、E 两点度数为 3，奇度点恰 2 个，仅是半欧拉图；</li>
+<li><span style="color:#C62828"><strong>F）不是一个欧拉图</strong></span>——三条对角线使每个点度数都变成 3，<strong>6 个奇度点</strong>，需要 $6 \div 2 = 3$ 笔才能画完。</li>
+</ul>
+<p><strong>答案：A、D 是欧拉图；B、C、E、F 不是。</strong></p>
+</div>
+<blockquote><p>技巧提示：B、E 这类「恰好 2 个奇度点」的图最容易失分——它们<strong>能</strong>一笔画（从奇点画到奇点），但<strong>不是欧拉图</strong>。审题时看清问的是「能否一笔画」还是「是否欧拉图」。</p></blockquote>
+
+<h2>12.7 求一条欧拉回路：Fleury 与 Hierholzer</h2>
+<p>判断之外，初赛偶尔考查「欧拉回路怎么找」，复赛（如 CSP-S）则可能要求编程实现。常见两种算法：</p>
+<h3>1、Fleury（避桥）算法</h3>
+<p>从起点出发，每次走一条边时<strong>优先不走「桥」</strong>（删掉后会让图断开的边），除非当前只剩下桥可走。这样保证未走过的边始终保持连通，不会「走进死角」。实现需要每次判断桥，复杂度较高，主要用于理解思想。</p>
+<h3>2、Hierholzer 算法（推荐）</h3>
+<p>核心思想是「能走就走，走投无路再回溯，回溯时倒着拼出回路」。用栈实现，复杂度 $O(V + E)$：</p>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int n, m;                     // 点数、边数
+vector&lt;vector&lt;int&gt;&gt; g;        // 邻接表
+vector&lt;int&gt; path;             // 存放欧拉回路（先得到逆序）
+stack&lt;int&gt; stk;
+
+void hierholzer(int s) {
+    stk.push(s);
+    while (!stk.empty()) {
+        int u = stk.top();
+        if (!g[u].empty()) {          // u 还有边可走
+            int v = g[u].back();
+            g[u].pop_back();          // 删掉边 u-v
+            g[v].pop_back();          // 无向图同时删反向边
+            stk.push(v);
+        } else {                      // u 走投无路，记录并回溯
+            path.push_back(u);
+            stk.pop();
+        }
+    }
+    reverse(path.begin(), path.end());  // 翻转得正序欧拉回路
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    g.assign(n + 1, {});
+    for (int i = 0; i &lt; m; i++) {
+        int u, v;
+        cin &gt;&gt; u &gt;&gt; v;
+        g[u].push_back(v);
+        g[v].push_back(u);            // 无向图
+    }
+    hierholzer(1);                    // 欧拉回路可从任意点出发
+    for (int i = 0; i &lt; (int)path.size(); i++)
+        cout &lt;&lt; path[i] &lt;&lt; " \n"[i + 1 == (int)path.size()];
+    return 0;
+}
+</code></pre>
+<blockquote><p>用 Hierholzer 求欧拉<strong>通路</strong>时，起点必须选奇度点（无向图）或「出度 − 入度 = 1」的点（有向图）；求欧拉<strong>回路</strong>则可从任意非孤立点出发。</p></blockquote>
+
+<h2>12.8 初赛常见考法与易错点</h2>
+<p>结合近年 CSP-J/S 初赛真题的命题习惯，本章的考点集中在以下几类：</p>
+<ol>
+<li><strong>给图判断</strong>：给出一张小图（一般 4~8 个点），问「能否一笔画」「是否欧拉图」「欧拉通路从哪点到哪点」——套用「一查连通、二数奇点」模板；</li>
+<li><strong>多笔画计数</strong>：问最少几笔画完，答案是「奇度点个数 ÷ 2」（连通时）；</li>
+<li><strong>概念辨析</strong>：欧拉图 vs 半欧拉图 vs 哈密顿图——欧拉看<strong>边</strong>（每条边一次），哈密顿看<strong>点</strong>（每个点一次）；</li>
+<li><strong>有向图判定</strong>：给一张有向图问是否存在欧拉回路，检查「每点入度 = 出度」；</li>
+<li><strong>实际模型转化</strong>：单词接龙（单词作边、首尾字母作点）、多米诺骨牌链（骨牌作边、点数作点）、扫房间路线等，先建模成图再数奇度点。</li>
+</ol>
+<p><strong>易错点清单：</strong></p>
+<ul>
+<li>孤立点（度数为 0）不影响欧拉判定，判断连通时可以忽略；</li>
+<li>「能一笔画」≠「欧拉图」：恰有 2 个奇度点只能算半欧拉图；</li>
+<li>欧拉通路的起点和终点<strong>必须是两个奇度点</strong>，不能任选；</li>
+<li>有向图不能套用无向图的「数奇度点」规则，要改查入度与出度的差；</li>
+<li>任何图的奇度点个数一定是<strong>偶数</strong>（握手定理），数出奇数个奇度点说明数错了。</li>
+</ul>
