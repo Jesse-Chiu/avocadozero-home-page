@@ -1,0 +1,313 @@
+<h2 id="sec-1">第一章：无符号整数（size_t / unsigned）陷阱</h2>
+
+<p><strong>核心问题</strong>：无符号整数（unsigned）在运算时永远不会小于 0，一旦发生减法下溢，会变成一个极其巨大的正数。</p>
+
+<h3>1. 容器大小与 int 混用</h3>
+<ul>
+  <li>场景：<code>vector.size()</code>、<code>string.size()</code>、<code>strlen()</code> 返回的都是 <code>size_t</code>（无符号）。</li>
+  <li>致命错误：<code>for (int i = 0; i &lt; v.size() - 1; ++i)</code>。当 <code>v</code> 为空时，<code>v.size() - 1</code> 变成 $2^{64}-1$，导致死循环或越界 RE。</li>
+  <li>正确写法：<code>int len = (int)v.size(); for (int i = 0; i &lt; len; ++i)</code></li>
+</ul>
+
+<h3>2. 倒序循环</h3>
+<ul>
+  <li>致命错误：<code>for (int i = v.size() - 1; i &gt;= 0; --i)</code>。当 <code>i</code> 减到 0 后再 <code>--i</code> 变成 -1，与 <code>size_t</code> 比较时 -1 被转换成极大正数，循环永不结束。</li>
+  <li>正确写法：<code>for (int i = (int)v.size() - 1; i &gt;= 0; --i)</code></li>
+</ul>
+
+<h3>3. 二分查找死循环</h3>
+<ul>
+  <li>场景：手写二分时，<code>mid = (l + r) / 2</code>。如果 <code>l</code> 和 <code>r</code> 都是 <code>unsigned</code>，且 <code>l + r</code> 溢出，<code>mid</code> 会变得很小。</li>
+  <li>正确写法：使用 <code>mid = l + (r - l) / 2</code>。</li>
+</ul>
+
+<h2 id="sec-2">第二章：数据溢出与精度陷阱</h2>
+
+<h3>1. int 溢出（爆 int）</h3>
+<ul>
+  <li>场景：计算 $N \times M$，$N, M \le 10^5$。结果 $10^{10}$，超出 int 上限（$2.1 \times 10^9$）。</li>
+  <li>致命错误：<code>int ans = n * m;</code></li>
+  <li>正确写法：<code>long long ans = 1LL * n * m;</code>（乘法前先强制转换一个乘数为 <code>long long</code>）。</li>
+</ul>
+
+<h3>2. 浮点数判等</h3>
+<ul>
+  <li>致命错误：<code>if (a == b)</code> 或 <code>if (a + b == c)</code>。浮点数计算有精度误差，比如 <code>0.1 + 0.2 != 0.3</code>。</li>
+  <li>正确写法：<code>if (fabs(a - b) &lt; 1e-8)</code>。</li>
+</ul>
+
+<h3>3. 取模减法为负</h3>
+<ul>
+  <li>致命错误：<code>ans = (a - b) % MOD;</code>。如果 <code>a &lt; b</code>，<code>ans</code> 会是负数，导致 WA。</li>
+  <li>正确写法：<code>ans = ((a - b) % MOD + MOD) % MOD;</code></li>
+</ul>
+
+<h3>4. 常量定义的坑</h3>
+<ul>
+  <li>致命错误：<code>const int MOD = 1e9 + 7;</code>。<code>1e9</code> 是浮点数（double），赋值给 int 虽然会隐式转换，但可能在某些编译器下丢失精度。</li>
+  <li>正确写法：<code>const int MOD = 1000000007;</code>（C++11 后 <code>1e9 + 7</code> 通常安全，但建议写全）。</li>
+</ul>
+
+<h2 id="sec-3">第三章：数组与内存陷阱</h2>
+
+<h3>1. 栈溢出（爆栈）</h3>
+<ul>
+  <li>场景：在 main 函数内部定义大数组，如 <code>int a[1000005];</code>。</li>
+  <li>原因：函数内的局部变量存储在栈上，栈空间通常只有 1MB~8MB。大数组会导致 RE。</li>
+  <li>正确做法：将大数组定义为全局变量（全局区有 256MB+），或者使用 <code>static</code> 关键字。</li>
+</ul>
+
+<h3>2. memset 的误用</h3>
+<ul>
+  <li>致命错误：<code>memset(a, 1, sizeof(a))</code>。memset 是按字节赋值的。把每个字节设为 1，一个 int（4字节）会变成 <code>0x01010101</code>（即 16843009），而不是 1。</li>
+  <li>正确用法：memset 只能用于赋 0、-1（因为补码全 1）或 <code>0x3f</code>（用于初始化为无穷大）。赋其他值请用 <code>fill()</code> 或循环。</li>
+</ul>
+
+<h3>3. 数组开小</h3>
+<ul>
+  <li>场景：题目要求 $N \le 10^5$，你开了 <code>const int MAXN = 1e4 + 10;</code>。</li>
+  <li>后果：本地小数据能过，评测机大数据直接 RE 或 WA。<strong>数组宁可开大 10 倍，不可开小 1 个。</strong></li>
+</ul>
+
+<h2 id="sec-4">第四章：输入输出与缓冲区陷阱</h2>
+
+<h3>1. cin/cout 与 scanf/printf 混用</h3>
+<ul>
+  <li>后果：开启 <code>ios::sync_with_stdio(false)</code> 后混用 <code>getchar()</code> 或 <code>scanf</code>，会导致输入缓冲区错乱，产生玄学 WA。</li>
+  <li>原则：要么全用 C++ 流，要么全用 C 标准 I/O。</li>
+</ul>
+
+<h3>2. 多组数据不清空</h3>
+<ul>
+  <li>场景：题目有多组测试数据（<code>while (cin &gt;&gt; n)</code> 或 T 组）。</li>
+  <li>后果：上一组的数组、vector、map 还残留着数据，导致下一组答案错误。</li>
+  <li>正确做法：每组数据前清空 vector、map、重置 dp 数组。</li>
+</ul>
+
+<h3>3. getline 读到空行</h3>
+<ul>
+  <li>场景：<code>cin &gt;&gt; n; getline(cin, s);</code></li>
+  <li>原因：<code>cin &gt;&gt; n</code> 读完后，缓冲区残留 <code>\n</code>，getline 读入这个空行。</li>
+  <li>正确做法：<code>cin &gt;&gt; n; cin.ignore(); getline(cin, s);</code></li>
+</ul>
+
+<h2 id="sec-5">第五章：STL 容器陷阱</h2>
+
+<h3>1. vector 遍历时删除元素</h3>
+<ul>
+  <li>致命错误：<code>for (auto it = v.begin(); it != v.end(); ++it) { if (...) v.erase(it); }</code>。erase 后迭代器失效，<code>++it</code> 会导致 RE。</li>
+  <li>正确写法：<code>v.erase(remove_if(...), v.end())</code> 或 <code>it = v.erase(it)</code>。</li>
+</ul>
+
+<h3>2. map 的 [] 访问</h3>
+<ul>
+  <li>场景：<code>map&lt;int, int&gt; mp; if (mp[x] == 0) ...</code></li>
+  <li>后果：如果 <code>x</code> 不存在，<code>mp[x]</code> 会插入一个键为 x、值为 0 的元素。这会改变 map 的大小，如果后面遍历 map，会多出无意义的元素。</li>
+  <li>正确做法：查询用 <code>mp.count(x)</code> 或 <code>mp.find(x)</code>。</li>
+</ul>
+
+<h3>3. priority_queue 默认是大根堆</h3>
+<ul>
+  <li>场景：Dijkstra 算法或需要小根堆。</li>
+  <li>正确写法：<code>priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; q;</code>（注意 <code>&gt;&gt;</code> 在 C++11 前要加空格 <code>&gt; &gt;</code>）。</li>
+</ul>
+
+<h2 id="sec-6">第六章：宏定义与函数陷阱</h2>
+
+<h3>1. 宏定义重复计算</h3>
+<ul>
+  <li>致命错误：<code>#define max(a, b) a &gt; b ? a : b</code>。调用 <code>max(i++, j)</code> 时，<code>i++</code> 会被执行两次。</li>
+  <li>正确做法：使用 <code>inline</code> 函数，或加括号 <code>#define max(a,b) ((a) &gt; (b) ? (a) : (b))</code>。</li>
+</ul>
+
+<h3>2. 宏名冲突</h3>
+<ul>
+  <li>场景：在 Windows 下，<code>&lt;windows.h&gt;</code> 定义了 max 和 min 宏。如果你写了 <code>#define max(a,b) ...</code>，会引发冲突。</li>
+  <li>正确做法：不要自己定义 max 和 min，直接使用 <code>std::max</code> 和 <code>std::min</code>。</li>
+</ul>
+
+<h2 id="sec-7">第七章：递归与栈溢出陷阱</h2>
+
+<h3>1. DFS 递归过深</h3>
+<ul>
+  <li>场景：图论题中，递归深度达到 $10^5$ 级别。</li>
+  <li>后果：栈溢出 RE。</li>
+  <li>正确做法：改写成栈（stack）迭代，或者手动开大编译器栈空间（如 <code>-Wl,--stack=268435456</code>，但评测机不一定支持）。</li>
+</ul>
+
+<h3>2. 忘记回溯</h3>
+<ul>
+  <li>场景：DFS 求全排列、N 皇后。</li>
+  <li>后果：标记数组 <code>vis[i] = 1</code> 后没有恢复 <code>vis[i] = 0</code>，导致后续搜索无法使用该元素。</li>
+  <li>正确做法：在递归返回后，立即恢复现场。</li>
+</ul>
+
+<h2 id="sec-8">第八章：string::size()、strlen(s)</h2>
+
+<p><code>std::string::size()</code> 的时间复杂度是 $O(1)$（常数时间）。</p>
+
+<h3>一、为什么是 O(1)？（底层原理）</h3>
+<p><code>std::string</code> 在底层实现时，内部通常会维护三个指针（或者一个指针+两个长度变量）：</p>
+<ol>
+  <li><code>_M_dataplus</code>（指向字符串数据的指针）</li>
+  <li><code>_M_string_length</code>（当前字符串的长度，直接存下来了）</li>
+  <li><code>_M_allocated_capacity</code>（当前分配的容量）</li>
+</ol>
+<p>当你调用 <code>s.size()</code> 时，它只是直接返回这个已经存好的变量，不需要像 C 语言那样从头到尾遍历去数。所以无论字符串多长，耗时都是固定的。</p>
+
+<h3>二、与 C 风格字符串的致命对比（竞赛避坑）</h3>
+<p>这是复赛中最容易导致 TLE（超时）的隐形杀手：</p>
+<ul>
+  <li><code>std::string s; s.size()</code> → $O(1)$</li>
+  <li><code>char s[MAXN]; strlen(s);</code> → $O(N)$（strlen 必须从头遍历到 <code>\0</code>）</li>
+</ul>
+<p><strong>复赛经典惨案：</strong>如果在 for 循环里写 <code>for (int i = 0; i &lt; strlen(s); ++i)</code>，每次循环都会重新数一遍长度，总复杂度直接从 $O(N)$ 退化成 $O(N^2)$，字符串长度 $10^5$ 时必定超时。</p>
+
+<h3>三、⚠️ 复赛最致命的坑：size_t 无符号整数</h3>
+<p>这是 <code>string::size()</code> 最大的坑，经常导致 RE（运行时错误）或死循环！</p>
+<p><code>size()</code> 的返回值类型是 <code>size_t</code>，这是一个无符号整数（unsigned long long）。当你把它和 <code>int</code> 混用，尤其是做减法时，会触发"无符号整数下溢"。</p>
+
+<p><strong>错误示范 1（空字符串导致 RE）：</strong></p>
+<pre><code class="language-cpp">string s = "";
+for (int i = 0; i &lt; s.size() - 1; ++i) 
+{
+    // ...
+}
+</code></pre>
+<p><strong>解析</strong>：<code>s.size()</code> 是 0，<code>s.size() - 1</code> 会发生下溢，变成 18446744073709551615（$2^{64}-1$）。循环条件 <code>i &lt; 18446744073709551615</code> 永远成立，导致数组越界 RE。</p>
+
+<p><strong>错误示范 2（倒序循环死循环）：</strong></p>
+<pre><code class="language-cpp">string s = "abc";
+for (int i = s.size() - 1; i &gt;= 0; --i)
+{
+    // ...
+}
+</code></pre>
+<p><strong>解析</strong>：当 <code>i</code> 减到 0 时，<code>--i</code> 变成 -1。但 <code>i</code> 是 int，<code>s.size() - 1</code> 是 <code>size_t</code>，比较时 int 会被转换成 <code>size_t</code>，-1 变成极大整数，条件 <code>i &gt;= 0</code> 永远成立，死循环。</p>
+
+<p><strong>正确做法（教练强推）</strong>：在循环前，强制转换为 int 或赋值给 int 变量。</p>
+<pre><code class="language-cpp">string s = "abc";
+int len = (int)s.size(); // 或者 int len = s.length();
+for (int i = 0; i &lt; len; ++i) 
+{
+    // ...
+}
+
+// 倒序遍历
+for (int i = (int)s.size() - 1; i &gt;= 0; --i)
+{
+    // ...
+}
+</code></pre>
+
+<h3>四、补充知识点：length() 和 size()</h3>
+<ul>
+  <li>两者完全等价，时间复杂度都是 $O(1)$，返回值都是 <code>size_t</code>。</li>
+  <li>早期 C++ 标准库为了兼容，同时提供了这两个函数。</li>
+  <li>在竞赛中，推荐统一使用 <code>s.size()</code>，这也是大多数人的肌肉记忆。</li>
+</ul>
+
+<h3>五、教练的复赛优化建议</h3>
+<p>虽然 <code>size()</code> 是 $O(1)$，但如果你在双层循环（比如 $O(N^2)$ 的暴力枚举）的最内层频繁调用 <code>s.size()</code>，编译器可能不会自动把它提取到循环外。为了极致的常数优化，建议：</p>
+<pre><code class="language-cpp">// 不推荐（每次循环都要调用函数）
+for (int i = 0; i &lt; s.size(); ++i) { ... }
+
+// 推荐（把长度提取出来，防止无符号溢出且提速）
+int len = (int)s.size();
+for (int i = 0; i &lt; len; ++i) { ... }
+</code></pre>
+
+<blockquote>
+  <p><strong>一句话总结</strong>：<code>string::size()</code> 是 $O(1)$，但千万别拿它和 int 直接做减法！用 <code>int len = (int)s.size();</code> 保你复赛平安。</p>
+</blockquote>
+
+<h2 id="sec-9">第九章：memset()</h2>
+
+<h3>一、memset 的核心原理（必懂）</h3>
+
+<h4>1. 底层是"按字节（Byte）赋值"</h4>
+<p><code>memset(void *s, int ch, size_t n)</code> 的实现机制是：将内存 s 的前 n 个字节，逐个字节地设置为 ch 的二进制低 8 位。它根本不管你的数据类型是 int、double 还是结构体，它只认内存字节。</p>
+
+<h4>2. 为什么只能安全地赋 0 或 -1？</h4>
+<ul>
+  <li>赋 0：int 的 4 个字节全变成 <code>0x00000000</code>，结果就是整型 0；double 变成 0.0。</li>
+  <li>赋 -1：在补码表示中，-1 的二进制是全 1（<code>0xFFFFFFFF</code>）。4 个字节全变成 <code>0xFF</code>，结果就是 -1。</li>
+  <li>赋其他值（如 1）：<code>memset(a, 1, sizeof(a))</code> 会让每个字节变成 <code>0x01</code>，一个 int 变成 <code>0x01010101</code>（即 16843009），绝不是 1。</li>
+</ul>
+
+<h3>二、0x3f 与 0x7f（竞赛必备知识）</h3>
+<p>在竞赛中，我们经常用 memset 给 int 数组赋"无穷大"，下面是最经典的对比：</p>
+
+<table>
+  <thead>
+    <tr><th>填充值</th><th>int a[0] 实际值</th><th>double b[0] 实际值</th><th>a[0] + a[0]（是否溢出）</th><th>b[0] + b[0]</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>0x3f</code></td><td>1061109567</td><td>0.000476792（极小值）</td><td>2122219134（没溢出）</td><td>0.000953585</td></tr>
+    <tr><td><code>0x7f</code></td><td>2139062143</td><td>1.38242e+306（极大值）</td><td>-16843010（溢出）</td><td>2.76483e+306（没溢出）</td></tr>
+    <tr><td>极限值</td><td><code>INT32_MAX</code>: 2147483647</td><td><code>DBL_MAX</code>: 1.79769e+308</td><td>—</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<h4>1. 0x3f —— 竞赛中最安全的无穷大</h4>
+<p><code>memset(a, 0x3f, sizeof(a))</code> 会让 int 变成 <code>0x3f3f3f3f</code>，即 1061109567（约 $10^9$）。</p>
+<p><strong>为什么安全？</strong>因为 <code>a[0] + a[0] = 2122219134</code>，仍然小于 <code>INT32_MAX</code>（2147483647）。这意味着在两个"无穷大"相加时，不会发生整型溢出。这对于 Dijkstra、Floyd 等需要松弛操作的算法至关重要。</p>
+
+<h4>2. 0x7f —— 引发整数溢出的"炸弹"</h4>
+<p><code>memset(a, 0x7f, sizeof(a))</code> 会让 int 变成 <code>0x7f7f7f7f</code>，即 2139062143。</p>
+<p><strong>致命陷阱</strong>：<code>a[0] + a[0]</code> 变成了 -16843010。这是因为两个 <code>0x7f7f7f7f</code> 相加超出了 <code>INT32_MAX</code>，最高位进位变成了负数，导致整型溢出（Undefined Behavior）。如果此时比较 <code>if (dist[u] + w &lt; dist[v])</code>，负数会直接破坏最短路算法。</p>
+
+<h4>3. double 数组的陷阱（不要用 memset 赋浮点数！）</h4>
+<p><code>0x3f</code> 和 <code>0x7f</code> 给 double 赋的值分别是 0.0004... 和 1.38e+306。这是一种极其危险的做法。</p>
+<p><code>0x7f</code> 得到的 1.38e+306 确实很大，但如果题目需要做加法（比如 1.38e306 + 1.38e306），虽然表里没溢出，但如果题目数据再大一点，或者乘以某个常数，就会变成 <code>inf</code>（无穷大），导致 WA。</p>
+<blockquote>
+  <p><strong>浮点数绝对不要用 memset 赋非 0 值！</strong>浮点数的无穷大应该用 for 循环赋值 <code>1e18</code> 或 <code>1e9</code>。</p>
+</blockquote>
+
+<h3>三、memset 的常见致命错误与避坑指南</h3>
+
+<h4>1. sizeof 的误用</h4>
+<ul>
+  <li>错误：<code>void func(int arr[]) { memset(arr, 0, sizeof(arr)); }</code></li>
+  <li>原因：数组作为函数参数传递时会退化为指针，<code>sizeof(arr)</code> 计算的是指针的大小（8 字节），而不是数组总大小。</li>
+  <li>正确做法：在函数外调用 <code>memset(arr, 0, sizeof(arr))</code>，或者显式传递数组的长度（如 <code>memset(arr, 0, len * sizeof(int))</code>）。</li>
+</ul>
+
+<h4>2. 结构体与 STL 容器的 memset</h4>
+<ul>
+  <li>如果结构体是 POD 类型（纯数据，无虚函数、无自定义构造函数），可以用 memset 置 0。</li>
+  <li>但如果是 <code>std::string</code>、<code>std::vector</code> 或包含这些容器的结构体，<strong>绝对不能用 memset</strong>！这会把容器的内部指针置为 0，导致程序崩溃（RE）。</li>
+</ul>
+
+<h4>3. 多组数据的清空</h4>
+<p>在多组数据题目中，必须在每组数据前清空 dp 数组、vis 数组等。memset 是最快的工具，但要注意不要漏清或多清（比如把 <code>head[]</code> 邻接表数组清了没重新初始化边数 <code>idx</code>）。</p>
+
+<h3>四、memset 的时间复杂度</h3>
+<p>这是一个非常经典的面试题/竞赛常识题。</p>
+<ul>
+  <li><strong>理论时间复杂度</strong>：$O(n)$，其中 n 是传入的字节数（len）。</li>
+  <li><strong>常数与底层优化</strong>：虽然理论是 $O(n)$，但 memset 的底层实现是由编译器高度优化的。它通常会被编译器替换为内联汇编，使用 SIMD 指令（如 AVX、SSE 指令集）或 <code>rep stosb</code> 硬件指令，以按字（Word）或更宽的单位进行并行写入。</li>
+  <li><strong>实际表现</strong>：它的常数极小，执行速度比手写的 for 循环快得多（通常快 10 倍以上）。</li>
+  <li>⚠️ <strong>竞赛警告</strong>：不要因为常数小就滥用 memset。如果在时间复杂度为 $O(N^2)$ 的双重循环内部每次操作前都 memset 一个 $O(N)$ 的数组，总复杂度会退化为 $O(N^3)$ 导致 TLE（超时）。</li>
+</ul>
+
+<h3>五、总结口诀</h3>
+<blockquote>
+  <p>memset 按字节，零和负一最安全。<br>
+  0x3f 做无穷，相加不溢最稳当。<br>
+  0x7f 是炸弹，相加溢出全完蛋。<br>
+  浮点数别乱用，循环赋值才是王。<br>
+  sizeof 防退化，多组数据莫忘清。</p>
+</blockquote>
+<p>在复赛中，养成"<strong>数组只初始化为 0 或 -1，无穷大用 0x3f，浮点数用循环或 fill</strong>"的习惯，能帮你避开 90% 的初始化玄学 WA。</p>
+
+<h2 id="sec-10">教练复赛终极叮嘱</h2>
+
+<ol>
+  <li><p><strong>写代码前：先看数据范围。</strong>$10^5$ 用 $O(N \log N)$，$10^6$ 用 $O(N^2)$，$10^9$ 用 $O(\log N)$ 或 $O(1)$。</p></li>
+  <li><p><strong>交卷前 15 分钟：不要轻易改代码！</strong>很多选手在最后时刻改动了某个边界条件，导致从 100 分变成 0 分。</p></li>
+  <li><p><strong>对拍是王道</strong>：如果觉得代码逻辑没问题但一直 WA，写一个暴力程序进行对拍，这是找 bug 最快的方法。</p></li>
+  <li><p><strong>心态</strong>：复赛不仅考算法，更考工程细节。把上面的坑都避开，你已经战胜了 80% 的选手。</p></li>
+</ol>
+
+<p>祝复赛顺利，代码一遍过，AC 满天飞！</p>

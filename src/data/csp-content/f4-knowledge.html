@@ -1,0 +1,209 @@
+<h2 id="sec-1">一、介绍</h2>
+
+<p>Dev-C++ 是一套用于开发 C/C++ 程序的自由的集成开发环境（IDE），并以 GPL 作为分发许可，使用 MinGW 及 GDB 作为编译系统与调试系统。Dev-C++ 运行在 Microsoft Windows 下。</p>
+<p>Dev-C++ 的优点在于界面简洁友好，安装便捷，支持单文件编译，因此成为了许多入门 OI 选手以及 C++ 语言初学者的首选。在 NOIP 中，提供 Windows 作为比赛系统的省份一般预置 Dev-C++。</p>
+<p>Dev-C++ 起源于 Colin Laplace 编写的 Bloodshed Dev-C++。该版本自 2005 年 2 月 22 日停止更新。2006 年，Dev-C++ 主要开发者 Colin Laplace 曾经对此作出了解释：「因忙于现实生活的事务，没有时间继续 Dev-C++ 的开发。」</p>
+<p>Orwell Dev-C++ 是 Dev-C++ 的一个衍生版本，由独立程序员 Orwell (Johan Mes) 开发并维护。其对原版 Dev-C++ 进行了错误修正，并更新了编译器版本。一般而言，Dev-C++ 5.x 均为 Orwell Dev-C++。其最后一次更新于 2015 年，版本为 5.11。</p>
+<p>Embarcadero Dev-C++ 是 Bloodshed Dev-C++ 和 Orwell Dev-C++ 的继任者。2020 年，Embarcadero 赞助并接手了原有的 Dev-C++ 项目，继续开发。Embarcadero Dev-C++ 加入了对高 DPI 的支持，更新了编译器以加入更新版本的 C++ 标准支持，以及暗色模式。</p>
+<p>以上的 Dev-C++ 分发都被认为是「官方的」。此外，在 2015 年 Orwell Dev-C++ 停止更新后，因为教学需要，一位来自中国的个人开发者 royqh1979 决定继续开发他的 Dev-C++ 个人分支，命名为<strong>小熊猫 Dev-C++</strong>，集成了智能提示和高版本的 MinGW64，非常便于国内的个人使用和学习。</p>
+<p>小熊猫 Dev-C++ 6.7.5 版本发布后，作者使用 qt5 开发了全新的<strong>小熊猫 C++</strong>，可在 windows、linux 和 macos 等系统下原生运行。小熊猫 C++ 的界面与 Dev-C++ 相似，除了提供和 Dev-C++ 相似但更加完善的单文件编译、调试、语法高亮、搜索/替换等功能外，还提供了诸如暗色主题、代码智能提示、变量/函数重命名、切换/自动识别文件编码等现代 IDE 常见的基本功能。此外小熊猫 C++ 还具备与 CP Editor 类似的试题集功能，可以自行编写或从常见的 OJ 竞赛网站上下载试题样例，自动运行和测试程序。</p>
+
+<h2 id="sec-2">二、使用教程</h2>
+
+<h3>1. 常用快捷键</h3>
+
+<h4>1.1 文件部分</h4>
+<table>
+  <thead><tr><th>快捷键</th><th>功能</th></tr></thead>
+  <tbody>
+    <tr><td><code>Ctrl + N</code></td><td>创建源代码</td></tr>
+    <tr><td><code>Ctrl + O</code></td><td>打开文件</td></tr>
+    <tr><td><code>Ctrl + W</code></td><td>关闭文件</td></tr>
+    <tr><td><code>Ctrl + P</code></td><td>打印文件</td></tr>
+  </tbody>
+</table>
+
+<h4>1.2 格式部分</h4>
+<table>
+  <thead><tr><th>快捷键</th><th>功能</th></tr></thead>
+  <tbody>
+    <tr><td><code>Ctrl + /</code></td><td>注释和取消注释</td></tr>
+    <tr><td><code>Tab</code></td><td>缩进</td></tr>
+    <tr><td><code>Shift + Tab</code></td><td>取消缩进</td></tr>
+  </tbody>
+</table>
+
+<h4>1.3 行操作</h4>
+<table>
+  <thead><tr><th>快捷键</th><th>功能</th></tr></thead>
+  <tbody>
+    <tr><td><code>Ctrl + E</code></td><td>复制行</td></tr>
+    <tr><td><code>Ctrl + D</code></td><td>删除行</td></tr>
+    <tr><td><code>Ctrl + Shift + Up</code></td><td>向上移动</td></tr>
+    <tr><td><code>Ctrl + Shift + Down</code></td><td>向下移动</td></tr>
+  </tbody>
+</table>
+
+<h4>1.4 跳转部分</h4>
+<table>
+  <thead><tr><th>快捷键</th><th>功能</th></tr></thead>
+  <tbody>
+    <tr><td><code>Ctrl + F</code></td><td>搜索</td></tr>
+    <tr><td><code>Ctrl + R</code></td><td>替换</td></tr>
+    <tr><td><code>F3</code></td><td>搜索下一个</td></tr>
+    <tr><td><code>Shift + F3</code></td><td>搜索上一个</td></tr>
+    <tr><td><code>Ctrl + G</code></td><td>到指定行号</td></tr>
+    <tr><td><code>Shift + Ctrl + G</code></td><td>到指定函数</td></tr>
+    <tr><td><code>Ctrl + [1 ~ 9]</code></td><td>设置书签</td></tr>
+    <tr><td><code>Alt + [1 ~ 9]</code></td><td>跳转书签</td></tr>
+  </tbody>
+</table>
+
+<h4>1.5 显示部分</h4>
+<table>
+  <thead><tr><th>快捷键</th><th>功能</th></tr></thead>
+  <tbody>
+    <tr><td><code>Ctrl + 滚轮</code></td><td>字号放大或缩小</td></tr>
+    <tr><td><code>Ctrl + F11</code></td><td>全屏或恢复</td></tr>
+  </tbody>
+</table>
+
+<h4>1.6 运行部分</h4>
+<table>
+  <thead><tr><th>快捷键</th><th>功能</th></tr></thead>
+  <tbody>
+    <tr><td><code>F9</code></td><td>只编译</td></tr>
+    <tr><td><code>F10</code></td><td>只运行</td></tr>
+    <tr><td><code>F11</code></td><td>编译并运行</td></tr>
+    <tr><td><code>F12</code></td><td>全部重新编译</td></tr>
+  </tbody>
+</table>
+
+<h4>1.7 调试部分</h4>
+<table>
+  <thead><tr><th>快捷键</th><th>功能</th></tr></thead>
+  <tbody>
+    <tr><td><code>F2</code></td><td>转到断点</td></tr>
+    <tr><td><code>F4</code></td><td>设置断点或取消</td></tr>
+    <tr><td><code>F5</code></td><td>调试运行</td></tr>
+    <tr><td><code>F6</code></td><td>停止</td></tr>
+    <tr><td><code>F7</code></td><td>逐步调试</td></tr>
+  </tbody>
+</table>
+
+<h3>2. 调试流程</h3>
+<ol>
+  <li>将编译器配置设定为 <code>TDM-GCC 4.9.2 64-bit Debug</code></li>
+  <li>按 <code>F4</code> 设置或取消调试断点</li>
+  <li>将光标放置在变量上，按 <code>Alt + A</code> 向调试窗口添加监控变量</li>
+  <li>按 <code>F5</code> 启动调试</li>
+  <li>按 <code>F7</code> 或 <code>Alt + N</code> 逐步调试</li>
+  <li>按 <code>Alt + S</code> 跳至下一个调试断点</li>
+  <li>按 <code>F6</code> 停止调试</li>
+</ol>
+
+<h2 id="sec-3">三、扩展</h2>
+
+<h3>1. 增加编译选项</h3>
+<p>点击 工具 -&gt; 编译选项，然后选择 "代码生成/优化" 选项卡。</p>
+
+<h4>1.1 -Wall 编译显示最多警告信息，辅助查错</h4>
+<p>打开方式：工具 --&gt; 编译选项 --&gt; 代码生成优化 --&gt; 代码警告 --&gt; 显示最多警告信息 --&gt; 改为 Yes。</p>
+<figure class="figure-single">
+  <img src="/images/csp/f4/warn-wall.png" alt="显示最多警告信息设置" loading="lazy" />
+  <figcaption>显示最多警告信息（-Wall）</figcaption>
+</figure>
+
+<h4>1.2 开启调试</h4>
+<p>工具 -&gt; 编译选项 -&gt; 代码生成/优化 -&gt; 连接器，将「产生调试信息」设置为 Yes。</p>
+<figure class="figure-single">
+  <img src="/images/csp/f4/debug-info.png" alt="产生调试信息设置" loading="lazy" />
+  <figcaption>连接器中开启「产生调试信息」</figcaption>
+</figure>
+
+<h4>1.3 开启优化</h4>
+<p>选择 "代码生成" 子选项卡中的 "优化级别（-Ox）"。也可以手动添加编译命令。</p>
+<figure class="figure-single">
+  <img src="/images/csp/f4/opt-level.png" alt="优化级别选择" loading="lazy" />
+  <figcaption>优化级别（-Ox）下拉选项</figcaption>
+</figure>
+<ul>
+  <li><code>-O1</code>：基本的优化级别，适合大多数应用场景。</li>
+  <li><code>-O2</code>：更强的优化级别，在某些场景下可能会带来显著的性能提升，例如大量的输入输出。</li>
+  <li><code>-O3</code>：最强的优化级别，会消耗更多的编译时间，但是可能获得更高的性能提升。</li>
+</ul>
+
+<h4>1.4 更换语言标准</h4>
+<p>选择 "代码生成" 子选项卡中的 "语言标准（-std）"。</p>
+<figure class="figure-single">
+  <img src="/images/csp/f4/std-manual.png" alt="手动添加 -std=c++14" loading="lazy" />
+  <figcaption>连接器命令行手动添加 <code>-std=c++14</code></figcaption>
+</figure>
+<figure class="figure-single">
+  <img src="/images/csp/f4/std-gnu.png" alt="语言标准选择 GNU C++" loading="lazy" />
+  <figcaption>语言标准下拉选择 GNU C++（最终评测是 Linux）</figcaption>
+</figure>
+<p><strong>竞赛建议选择 GNU C++，因为最终评测环境为 Linux。</strong>也可以手动添加编译参数，例如 <code>-std=c++14</code>，注意参数中间不能带有空格。Dev-C++ 5.11 已经支持 C++14 的特性测试。</p>
+<p>C++11/14 示例代码：</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+int main(){
+    // C++11
+    int a[] = {1,2,3,4,5};
+    for(auto i:a){
+        cout&lt;&lt;i&lt;&lt;" ";
+    }
+    cout&lt;&lt;endl;
+    // C++14 Lambda
+    auto add = [](auto x, auto y) {
+        return x + y;
+    };
+    cout &lt;&lt; add(1, 2) &lt;&lt; endl;      // 输出 3
+    cout &lt;&lt; add(1.5, 2.5) &lt;&lt; endl;  // 输出 4
+}
+</code></pre>
+<p>C++ 标准参考文档：<a href="https://zh.cppreference.com/w/cpp/11" target="_blank" rel="noopener">https://zh.cppreference.com/w/cpp/11</a></p>
+
+<h3>2. 小 trick</h3>
+<p>点击 工具 -&gt; 编译选项，然后选择 "编译器" 选项卡。</p>
+
+<h4>2.1 开大栈</h4>
+<p>防止 DFS 爆系统栈。在连接器命令行加入以下命令：<code>-Wl,--stack=128000000</code>，该命令把栈大小设置约 128MB，数值可以按需修改。</p>
+<figure class="figure-single">
+  <img src="/images/csp/f4/stack-cmd.png" alt="开大栈编译命令" loading="lazy" />
+  <figcaption>连接器命令行加入 <code>-Wl,--stack=128000000</code>（注意中间不能有空格）</figcaption>
+</figure>
+
+<h4>2.2 定义宏</h4>
+<p>方便本地评测使用文件输入输出或作其他用途。在"连接器命令行加入以下命令"中加入 <code>-D[String]</code> 命令，其中 <code>[String]</code> 改为你需要的宏名。</p>
+<figure class="figure-single">
+  <img src="/images/csp/f4/macro-cmd.png" alt="定义 LOCAL 宏" loading="lazy" />
+  <figcaption>连接器命令行加入 <code>-DLOCAL</code> 定义宏</figcaption>
+</figure>
+<p>如图，当开启编译选项后便可将以下代码从 <code>test.in</code> 文件读入数据并在 <code>test.out</code> 文件中输出：</p>
+<pre><code class="language-cpp">#ifdef LOCAL
+freopen("test.in", "r", stdin);
+freopen("test.out", "w", stdout);
+#endif
+</code></pre>
+
+<h4>2.3 代码格式化</h4>
+<p>Astyle -&gt; 格式化当前文件，快捷键 <code>Ctrl+Shift+A</code>。</p>
+<figure class="figure-single">
+  <img src="/images/csp/f4/astyle-menu.png" alt="Astyle 格式化菜单" loading="lazy" />
+  <figcaption>Astyle 格式化当前文件（Ctrl+Shift+A）</figcaption>
+</figure>
+
+<h4>2.4 美化字体</h4>
+<p>工具 -&gt; 编辑器选项 -&gt; 显示，设置字体（推荐 Consolas）、字号、行号等。</p>
+<figure class="figure-single">
+  <img src="/images/csp/f4/editor-display.png" alt="编辑器字体设置" loading="lazy" />
+  <figcaption>编辑器选项：字体、字号、行号设置</figcaption>
+</figure>
+
+<h4>2.5 主题</h4>
+<p>工具 -&gt; 编辑器选项 -&gt; 语法，可以选择预设语法高亮主题，自定义颜色。</p>
+<figure class="figure-single">
+  <img src="/images/csp/f4/syntax-theme.png" alt="语法高亮主题设置" loading="lazy" />
+  <figcaption>编辑器选项：语法高亮主题自定义</figcaption>
+</figure>

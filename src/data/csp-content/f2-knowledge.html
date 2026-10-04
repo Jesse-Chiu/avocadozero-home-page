@@ -1,0 +1,186 @@
+<p>在信息学奥赛（OI）复赛中，输入输出（I/O）的效率和正确性直接关系到能否 AC（Accepted）。很多选手因为 I/O 写得慢导致 TLE（超时），或者因为格式控制不当导致 WA（答案错误）。</p>
+<p>本文整理了一份复赛 I/O 详细方案，分为 <code>cin/cout</code> 和 <code>scanf/printf</code> 两个模块，重点剖析各自的注意事项，并专门针对 <code>string</code> 类型输入提供完整的解决方案。所有代码均采用 Allman 格式。</p>
+
+<h2 id="sec-1">模块一：cin/cout 流式输入输出</h2>
+
+<p>在 C++ 中，<code>cin/cout</code> 是最符合现代编程习惯的方式，类型安全（不需要手动指定 <code>%d</code> 等格式符），且对 <code>std::string</code> 的支持极其友好。</p>
+
+<h3>1. 核心注意事项</h3>
+<ol>
+  <li><p><strong>必须开启 IO 加速</strong>：默认情况下 <code>cin/cout</code> 与 C 标准库同步，速度极慢。复赛必须加上以下两行：</p>
+<pre><code class="language-cpp">ios::sync_with_stdio(false);
+cin.tie(nullptr);
+</code></pre>
+      <p><code>sync_with_stdio(false)</code>：关闭 C 和 C++ 标准流的同步，大幅提速。<br><code>cin.tie(nullptr)</code>：解除 <code>cin</code> 和 <code>cout</code> 的绑定，避免每次输入前强制刷新输出缓冲区。</p></li>
+  <li><p><strong>绝对不能混用 scanf/printf</strong>：开启 IO 加速后，如果混用 <code>scanf</code> 或 <code>getchar()</code>，会导致缓冲区错乱，引发玄学 WA。</p></li>
+  <li><p><strong>换行与刷新</strong>：输出大量数据时，用 <code>'\n'</code> 代替 <code>endl</code>。<code>endl</code> 会强制刷新缓冲区，导致严重超时。</p></li>
+</ol>
+
+<h3>2. 基础用法</h3>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int a;
+    long long b;
+    double c;
+    string s;
+    // 输入：自动识别类型，遇空格/换行停止
+    cin &gt;&gt; a &gt;&gt; b &gt;&gt; c &gt;&gt; s;
+    // 输出：自动识别类型
+    cout &lt;&lt; a &lt;&lt; " " &lt;&lt; b &lt;&lt; " " &lt;&lt; c &lt;&lt; " " &lt;&lt; s &lt;&lt; "\n";
+    return 0;
+}
+</code></pre>
+
+<h3>3. 针对 string 的输入解决方案</h3>
+<p><code>cin &gt;&gt;</code> 遇到空格或换行会停止，如果要读入带空格的整行字符串，必须使用 <code>getline()</code>。</p>
+
+<h4>⚠️ 致命坑点：cin &gt;&gt; 与 getline() 混用</h4>
+<p><code>cin &gt;&gt; n</code> 读入数字后，缓冲区里还残留一个回车符 <code>\n</code>。如果紧接着用 <code>getline(cin, s)</code>，它会读入这个空行，导致 <code>s</code> 为空。必须用 <code>cin.ignore()</code> 或 <code>getchar()</code> 吃掉回车。</p>
+<p>正确做法：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int n;
+    string s1, s2;
+    cin &gt;&gt; n;
+    
+    // 解决方案 1：忽略缓冲区直到遇到换行符
+    cin.ignore(1000, '\n'); 
+    // 解决方案 2：吃掉一个字符（等价于 getchar()）
+    // cin.get(); 
+    getline(cin, s1); // 读入整行（包含空格）
+    cin &gt;&gt; s2;        // 读入单个单词（遇到空格停止）
+    cout &lt;&lt; s1 &lt;&lt; "\n" &lt;&lt; s2 &lt;&lt; "\n";
+    return 0;
+}
+</code></pre>
+
+<h2 id="sec-2">模块二：scanf/printf 格式化输入输出</h2>
+
+<p>C 标准库的 I/O 方式，速度极快，且格式控制极其灵活（如保留小数、十六进制、前导零等）。适合处理纯数字、字符数组，或者对格式要求极高的题目。</p>
+
+<h3>1. 核心注意事项</h3>
+<ol>
+  <li><p><strong>类型必须严格匹配</strong>：</p>
+<pre><code class="language-cpp">int       -&gt; %d
+long long -&gt; %lld   （绝不能写成 %d）
+float     -&gt; %f     （输入）
+double    -&gt; %lf    （输入），输出时 %f 和 %lf 均可
+char      -&gt; %c
+char[]    -&gt; %s
+</code></pre></li>
+  <li><p><strong>取地址符 &amp;</strong>：<code>scanf</code> 中除数组名（本身代表地址）外，其他变量必须加 <code>&amp;</code>。</p></li>
+  <li><p><strong>%c 的空白符吞噬</strong>：<code>scanf("%c", &amp;ch)</code> 会读入空格或换行。如果前面读了数字，要读字符，必须在 <code>%c</code> 前加一个空格：<code>scanf(" %c", &amp;ch)</code>。</p></li>
+  <li><p><strong>__int128 不支持</strong>：scanf/printf 无法直接读写 <code>__int128</code>，必须手写快读快写。</p></li>
+</ol>
+
+<h3>2. 基础用法</h3>
+<pre><code class="language-cpp">#include &lt;cstdio&gt;
+using namespace std;
+int main()
+{
+    int a;
+    long long b;
+    double c;
+    char ch;
+    char str[1005];
+    // 输入：注意 double 是 %lf，long long 是 %lld
+    scanf("%d %lld %lf %c %s", &amp;a, &amp;b, &amp;c, &amp;ch, str);
+    // 输出：注意格式控制
+    printf("%d\n", a);
+    printf("%lld\n", b);
+    printf("%.2f\n", c);   // 保留两位小数
+    printf("%c\n", ch);
+    printf("%s\n", str);
+    // 进阶格式控制
+    printf("%05d\n", a);   // 前导零补足5位
+    printf("%x\n", a);     // 十六进制输出
+    printf("%-5dEND\n", a); // 左对齐，宽度5
+    return 0;
+}
+</code></pre>
+
+<h3>3. 针对 string 的输入解决方案</h3>
+<p><code>scanf</code> 和 <code>printf</code> 完全不支持 <code>std::string</code>。在复赛中，如果题目涉及大量字符串操作且必须用 <code>scanf/printf</code>，通常需要借助 <code>char[]</code> 进行中转。</p>
+
+<h4>解决方案 A：读入单词（无空格）</h4>
+<pre><code class="language-cpp">#include &lt;cstdio&gt;
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+using namespace std;
+const int MAXN = 1e5 + 10;
+int main()
+{
+    char buf[MAXN];
+    string s;
+    scanf("%s", buf); // 读入 char 数组
+    s = buf;          // 自动转换为 string，方便后续操作
+    printf("%s\n", s.c_str()); // 输出时用 c_str() 转换回 C 风格字符串
+    return 0;
+}
+</code></pre>
+
+<h4>解决方案 B：读入整行（含空格）</h4>
+<pre><code class="language-cpp">#include &lt;cstdio&gt;
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+using namespace std;
+const int MAXN = 1e5 + 10;
+int main()
+{
+    char buf[MAXN];
+    string s;
+    fgets(buf, sizeof(buf), stdin); // 读入整行
+    s = buf;
+    
+    // fgets 会保留末尾的换行符，需要手动去掉
+    if (!s.empty() &amp;&amp; s.back() == '\n') 
+    {
+        s.pop_back();
+    }
+    printf("%s\n", s.c_str());
+    return 0;
+}
+</code></pre>
+
+<h2 id="sec-3">三、两种方式对比</h2>
+
+<table>
+  <thead>
+    <tr><th>维度</th><th>cin/cout</th><th>scanf/printf</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>速度</td><td>开启 IO 加速后极快</td><td>原生极快，无需额外配置</td></tr>
+    <tr><td>类型安全</td><td>极高（自动推导）</td><td>低（必须手动匹配 <code>%d</code> 等）</td></tr>
+    <tr><td>string 支持</td><td>完美支持</td><td>不支持，需 <code>char[]</code> 中转</td></tr>
+    <tr><td>格式控制</td><td>繁琐（需 <code>&lt;iomanip&gt;</code>）</td><td>极其方便（<code>%05d</code>、<code>%.2f</code>）</td></tr>
+    <tr><td>混用风险</td><td>极容易引发玄学 WA</td><td>较安全，但需注意回车符</td></tr>
+  </tbody>
+</table>
+
+<h2 id="sec-4">总结与复赛策略建议</h2>
+
+<blockquote>
+  <p><strong>教练复赛实战建议</strong></p>
+</blockquote>
+
+<ol>
+  <li><p><strong>纯数字/基础题</strong>：推荐直接使用 <code>scanf/printf</code>，不需要考虑 IO 加速，且格式控制方便。</p></li>
+  <li><p><strong>字符串/大模拟题</strong>：推荐使用 <code>cin/cout</code> + <code>ios::sync_with_stdio(false)</code>。<code>string</code> 的 <code>+</code>、<code>==</code>、<code>substr</code>、<code>find</code> 等操作能极大提升编码效率。</p></li>
+  <li><p><strong>数据量极大（如 $10^6$ 级别读入）</strong>：如果使用 <code>cin/cout</code>，记得加 IO 加速；如果依然超时，改用 <code>scanf</code> 或手写快读（<code>getchar()</code> 版本）。</p></li>
+  <li><p><strong>统一风格</strong>：在同一个程序中，尽量只用一种 I/O 方式。如果你决定用 <code>cin/cout</code>，就不要在代码里写 <code>getchar()</code>；如果你决定用 <code>scanf/printf</code>，就不要写 <code>cin &gt;&gt;</code>。</p></li>
+</ol>
+
+<blockquote>
+  <p><strong>默写口诀：</strong></p>
+  <p><code>cin/cout</code> 加加速，<code>string</code> 处理最舒服。<br><code>scanf/printf</code> 格式严，<code>%lld</code> 配 <code>long long</code>。<br>混用容易出玄学，统一风格保平安。</p>
+</blockquote>

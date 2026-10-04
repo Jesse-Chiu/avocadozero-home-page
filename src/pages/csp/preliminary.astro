@@ -1,0 +1,185 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { path } from '../../utils/base';
+import { getChaptersByGroup } from '../../data/csp-chapters';
+
+const pageTitle = '初赛知识点入口 · 牛油果零壹信奥';
+const pageDesc = 'CSP-J（普及组）/ CSP-S（提高组）初赛知识点学习入口';
+
+const groupJ = getChaptersByGroup('J');
+const groupS = getChaptersByGroup('S');
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <!-- Top banner -->
+  <section class="bg-gradient-to-b from-green-50/60 via-white to-white border-b border-green-100/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <a
+              href={path('/csp/')}
+              class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-semibold hover:bg-green-100 hover:text-green-700 transition-colors"
+            >
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+              </svg>
+              返回备考专区
+            </a>
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100/80 text-green-700 text-xs font-semibold">
+              <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+              CSP-J/S 初赛备考
+            </span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">选择学习组别</h1>
+          <p class="text-gray-500 text-sm sm:text-base">根据参赛组别进入对应的初赛知识点学习模块</p>
+        </div>
+        <div class="flex items-center gap-3 text-sm text-gray-500">
+          <span>登录身份：</span>
+          <span id="user-display" class="font-semibold text-gray-700">--</span>
+          <button
+            id="logout-btn"
+            class="ml-2 px-3 py-1.5 rounded-lg text-xs text-gray-500 hover:text-red-600 hover:bg-red-50 transition-colors"
+          >
+            退出
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Group entries -->
+  <section class="py-10 sm:py-14">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+
+        <!-- CSP-J 入门级（普及组） -->
+        <a
+          href={path('/csp/intro')}
+          class="group relative bg-white rounded-2xl border border-green-200/80 overflow-hidden
+                 shadow-[0_2px_12px_rgba(0,0,0,0.04)]
+                 hover:shadow-[0_16px_40px_rgba(34,197,94,0.12)]
+                 hover:-translate-y-1.5 hover:border-green-300
+                 transition-all duration-300"
+        >
+          <div class="h-2 bg-gradient-to-r from-green-400 via-emerald-500 to-teal-400"></div>
+          <div class="p-6 sm:p-8">
+            <div class="flex items-start justify-between mb-5">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-100 to-emerald-50 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform duration-300">
+                🥑
+              </div>
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                已上线
+              </span>
+            </div>
+
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-1 group-hover:text-green-700 transition-colors">
+              CSP-J 入门级
+            </h2>
+            <p class="text-sm text-gray-400 font-medium mb-4">普及组 · 初赛第一轮</p>
+
+            <p class="text-sm text-gray-500 leading-relaxed mb-6">
+              面向 CSP-J（入门级/普及组）考生的初赛知识点系统复习，涵盖计算机基础、数据结构、数学与逻辑等核心板块。
+            </p>
+
+            <div class="flex items-center justify-between">
+              <div class="text-xs text-gray-400">
+                共 <span class="font-bold text-green-600">{groupJ.length}</span> 个章节
+              </div>
+              <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-green-600 group-hover:gap-3 transition-all">
+                进入学习
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- CSP-S 提高级（提高组） -->
+        <a
+          href={path('/csp/intro?group=S')}
+          class="group relative bg-white rounded-2xl border border-amber-200/80 overflow-hidden
+                 shadow-[0_2px_12px_rgba(0,0,0,0.04)]
+                 hover:shadow-[0_16px_40px_rgba(245,158,11,0.12)]
+                 hover:-translate-y-1.5 hover:border-amber-300
+                 transition-all duration-300"
+        >
+          <div class="h-2 bg-gradient-to-r from-orange-400 via-amber-500 to-yellow-400"></div>
+          <div class="p-6 sm:p-8">
+            <div class="flex items-start justify-between mb-5">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-100 to-amber-50 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform duration-300">
+                🏆
+              </div>
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                {groupS.length > 0 ? '已上线' : '筹备中'}
+              </span>
+            </div>
+
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-1 group-hover:text-amber-700 transition-colors">
+              CSP-S 提高级
+            </h2>
+            <p class="text-sm text-gray-400 font-medium mb-4">提高组 · 初赛第一轮</p>
+
+            <p class="text-sm text-gray-500 leading-relaxed mb-6">
+              面向 CSP-S（提高级/提高组）考生的初赛知识点专题，覆盖 Linux 编程环境、Trie、KMP、二分图等数据结构、算法与数学知识。
+            </p>
+
+            <div class="flex items-center justify-between">
+              <div class="text-xs text-gray-400">
+                共 <span class="font-bold text-amber-600">{groupS.length}</span> 个章节
+              </div>
+              {groupS.length > 0 ? (
+                <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-600 group-hover:gap-3 transition-all">
+                  进入学习
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+              ) : (
+                <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-400">
+                  敬请期待
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </span>
+              )}
+            </div>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Footer note -->
+      <div class="mt-10 text-center text-xs text-gray-400">
+        <p>内容持续更新中 · 如需补充请向教练反馈</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { requireAuth, getCurrentUser, logout } from '../../utils/auth';
+    import { path } from '../../utils/base';
+
+    // 鉴权：未登录跳转到 /login
+    requireAuth();
+
+    // 显示当前用户名
+    const userDisplay = document.getElementById('user-display');
+    if (userDisplay) {
+      const user = getCurrentUser();
+      userDisplay.textContent = user ? `🥑 ${user}` : '🥑';
+    }
+
+    // 退出按钮
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        logout();
+        window.location.href = path('/login');
+      });
+    }
+  </script>
+</BaseLayout>

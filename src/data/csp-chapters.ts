@@ -16,7 +16,7 @@ export interface CspChapter {
   knowledge: string;
   practice: string;
   icon: string;
-  color: 'blue' | 'green' | 'purple' | 'orange' | 'pink' | 'cyan' | 'amber' | 'indigo';
+  color: 'blue' | 'green' | 'purple' | 'orange' | 'pink' | 'cyan' | 'amber' | 'indigo' | 'teal' | 'rose';
   /** 所属组别：J = CSP-J 入门级（普及组），S = CSP-S 提高级（提高组） */
   group: 'J' | 'S';
 }
@@ -137,6 +137,33 @@ export const CSP_CHAPTERS: CspChapter[] = [
     practice: 'Master 定理三种情况判定练习、递归式复杂度计算与历年真题演练',
     icon: '📐',
     color: 'blue',
+    group: 'S',
+  },
+  {
+    id: '14',
+    title: '字典树（Trie Tree）',
+    knowledge: 'Trie 的结构与节点含义、插入/查询/前缀匹配操作、字符集处理与空间优化',
+    practice: 'Trie 概念辨析、插入查询模拟、前缀统计与历年真题演练',
+    icon: '🔤',
+    color: 'teal',
+    group: 'S',
+  },
+  {
+    id: '15',
+    title: 'KMP 算法',
+    knowledge: '字符串匹配思想、next/fail 失配数组、KMP 匹配过程与复杂度分析',
+    practice: 'next 数组手算、匹配过程模拟、KMP 应用与历年真题演练',
+    icon: '🧩',
+    color: 'amber',
+    group: 'S',
+  },
+  {
+    id: '16',
+    title: '二分图',
+    knowledge: '二分图的定义与判定（染色法）、最大匹配、匈牙利算法、增广路思想',
+    practice: '二分图判定、最小点覆盖/最大独立集概念题与历年真题演练',
+    icon: '⚖️',
+    color: 'rose',
     group: 'S',
   },
 ];

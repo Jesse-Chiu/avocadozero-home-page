@@ -1,0 +1,238 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { path } from '../../utils/base';
+import { getFinalChaptersByGroup } from '../../data/csp-final-chapters';
+
+const pageTitle = '复赛入口 · 牛油果零壹信奥';
+const pageDesc = 'CSP-J（普及组）/ CSP-S（提高组）复赛（第二轮上机）备考入口';
+
+const groupJ = getFinalChaptersByGroup('J');
+const groupS = getFinalChaptersByGroup('S');
+
+// 复赛备考大纲（规划中，内容上线前展示，便于学生了解复习方向）
+const outline = [
+  {
+    group: 'CSP-J 入门级',
+    icon: '🥑',
+    tone: 'green',
+    topics: [
+      { name: '模拟与枚举', desc: '按题意逐步实现、边界与特判处理' },
+      { name: '排序与查找', desc: '排序应用、二分答案、前缀和与差分' },
+      { name: '贪心与递推', desc: '贪心策略证明、递推与简单动态规划' },
+      { name: '搜索与剪枝', desc: 'DFS/BFS 框架、回溯、可行性剪枝' },
+      { name: '基础数据结构', desc: '栈、队列、并查集、堆与 STL 容器' },
+      { name: '简单图论', desc: '存图方式、最短路（Dijkstra/Floyd）、生成树入门' },
+    ],
+  },
+  {
+    group: 'CSP-S 提高级',
+    icon: '🏆',
+    tone: 'amber',
+    topics: [
+      { name: '进阶动态规划', desc: '背包、区间 DP、树形 DP、状态压缩' },
+      { name: '图论进阶', desc: '最短路径进阶、拓扑排序、强连通分量、网络流入门' },
+      { name: '高级数据结构', desc: '线段树、树状数组、平衡树、单调栈/队列' },
+      { name: '数论与组合', desc: '质数与筛法、快速幂与逆元、GCD/EXGCD、组合计数' },
+      { name: '字符串', desc: 'KMP、哈希、Trie 等字符串处理技巧' },
+      { name: '对拍与调试', desc: '暴力对拍、造数据、常量优化与卡常技巧' },
+    ],
+  },
+];
+
+const toneMap: Record<string, { band: string; bg: string; text: string; ring: string }> = {
+  green: { band: 'from-green-400 via-emerald-500 to-teal-400', bg: 'bg-green-50', text: 'text-green-700', ring: 'border-green-200/80' },
+  amber: { band: 'from-orange-400 via-amber-500 to-yellow-400', bg: 'bg-amber-50', text: 'text-amber-700', ring: 'border-amber-200/80' },
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <!-- Top banner -->
+  <section class="bg-gradient-to-b from-indigo-50/60 via-white to-white border-b border-indigo-100/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <a
+              href={path('/csp/')}
+              class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-semibold hover:bg-indigo-100 hover:text-indigo-700 transition-colors"
+            >
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+              </svg>
+              返回备考专区
+            </a>
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100/80 text-indigo-700 text-xs font-semibold">
+              <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
+              CSP-J/S 复赛备考
+            </span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">选择学习组别</h1>
+          <p class="text-gray-500 text-sm sm:text-base">复赛（第二轮上机测试）做题技巧与知识点 · 持续更新中</p>
+        </div>
+        <div class="flex items-center gap-3 text-sm text-gray-500">
+          <span>登录身份：</span>
+          <span id="user-display" class="font-semibold text-gray-700">--</span>
+          <button
+            id="logout-btn"
+            class="ml-2 px-3 py-1.5 rounded-lg text-xs text-gray-500 hover:text-red-600 hover:bg-red-50 transition-colors"
+          >
+            退出
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Group entries -->
+  <section class="py-10 sm:py-14">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+
+        <!-- CSP-J 复赛 -->
+        <div class="relative bg-white rounded-2xl border border-green-200/80 overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.04)]">
+          <div class="h-2 bg-gradient-to-r from-green-400 via-emerald-500 to-teal-400"></div>
+          <div class="p-6 sm:p-8">
+            <div class="flex items-start justify-between mb-5">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-100 to-emerald-50 flex items-center justify-center text-3xl">
+                🥑
+              </div>
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-green-100/80 text-green-700 text-xs font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                已上线 {groupJ.length} 章
+              </span>
+            </div>
+
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-1">CSP-J 入门级</h2>
+            <p class="text-sm text-gray-400 font-medium mb-4">普及组 · 复赛第二轮</p>
+
+            <p class="text-sm text-gray-500 leading-relaxed mb-6">
+              面向 CSP-J 复赛上机测试的做题技巧与算法专题复习，覆盖考试注意事项、爆零规避、考场流程等。
+            </p>
+
+            <div class="flex items-center justify-between">
+              <div class="text-xs text-gray-400">
+                共 <span class="font-bold text-gray-500">{groupJ.length}</span> 个章节
+              </div>
+              <a
+                href={path(`/csp/final/intro?group=J`)}
+                class="inline-flex items-center gap-1.5 text-sm font-semibold text-green-600 hover:text-green-700 transition-colors"
+              >
+                进入学习
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CSP-S 复赛 -->
+        <div class="relative bg-white rounded-2xl border border-amber-200/80 overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.04)]">
+          <div class="h-2 bg-gradient-to-r from-orange-400 via-amber-500 to-yellow-400"></div>
+          <div class="p-6 sm:p-8">
+            <div class="flex items-start justify-between mb-5">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-100 to-amber-50 flex items-center justify-center text-3xl">
+                🏆
+              </div>
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-green-100/80 text-green-700 text-xs font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                已上线 {groupS.length} 章
+              </span>
+            </div>
+
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-1">CSP-S 提高级</h2>
+            <p class="text-sm text-gray-400 font-medium mb-4">提高组 · 复赛第二轮</p>
+
+            <p class="text-sm text-gray-500 leading-relaxed mb-6">
+              面向 CSP-S 复赛上机测试的做题技巧与算法数据结构专题，覆盖考试注意事项、平台兼容性、Linux 环境等。
+            </p>
+
+            <div class="flex items-center justify-between">
+              <div class="text-xs text-gray-400">
+                共 <span class="font-bold text-gray-500">{groupS.length}</span> 个章节
+              </div>
+              <a
+                href={path(`/csp/final/intro?group=S`)}
+                class="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-600 hover:text-amber-700 transition-colors"
+              >
+                进入学习
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 备考大纲（规划中） -->
+  <section class="pb-14 sm:pb-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-3 mb-6">
+        <h2 class="text-lg sm:text-xl font-bold text-gray-900">复赛备考大纲</h2>
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-xs font-semibold border border-indigo-200">
+          规划中
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {outline.map((g) => {
+          const t = toneMap[g.tone];
+          return (
+            <div class={`bg-white rounded-2xl border ${t.ring} overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.04)]`}>
+              <div class={`h-1.5 bg-gradient-to-r ${t.band}`}></div>
+              <div class="p-6">
+                <div class="flex items-center gap-2.5 mb-4">
+                  <span class="text-2xl">{g.icon}</span>
+                  <h3 class="text-base sm:text-lg font-bold text-gray-900">{g.group} 复赛</h3>
+                </div>
+                <ul class="space-y-3">
+                  {g.topics.map((topic) => (
+                    <li class="flex items-start gap-3">
+                      <span class={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${t.text} ${t.bg}`}></span>
+                      <div>
+                        <p class="text-sm font-semibold text-gray-800 leading-snug">{topic.name}</p>
+                        <p class="text-xs text-gray-500 leading-relaxed">{topic.desc}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div class="mt-10 text-center text-xs text-gray-400">
+        <p>复赛专题内容正在整理中 · 上线后可直接在对应组别中学习</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { requireAuth, getCurrentUser, logout } from '../../utils/auth';
+    import { path } from '../../utils/base';
+
+    // 鉴权：未登录跳转到 /login
+    requireAuth();
+
+    // 显示当前用户名
+    const userDisplay = document.getElementById('user-display');
+    if (userDisplay) {
+      const user = getCurrentUser();
+      userDisplay.textContent = user ? `🥑 ${user}` : '🥑';
+    }
+
+    // 退出按钮
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        logout();
+        window.location.href = path('/login');
+      });
+    }
+  </script>
+</BaseLayout>

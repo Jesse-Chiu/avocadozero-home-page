@@ -1,0 +1,203 @@
+<h2 id="sec-1">一、注意事项</h2>
+
+<p><strong>严格按照考试要求建文件夹、命名文件夹、命名程序、保存程序！</strong></p>
+
+<ol>
+  <li><p>文件名（程序名和输入输出文件名），必须使用英文小写。</p></li>
+  <li><p>C/C++ 中函数 <code>main()</code> 的返回值类型必须是 <code>int</code>，程序正常结束时的返回值必须是 0；评测系统是 Linux 环境，如果没有 <code>return 0</code> 会返回错误。</p></li>
+  <li><p>考试环境升级到了 C++14，<code>gets()</code> 不能用了，使用 <code>cin.getline()</code> 替换。</p>
+      <blockquote><p>平时做题要养成好习惯：<strong>努力提高首次提交的正确率。</strong></p></blockquote></li>
+  <li><p>不能定义和引入头文件中系统函数同名的全局变量，否则会爆 0 分。高危变量名：<code>dfs</code>、<code>next</code>、<code>search</code>、<code>index</code>、<code>pow</code>（幂函数）、<code>min</code>、<code>max</code>、<code>y1</code>、<code>x0</code>、<code>link</code>、<code>map</code>、<code>pipe</code>、<code>ws</code> 等。<br>规避方法：将原单词缩写，或者加下划线，例如 <code>ma</code>、<code>mi</code>、<code>ne</code> 等。</p>
+      <p>报错示例：</p>
+      <figure class="figure-single">
+        <img src="/images/csp/f1/img-err.png" alt="高危变量名报错示例" loading="lazy" />
+        <figcaption>编译会报「重定义、类型不匹配」等大量错误</figcaption>
+      </figure>
+      <p>修改后：</p>
+      <figure class="figure-single">
+        <img src="/images/csp/f1/img-fixed.png" alt="修改变量名后编译通过" loading="lazy" />
+        <figcaption>缩写 / 加下划线后编译通过（0 errors, 0 warnings）</figcaption>
+      </figure></li>
+  <li><p>cpp 程序"文件名"不符合要求：部分电脑默认隐藏扩展名，选手容易把文件命名成 <code>xx.cpp.cpp</code>，务必设置显示文件扩展名。</p>
+      <ul>
+        <li><p>Windows 7：</p>
+          <ol>
+            <li>打开任意文件夹</li>
+            <li>点击左上角「组织」→「文件夹和搜索选项」</li>
+            <li>切换到「查看」选项卡</li>
+            <li>取消勾选「隐藏已知文件类型的扩展名」</li>
+            <li>点击「确定」</li>
+          </ol></li>
+        <li><p>Windows 10：</p>
+          <ol>
+            <li>打开任意文件夹</li>
+            <li>点击顶部「查看」选项卡</li>
+            <li>勾选「文件扩展名」（显示/隐藏区域）</li>
+            <li>或：「查看」→「选项」→「查看」选项卡 → 取消勾选"隐藏已知文件类型的扩展名"</li>
+          </ol></li>
+        <li><p>Windows 11：</p>
+          <ol>
+            <li>打开任意文件夹</li>
+            <li>点击顶部「查看」→「显示」</li>
+            <li>勾选「文件扩展名」</li>
+            <li>或：「查看」→「显示」→「显示文件扩展名」</li>
+          </ol></li>
+      </ul></li>
+  <li><p>使用 <code>cin/cout</code> 时，不要再混用 <code>scanf/printf</code>。C++ 的 <code>cin/cout</code> 和 C 的 <code>scanf/printf</code> 是两套独立的 I/O 系统，混用可能导致输出顺序错乱、缓冲区冲突。加速写法（仅在 main 函数开头写一次）：</p>
+<pre><code class="language-cpp">ios::sync_with_stdio(false);
+cin.tie(0);
+cout.tie(0);
+</code></pre>
+      <p>关闭同步后，<code>cin/cout</code> 速度接近 <code>scanf/printf</code>；但关闭后<strong>绝对不能再混用</strong> <code>scanf/printf</code>，否则会出问题。使用 <code>freopen</code> 时这两行仍然有效。</p></li>
+</ol>
+
+<h2 id="sec-2">二、基本原则</h2>
+
+<p><strong>核心原则：拿分、拿分、拿分，尽可能在有限的时间内多拿分！</strong></p>
+
+<ol>
+  <li>考试的目的是拿分，一道题实在没有更好的方法，可以暴力求解或者针对部分数据点拿分。</li>
+  <li>会做的题目尽可能拿满分，先做有把握的题；不会做的题目针对部分数据点拿部分分数，不要因为一道题消耗太多时间，注意时间分配。</li>
+  <li><p>针对部分数据点拿分：如果对优化算法没有把握，且分析题意发现部分数据可以直接暴力求解：</p>
+<pre><code class="language-cpp">if(数据量不大的情况){
+    暴力求解;
+}else{
+    优化求解;
+}
+</code></pre></li>
+</ol>
+
+<h2 id="sec-3">三、考试流程注意</h2>
+
+<ol>
+  <li>考前调节心态，充分自信，自信并认真是最好的考试状态。</li>
+  <li><p>开考：</p>
+    <ol>
+      <li>按要求创建、命名文件夹和文件，写好基本模板；</li>
+      <li>遇到任何规则上不清楚的问题（比如保存文件、文件夹等问题）一定要和监考老师确认；</li>
+    </ol>
+    <p>基础模板：</p>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    freopen("题目要求的名字.in", "r", stdin);
+    freopen("题目要求的名字.out", "w", stdout);
+    // 代码内容
+    fclose(stdin);
+    fclose(stdout);
+    return 0;
+}
+</code></pre>
+    <ol start="3">
+      <li>大致浏览试卷，优先做相对简单、自己有思路的题目。</li>
+    </ol></li>
+  <li>快结束的前 5~10 分钟：认真检查文件夹命名、文件保存，检查每道题基本模板正确，没有多余输出。</li>
+</ol>
+
+<blockquote>
+  <p><strong>注意：进入考场前，知识储备决定成绩；进入考场后，心态、做题习惯、做题技巧决定成绩。</strong></p>
+</blockquote>
+
+<h2 id="sec-4">四、做一个题目的流程</h2>
+
+<h3>1. 读题</h3>
+<ol>
+  <li>仔细阅读题目的每一句话，确认理解无误；</li>
+  <li>测试数据能人工计算的，通过计算确认理解正确；题目不明确时，通过测试数据加深理解；</li>
+  <li>自己举例计算，思考是否存在特殊情况（部分题目的特殊情况不会在样例中展现）。</li>
+</ol>
+
+<h3>2. 构建算法</h3>
+<ol>
+  <li>仔细读题、认真思考，不要过早编程；选错方法或理解错题导致的时间浪费非常可惜。</li>
+  <li>确认数据量，判断是否要用 <code>long long</code>（相加、相乘是否会超 int 范围）；</li>
+  <li>确认数据范围，评估算法时间是否超限；没有更好算法时，也可以用现有思路拿部分分数。</li>
+  <li>考虑特殊边界情况。</li>
+  <li>构建算法可能耗时，但好的算法实现起来往往更简单。</li>
+</ol>
+<blockquote>
+  <p><strong>十年竞赛一场空，没写 long long 见祖宗！</strong></p>
+</blockquote>
+
+<h3>3. 编程</h3>
+<p>复杂问题注意划分子任务，逐步验证。</p>
+
+<h3>4. 调错</h3>
+<ol>
+  <li>静态找错：先通读代码，不要上来就测样例，防止样例正确但程序存在隐藏错误。</li>
+  <li>测试样例：样例正确也可能拿不到满分，甚至 0 分；要做输出调错、单步调试。</li>
+  <li>反复举例验算：通过测试数据和自造数据验证正确性。</li>
+</ol>
+
+<h3>5. 离开题目前的检查</h3>
+<p>检查文件名、文件保存目录、<code>freopen</code> 编写、是否有多余输出等细节，反复确认无误后保存，再做下一题。</p>
+
+<blockquote>
+  <p><strong>总结做题流程：</strong></p>
+  <ol>
+    <li>仔细读题</li>
+    <li>算样例，思考是否有特殊情况</li>
+    <li>构建算法：确认数据量、数据范围</li>
+    <li>逐步编程</li>
+    <li>静态读代码、测试样例、反复举例验算</li>
+    <li>检查文件名，排查多余输出</li>
+  </ol>
+</blockquote>
+
+<h2 id="sec-5">五、注意爆零情况</h2>
+
+<h3>1. 数组爆零</h3>
+
+<h4>（1）开大爆零</h4>
+<p>解决方法：数组定义要小于空间限制。查看数组占用空间（单位：M）：</p>
+<pre><code class="language-cpp">printf("%.3lf M\n",(double)sizeof(arr)/(1&lt;&lt;20));
+</code></pre>
+<p>参考大小：</p>
+<table>
+  <thead>
+    <tr><th>数组定义</th><th>占用空间</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>int arr1[1e6]</code></td><td>3.815 M</td></tr>
+    <tr><td><code>int arr2[1e7]</code></td><td>38.147 M</td></tr>
+    <tr><td><code>int arr3[1e8]</code></td><td>381.470 M</td></tr>
+    <tr><td><code>long long arr4[1e6]</code></td><td>7.629 M</td></tr>
+    <tr><td><code>long long arr5[1e7]</code></td><td>76.294 M</td></tr>
+    <tr><td><code>long long arr6[1e8]</code></td><td>762.939 M</td></tr>
+  </tbody>
+</table>
+
+<h4>（2）开小"防爆"</h4>
+<p>看清题目数据范围，数组开小会导致越界，引发运行错误（RE）。</p>
+
+<h3>2. 竞赛基本数据常识</h3>
+<ul>
+  <li><code>int</code> 上限：$2^{31}-1$（约 21 亿，10 位整数）</li>
+  <li><code>long long</code> 上限：$2^{63}-1$（19 位整数）</li>
+  <li>1 秒循环上限：约 $10^8$ 次</li>
+  <li>数组大小一般控制在 $10^6$ 量级</li>
+  <li>数据量 $10^5$ 及以上，尽量用 <code>scanf</code> / <code>printf</code> 替代 <code>cin</code> / <code>cout</code> 提升效率</li>
+  <li>数组尽量不要定义在函数内部（栈空间上限小，约 $10^6$），建议定义为全局变量。</li>
+</ul>
+
+<h2 id="sec-6">六、不同平台的兼容性问题</h2>
+
+<p>考试机是 Windows 系统，但最终评测是 Linux 系统，GCC 标准不同，会带来兼容性问题：</p>
+<ol>
+  <li>Windows 下结构体内的数组一般默认初始为 0，但 Linux 下包括全局变量都不会自动初始化，必须手动初始化。</li>
+  <li>Windows 下 <code>scanf</code> 读入 <code>long long</code> 用 <code>%I64d</code>，Linux 下用 <code>%lld</code>；数据量小时推荐用 <code>cin/cout</code>，兼容性更强。</li>
+  <li>Windows 下程序末尾可以不写 <code>return 0;</code>，但 Linux 下必须写，否则会 0 分。</li>
+</ol>
+
+<h2 id="sec-7">七、Linux 环境</h2>
+
+<ol>
+  <li>桌面建立文件夹，以自己的参赛号命名。</li>
+  <li>在新建文件夹下，建立以考题命名的四个文件夹。</li>
+  <li>分别在考题文件夹下建立对应命名的 <code>.cpp</code> 文件，路径不能带中文，Code::Blocks 无法识别中文路径。</li>
+  <li>运行测试代码，不要忘记添加 <code>freopen</code> 文件重定向。</li>
+  <li>删除测试产生的多余文件（如 <code>.in</code>、<code>.out</code>），只保留 <code>.cpp</code> 文件（按监考老师要求执行）。</li>
+  <li>等待老师拷贝代码时，切记不要关机，否则文件可能丢失。</li>
+  <li>NOI Linux 2.0 提供计算器、日期等软件，可以使用。</li>
+  <li>考场上任何问题举手问老师（题目相关问题除外）。</li>
+</ol>

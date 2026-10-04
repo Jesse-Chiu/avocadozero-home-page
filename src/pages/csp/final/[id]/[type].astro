@@ -2,17 +2,17 @@
 import fs from 'node:fs';
 import { resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { path } from '../../../utils/base';
-import { CSP_CHAPTERS, type CspChapter } from '../../../data/csp-chapters';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { path } from '../../../../utils/base';
+import { FINAL_CHAPTERS, type FinalChapter } from '../../../../data/csp-final-chapters';
 
 export async function getStaticPaths() {
   const paths: Array<{
     params: { id: string; type: string };
-    props: { chapter: CspChapter; type: 'knowledge' | 'practice' };
+    props: { chapter: FinalChapter; type: 'knowledge' | 'practice' };
   }> = [];
 
-  for (const chapter of CSP_CHAPTERS) {
+  for (const chapter of FINAL_CHAPTERS) {
     paths.push({
       params: { id: chapter.id, type: 'knowledge' },
       props: { chapter, type: 'knowledge' },
@@ -25,7 +25,7 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { chapter, type } = Astro.props as { chapter: CspChapter; type: 'knowledge' | 'practice' };
+const { chapter, type } = Astro.props as { chapter: FinalChapter; type: 'knowledge' | 'practice' };
 
 const isKnowledge = type === 'knowledge';
 const pageTitle = `${isKnowledge ? '知识点' : '练习'} · ${chapter.title} · 牛油果零壹信奥`;
@@ -61,10 +61,10 @@ const colorClass = {
 
 <BaseLayout title={pageTitle} description={pageDesc}>
   <!-- Breadcrumb -->
-  <section class="bg-gradient-to-b from-green-50/40 via-white to-white border-b border-green-100/50">
+  <section class="bg-gradient-to-b from-indigo-50/40 via-white to-white border-b border-indigo-100/50">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
       <nav class="flex items-center gap-2 text-sm text-gray-500 mb-4">
-        <a href={path(`/csp/intro?group=${chapter.group}`)} class="hover:text-green-600 transition-colors">初赛知识点</a>
+        <a href={path(`/csp/final/intro?group=${chapter.group === 'both' ? 'J' : chapter.group}`)} class="hover:text-indigo-600 transition-colors">复赛知识点</a>
         <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>
@@ -84,6 +84,9 @@ const colorClass = {
             <span class="text-xs font-bold text-gray-400">Ch.{chapter.id}</span>
             <span class={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full ${isKnowledge ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'}`}>
               {isKnowledge ? '📖 知识点' : '✏️ 练习'}
+            </span>
+            <span class="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">
+              🖥️ 复赛
             </span>
           </div>
           <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">{chapter.title}</h1>
@@ -132,19 +135,19 @@ const colorClass = {
                 <p class="text-xs font-semibold text-gray-500 mb-3 uppercase tracking-wider">本页将包含</p>
                 <ul class="space-y-2 text-sm text-gray-600">
                   <li class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
                     <span>核心概念讲解</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
                     <span>典型例题演示</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
                     <span>常见考点解析</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
                     <span>{isKnowledge ? '知识点小结与思维导图' : '练习题与答案解析'}</span>
                   </li>
                 </ul>
@@ -157,8 +160,8 @@ const colorClass = {
       <!-- Type switcher + nav -->
       <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
         <a
-          href={path(`/csp/intro?group=${chapter.group}`)}
-          class="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-green-600 transition-colors"
+          href={path(`/csp/final/intro?group=${chapter.group === 'both' ? 'J' : chapter.group}`)}
+          class="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 transition-colors"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -169,13 +172,13 @@ const colorClass = {
         <!-- Switch knowledge/practice -->
         <div class="inline-flex items-center bg-gray-100 rounded-full p-1">
           <a
-            href={path(`/csp/${chapter.id}/knowledge`)}
+            href={path(`/csp/final/${chapter.id}/knowledge`)}
             class={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${isKnowledge ? 'bg-white text-blue-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
           >
             📖 知识点
           </a>
           <a
-            href={path(`/csp/${chapter.id}/practice`)}
+            href={path(`/csp/final/${chapter.id}/practice`)}
             class={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${!isKnowledge ? 'bg-white text-green-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
           >
             ✏️ 练习
@@ -186,7 +189,7 @@ const colorClass = {
   </section>
 
   <script>
-    import { requireAuth } from '../../../utils/auth';
+    import { requireAuth } from '../../../../utils/auth';
     requireAuth();
   </script>
 
@@ -260,7 +263,7 @@ const colorClass = {
   color: #111827;
   margin: 2.25rem 0 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid #d1fae5;
+  border-bottom: 2px solid #e0e7ff;
   scroll-margin-top: 5rem;
 }
 .csp-content h2:first-child { margin-top: 0; }
@@ -270,7 +273,7 @@ const colorClass = {
   color: #1f2937;
   margin: 1.75rem 0 0.75rem;
   padding-left: 0.75rem;
-  border-left: 4px solid #10b981;
+  border-left: 4px solid #6366f1;
   scroll-margin-top: 5rem;
 }
 .csp-content h4 {
@@ -352,16 +355,16 @@ const colorClass = {
 .csp-content blockquote {
   margin: 1.25rem 0;
   padding: 0.85rem 1.25rem;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  border-left: 4px solid #22c55e;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  border-left: 4px solid #6366f1;
   border-radius: 0.75rem;
-  color: #166534;
+  color: #3730a3;
 }
 .csp-content blockquote p { margin: 0.4rem 0; }
 .csp-content blockquote ul,
 .csp-content blockquote ol { margin: 0.4rem 0; padding-left: 1.35rem; }
-.csp-content blockquote code { background: rgba(34, 197, 94, 0.12); color: #14532d; }
+.csp-content blockquote code { background: rgba(99, 102, 241, 0.12); color: #312e81; }
 
 /* 表格 */
 .csp-content table {
@@ -375,11 +378,11 @@ const colorClass = {
   white-space: nowrap;
 }
 .csp-content thead th {
-  background: #ecfdf5;
-  color: #065f46;
+  background: #eef2ff;
+  color: #3730a3;
   font-weight: 700;
   padding: 0.6rem 0.9rem;
-  border: 1px solid #a7f3d0;
+  border: 1px solid #c7d2fe;
   text-align: left;
   white-space: nowrap;
 }
@@ -389,7 +392,7 @@ const colorClass = {
   color: #374151;
 }
 .csp-content tbody tr:nth-child(even) { background: #f9fafb; }
-.csp-content tbody tr:hover { background: #f0fdf4; }
+.csp-content tbody tr:hover { background: #eef2ff; }
 
 /* 行内代码 */
 .csp-content :not(pre) > code {
@@ -400,18 +403,6 @@ const colorClass = {
   font-size: 0.88em;
 }
 .csp-content pre code { background: none; color: inherit; padding: 0; }
-
-/* 真题块 */
-.csp-content .quiz-block {
-  margin: 1.5rem 0;
-  padding: 1rem 1.25rem;
-  background: linear-gradient(135deg, #fffbeb, #fef3c7);
-  border: 1px solid #fcd34d;
-  border-left: 4px solid #f59e0b;
-  border-radius: 0.75rem;
-}
-.csp-content .quiz-block p { margin: 0.35rem 0; }
-.csp-content .quiz-block p:first-child { font-weight: 600; }
 
 /* 代码块（浅色背景 + 语法高亮） */
 .csp-content pre {
